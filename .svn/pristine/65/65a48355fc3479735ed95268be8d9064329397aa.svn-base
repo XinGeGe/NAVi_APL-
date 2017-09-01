@@ -1,0 +1,337 @@
+/*=====================================
+	スタイルリセット
+ =======================================*/
+html, body, h1, h2, h3, h4, h5, h6, ul, ol, dl, li, dt, dd, p,
+header, hgroup, section, article, aside, hgroup, footer, figure,
+figcaption, nav {
+    margin: 0;
+    padding: 0;
+    font-size: 100%;
+}
+.highlight {
+    background-color: yellow;
+    font-style: normal;
+}
+table {
+    border-collapse: collapse;
+}
+th, td {
+    padding: 0px;
+}
+
+/*===============================
+ 基本スタイル
+ ================================*/
+body {
+    font-family: "ＭＳ Ｐゴシック";
+}
+
+/*-----------------
+ 表示エリア
+ ------------------*/
+.sec_view_area {
+    
+    position: absolute;
+    border: 1px #000000 solid;
+    overflow: hidden;
+    
+    padding: 0px;
+}
+.sec_view, .sec_kiji_detail {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+.sec_kiji_detail, .sec_paper_info {
+    overflow: hidden;
+    display: none;
+}
+.sec_kiji_detail {
+    padding-top: 5px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+
+
+
+/*-----------------------
+	VIEW 記事情報
+ -------------------------*/
+.view_page {
+    
+    float: left;
+    overflow: hidden;
+}
+
+/* VIEW記事 タイトル */
+.view_data_title {
+    
+    font-weight: bold;
+    margin: 0px 5px 0px 5px;
+}
+/* VIEW記事 本文 */
+.view_data_honbun_area_top {
+    height: 140px;
+    overflow: hidden;
+}
+.view_data_honbun_area_bottom {
+    height: 105px;
+    overflow: hidden;
+}
+.view_data_honbun {
+    
+    overflow: hidden;
+    margin: 5px 5px 5px 5px;
+    color: #333333;
+    
+    column-count: auto;
+    -moz-column-count: auto;
+    -webkit-column-count: auto;
+}
+
+/*------------------------
+	VIEW 文字サイズ
+ -------------------------*/
+/*  フォント：小  */
+.view_data_title {
+    
+    font-size: 18px;
+    line-height: 20px;
+}
+.view_data_honbun {
+    
+    font-size: 15px;
+    line-height: 20px;
+}
+
+.view_data_honbun_txt {
+
+}
+
+.view_data_photo {
+    width: 100px;
+    padding: 5px 0px 5px 5px;
+    float: right;
+}
+
+.view_data_shimen_info {
+    font-size: 14px;
+    line-height: 16px;
+    color: #777777;
+    margin-left: 5px;
+    font-family: 'ヒラギノ' !important;
+}
+
+/* 画像サイズ */
+.view_data_img_1 {
+    width: 100%;
+}
+.view_data_img_2 {
+    width: 65%;
+}
+.view_data_img_3 {
+    width: 55%;
+}
+.view_data_img_4 {
+    width: 45%;
+}
+
+/* 連数字 */
+.tate_rensuuji {
+    display: inline-block;
+    transform: rotate(-90deg);
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+}
+
+.tate_rensuuji_ipad {
+    display: inline-block;
+    -webkit-transform: rotate(-90deg) translateY(-5px);
+}
+
+.tateChar {
+    /*
+     font-family: 'ヒラギノ' !important;
+     */
+}
+
+.kiji_info {
+    overflow: hidden;
+}
+
+/* クリップ選択記事 */
+.clip_select {
+    background-color: #DEF;
+}
+
+/*==========================
+	25分割
+ ===========================*/
+.view_data_honbun {
+}
+
+/*--  記事数：2  ---*/
+.viewpt_36_2_1 { border-bottom: 1px #333 dotted; }
+.viewpt_36_2_1 .view_data_title { /* height: 17%; */ }
+.viewpt_36_2_1 .view_data_honbun { height: 76%; }
+.viewpt_36_2_1 .view_data_photo { width: 30%; }
+.viewpt_36_2_1 .view_data_honbun_txt {}
+.viewpt_36_2_1 .view_data_shimen_info {  }
+.viewpt_36_2_2 {  }
+.viewpt_36_2_2 .view_data_title { /* height: 25%; */ }
+.viewpt_36_2_2 .view_data_honbun { height: 62%; }
+.viewpt_36_2_2 .view_data_photo { width: 30%; }
+.viewpt_36_2_2 .view_data_honbun_txt {}
+.viewpt_36_2_2 .view_data_shimen_info {  }
+/*--  記事数：2縦  ---*/
+.viewpt_36_2_1t { border-right: 1px #333 dotted; }
+.viewpt_36_2_1t .view_data_title { /* height: 12%; */ }
+.viewpt_36_2_1t .view_data_honbun { height: 80%; }
+.viewpt_36_2_1t .view_data_photo { width: 30%; }
+.viewpt_36_2_1t .view_data_honbun_txt {  }
+.viewpt_36_2_1t .view_data_shimen_info {  }
+.viewpt_36_2_2t {  }
+.viewpt_36_2_2t .view_data_title { /* height: 12%; */ }
+.viewpt_36_2_2t .view_data_honbun { height: 80%; }
+.viewpt_36_2_2t .view_data_photo { width: 27%; }
+.viewpt_36_2_2t .view_data_honbun_txt {}
+.viewpt_36_2_2t .view_data_shimen_info {  }
+/*--  記事数：3  ---*/
+.viewpt_36_3_1 { border-bottom: 1px #333 dotted; }
+.viewpt_36_3_1 .view_data_title { /* height: 25%; */ }
+.viewpt_36_3_1 .view_data_honbun { height: 62%; }
+.viewpt_36_3_1 .view_data_photo { width: 30%; }
+.viewpt_36_3_1 .view_data_honbun_txt { }
+.viewpt_36_3_1 .view_data_shimen_info { }
+.viewpt_36_3_2 {  border-right: 1px #333 dotted; }
+.viewpt_36_3_2 .view_data_title, .viewpt_36_3_3 .view_data_title { /* height: 17%; */ }
+.viewpt_36_3_2 .view_data_honbun, .viewpt_36_3_3 .view_data_honbun { height: 76%;  }
+.viewpt_36_3_2 .view_data_photo, .viewpt_36_3_3 .view_data_photo { }
+.viewpt_36_3_2 .view_data_honbun_txt, .viewpt_36_3_3 .view_data_honbun_txt {}
+.viewpt_36_3_2 .view_data_shimen_info, .viewpt_36_3_3 .view_data_shimen_info {  }
+/*--  記事数：3縦  ---*/
+.viewpt_36_3_1t { border-right: 1px #333 dotted; }
+.viewpt_36_3_1t .view_data_title { /* height: 12%; */ }
+.viewpt_36_3_1t .view_data_honbun { height: 80%; }
+.viewpt_36_3_1t .view_data_photo { width: 27%; }
+.viewpt_36_3_1t .view_data_honbun_txt {}
+.viewpt_36_3_1t .view_data_shimen_info { }
+.viewpt_36_3_2t { border-bottom: 1px #333 dotted; }
+.viewpt_36_3_2t .view_data_title { /* height: 17%; */ }
+.viewpt_36_3_2t .view_data_honbun { height: 76%;  }
+.viewpt_36_3_2t .view_data_photo { }
+.viewpt_36_3_2t .view_data_honbun_txt {}
+.viewpt_36_3_2t .view_data_shimen_info {  }
+.viewpt_36_3_3t { border-bottom: 1px #333 dotted; }
+.viewpt_36_3_3t .view_data_title { /* height: 24%; */ }
+.viewpt_36_3_3t .view_data_honbun { height: 63%;  }
+/*--  記事数：4  ---*/
+.viewpt_36_4_1 { border-bottom: 1px #333 dotted; border-right: 1px #333 dotted; }
+.viewpt_36_4_2 { border-bottom: 1px #333 dotted; }
+.viewpt_36_4_1 .view_data_title, .viewpt_36_4_2 .view_data_title { /* height: 17%; */ }
+.viewpt_36_4_1 .view_data_honbun, .viewpt_36_4_2 .view_data_honbun { height: 76%; }
+.viewpt_36_4_1 .view_data_photo, .viewpt_36_4_2 .view_data_photo {}
+.viewpt_36_4_1 .view_data_honbun_txt, .viewpt_36_4_2 .view_data_honbun_txt {}
+.viewpt_36_4_1 .view_data_shimen_info, .viewpt_36_4_2 .view_data_shimen_info {  }
+.viewpt_36_4_3 { border-right: 1px #333 dotted; }
+.viewpt_36_4_3 .view_data_title, .viewpt_36_4_4 .view_data_title { /* height: 25%; */ }
+.viewpt_36_4_3 .view_data_honbun, .viewpt_36_4_4 .view_data_honbun { height: 62%;  }
+.viewpt_36_4_3 .view_data_photo, .viewpt_36_4_4 .view_data_photo {}
+.viewpt_36_4_3 .view_data_honbun_txt, .viewpt_36_4_4 .view_data_honbun_txt {}
+.viewpt_36_4_3 .view_data_shimen_info, .viewpt_36_4_4 .view_data_shimen_info {  }
+/*--  記事数：4縦  ---*/
+.viewpt_36_4_1t { border-bottom: 1px #333 dotted; border-right: 1px #333 dotted; }
+.viewpt_36_4_2t { border-bottom: 1px #333 dotted; }
+.viewpt_36_4_1t .view_data_title, .viewpt_36_4_2t .view_data_title { /* height: 17%; */ }
+.viewpt_36_4_1t .view_data_honbun, .viewpt_36_4_2t .view_data_honbun { height: 76%; }
+.viewpt_36_4_1t .view_data_photo, .viewpt_36_4_2t .view_data_photo {}
+.viewpt_36_4_1t .view_data_honbun_txt, .viewpt_36_4_2t .view_data_honbun_txt {}
+.viewpt_36_4_1t .view_data_shimen_info, .viewpt_36_4_2t .view_data_shimen_info {  }
+.viewpt_36_4_3t { border-right: 1px #333 dotted; }
+.viewpt_36_4_3t .view_data_title, .viewpt_36_4_4t .view_data_title { /* height: 25%; */ }
+.viewpt_36_4_3t .view_data_honbun, .viewpt_36_4_4t .view_data_honbun { height: 62%;  }
+.viewpt_36_4_3t .view_data_photo, .viewpt_36_4_4t .view_data_photo {}
+.viewpt_36_4_3t .view_data_honbun_txt, .viewpt_36_4_4t .view_data_honbun_txt {}
+.viewpt_36_4_3t .view_data_shimen_info, .viewpt_36_4_4t .view_data_shimen_info {  }
+/*--  記事数：5  ---*/
+.viewpt_36_5_1 { border-bottom: 1px #333 dotted; border-right: 1px #333 dotted; }
+.viewpt_36_5_2 { border-right: 1px #333 dotted; }
+.viewpt_36_5_1 .view_data_title, .viewpt_36_5_2 .view_data_title { /* height: 17%; */ }
+.viewpt_36_5_1 .view_data_honbun, .viewpt_36_5_2 .view_data_honbun { height: 76%; }
+.viewpt_36_5_3 { border-bottom: 1px #333 dotted; }
+.viewpt_36_5_4 { border-bottom: 1px #333 dotted; }
+.viewpt_36_5_3 .view_data_title, .viewpt_36_5_4 .view_data_title , .viewpt_36_5_5 .view_data_title { /* height: 25%; */ }
+.viewpt_36_5_3 .view_data_honbun, .viewpt_36_5_4 .view_data_honbun, .viewpt_36_5_5 .view_data_honbun { height: 62%;  }
+/*--  記事数：5縦  ---*/
+.viewpt_36_5_1t { border-bottom: 1px #333 dotted; border-right: 1px #333 dotted; }
+.viewpt_36_5_2t { border-bottom: 1px #333 dotted; }
+.viewpt_36_5_3t { border-right: 1px #333 dotted; }
+.viewpt_36_5_4t { border-right: 1px #333 dotted; }
+
+/** 縦書き用左罫線 */
+.tate_kei {
+    border-right: none;
+    border-left: 1px #333 dotted;
+}
+
+.view_data_photo_div {
+    position: static;
+    float: right;
+}
+
+/*======================
+	縦書き用
+ =======================*/
+.tate-base {
+    /*
+     font-family: '@ヒラギノ' !important;
+     */
+    font-family: '@ＭＳ ゴシック' !important;
+    float: right;
+}
+
+.tate-base strong span.cjk:after {
+    margin: -0.3em 0 0 1em;
+}
+
+.tate-base strong span.kogaki:after {
+    margin: -0.15em 0 0 0.8em;
+}
+
+.tate-base strong span.cho-on:after {
+    margin: 1em 0.3em -1em -0.3em;
+}
+
+.tate-base strong.bo-ten span.cjk:after {
+    margin: -0.55em -0.05em 0.55em 0.05em;
+}
+
+.tate-base .tate-col {
+    -moz-writing-mode: vertical-rl;
+    -webkit-writing-mode: vertical-rl;
+    -o-writing-mode: vertical-rl;
+    -ms-writing-mode: tb-rl;
+    /*
+     /writing-mode: tb-rl;
+     _writing-mode: tb-rl;
+     */
+}
+
+.disp_none {
+    display: none;
+}
+
+
+body {
+    user-select:none;
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -khtml-user-select:none;
+    -webkit-user-drag:none;
+    -khtml-user-drag:none;
+    
+    /*iPhone長押し無効用*/
+    -webkit-touch-callout: none;
+}

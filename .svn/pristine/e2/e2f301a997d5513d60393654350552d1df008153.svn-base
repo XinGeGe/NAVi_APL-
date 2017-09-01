@@ -1,0 +1,15 @@
+<html>
+     <style type="text/css">
+         .highlight {
+             background-color: yellow;
+             font-style: normal;
+         }
+        .body{
+            background:#0f0;
+            background-color:transparent;
+        font-family: "ヒラギノ",serif;}
+     </style>
+    <body>
+        @myContent@
+    </body>
+</html>

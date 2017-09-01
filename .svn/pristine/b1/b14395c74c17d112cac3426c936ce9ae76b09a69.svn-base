@@ -1,0 +1,403 @@
+<html lang="ja">
+<head>
+	<meta charset="utf-8"/>
+    <link href="sokuho.css" rel="stylesheet" type="text/css">
+    <link href="taketori.css" rel="stylesheet" type="text/css">
+        
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript" src="sokuho.js"></script>
+</head>
+
+<body>
+<!--==========================
+	記事表示用フォーマット
+=============================-->
+<section id="sec_view" class="sec_view">
+	<!--  36分割  -->
+	<div id="viewpt_36_2" style="display:none">
+		<div class="view_page" page="">
+			<table width="100%" height="100%">
+				<tr width="100%">
+                    <td v_width="100%" v_height="60%" class="viewpt_36_2_1" type="y">
+                        @viewpt_36_2_1@
+                    </td>
+                </tr>
+				<tr >
+                    <td v_width="100%" v_height="40%" class="viewpt_36_2_2" type="y">
+                        @viewpt_36_2_2@
+                    </td>
+                </tr>
+			</table>
+		</div>
+	</div>
+	<div id="viewpt_36_2_t" style="display:none">
+		<div class="view_page" page="">
+			<table width="100%" height="100%">
+				<tr width="100%">
+					<td v_width="60%" v_height="100%" class="viewpt_36_2_1t" type="t">
+                        @viewpt_36_2_1@
+                    </td>
+					<td v_width="40%" v_height="100%" class="viewpt_36_2_2t" type="t">
+                        @viewpt_36_2_2@
+                    </td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<div id="viewpt_36_3" style="display:none">
+		<div class="view_page" page="">
+			<table width="100%" >
+				<tr width="100%" >
+                    <td v_width="100%" v_height="40%" colspan="2" class="viewpt_36_3_1" type="y">
+                        @viewpt_36_3_1@
+                    </td>
+                </tr>
+				<tr width="100%" >
+					<td v_width="60%" v_height="60%" class="viewpt_36_3_2" type="y">
+                        @viewpt_36_3_2@
+                    </td>
+					<td v_width="40%" v_height="60%" class="viewpt_36_3_3" type="t">
+                        @viewpt_36_3_3@
+                    </td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<div id="viewpt_36_3_t" style="display:none">
+		<div class="view_page" page="">
+			<table width="100%" height="100%">
+				<tr width="100%" >
+					<td rowspan="2" v_width="40%" v_height="100%" class="viewpt_36_3_1t" type="t">
+                        @viewpt_36_3_1@
+                    </td>
+					<td v_width="60%" v_height="60%" class="viewpt_36_3_2t" type="y">
+                        @viewpt_36_3_2@
+                    </td>
+				</tr>
+				<tr width="100%">
+					<td v_width="60%" v_height="40%" class="viewpt_36_3_3t" type="y">
+                        @viewpt_36_3_3@
+                    </td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<div id="viewpt_36_4" style="display:none">
+		<div class="view_page" page="">
+			<table width="100%" height="100%">
+				<tr>
+					<td v_width="60%" v_height="50%" class="viewpt_36_4_1" type="y">
+                        @viewpt_36_4_1@
+                    </td>
+					<td v_width="40%" v_height="50%" class="viewpt_36_4_2" type="t">
+                        @viewpt_36_4_2@
+                    </td>
+				</tr>
+				<tr>
+					<td v_width="60%" v_height="50%" class="viewpt_36_4_3" type="y">
+                        @viewpt_36_4_3@
+                    </td>
+					<td v_width="40%" v_height="50%" class="viewpt_36_4_4" type="y">
+                        @viewpt_36_4_4@
+                    </td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<div id="viewpt_36_4_t" style="display:none">
+		<div class="view_page" page="">
+			<table width="100%" height="100%">
+				<tr height="66%">
+					<td v_width="50%" v_height="66%" class="viewpt_36_4_1t" type="y">
+                        @viewpt_36_4_1@
+                    </td>
+					<td v_width="50%" v_height="66%" class="viewpt_36_4_2t" type="t">
+                        @viewpt_36_4_2@
+                    </td>
+				</tr>
+				<tr height="34%">
+					<td v_width="50%" v_height="34%" class="viewpt_36_4_3t" type="y">
+                        @viewpt_36_4_3@
+                    </td>
+					<td v_width="50%" v_height="34%" class="viewpt_36_4_4t" type="y">
+                        @viewpt_36_4_4@
+                    </td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<div id="viewpt_36_5" style="display:none">
+		<div class="view_page" page="">
+			<table width="100%" height="100%">
+				<tr height="100%">
+					<td width="50%">
+						<table width="100%" height="100%">
+							<tr>
+								<td v_width="50%" v_height="50%" class="viewpt_36_5_1" type="y">
+                                    @viewpt_36_5_1@
+                                </td>
+							</tr>
+							<tr>
+								<td v_width="50%" v_height="50%" class="viewpt_36_5_2" type="y">
+                                    @viewpt_36_5_2@
+                                </td>
+							</tr>
+						</table>
+					</td>
+					<td width="50%">
+						<table width="100%" height="100%">
+							<tr>
+								<td v_width="50%" v_height="33%" class="viewpt_36_5_3" type="y">
+                                    @viewpt_36_5_3@
+                                </td>
+							</tr>
+							<tr>
+								<td v_width="50%" v_height="33%" class="viewpt_36_5_4" type="y">
+                                    @viewpt_36_5_4@
+                                </td>
+							</tr>
+							<tr>
+								<td v_width="50%" v_height="34%" class="viewpt_36_5_5" type="y">
+                                    @viewpt_36_5_5@
+                                </td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+
+			</table>
+		</div>
+	</div>
+	<div id="viewpt_36_5_t" style="display:none">
+		<div class="view_page" page="">
+			<table width="100%" height="100%">
+				<tr height="50%">
+					<td width="100%">
+						<table>
+							<tr>
+								<td v_width="50%" v_height="50%" class="viewpt_36_5_1t" type="y" >
+                                    @viewpt_36_5_1@
+                                </td>
+								<td v_width="50%" v_height="50%" class="viewpt_36_5_2t" type="y" >
+                                    @viewpt_36_5_2@
+                                </td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<tr height="50%">
+					<td>
+						<table>
+							<tr>
+								<td v_width="33%" v_height="50%" class="viewpt_36_5_3t" type="t">
+                                    @viewpt_36_5_3@
+                                </td>
+								<td v_width="33%" v_height="50%" class="viewpt_36_5_4t" type="t">
+                                    @viewpt_36_5_4@
+                                </td>
+								<td v_width="33%" v_height="50%" class="viewpt_36_5_5t" type="t">
+                                    @viewpt_36_5_5@
+                                </td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+
+	<!--  縦書き用36分割  -->
+	<div id="tate_viewpt_36_2" style="display:none">
+		<div class="view_page" page="">
+			<table width="100%" height="100%">
+				<tr width="100%">
+                    <td v_width="100%" v_height="60%" class="viewpt_36_2_1" type="y">
+                        @viewpt_36_2_1@
+                    </td>
+                </tr>
+				<tr >
+                    <td v_width="100%" v_height="40%" class="viewpt_36_2_2" type="y">
+                        @viewpt_36_2_2@
+                    </td>
+                </tr>
+			</table>
+		</div>
+	</div>
+	<div id="tate_viewpt_36_2_t" style="display:none">
+		<div class="view_page" page="">
+			<table width="100%" height="100%">
+				<tr width="100%">
+					<td v_width="40%" v_height="100%" class="viewpt_36_2_2t" type="t">
+                        @viewpt_36_2_2@
+                    </td>
+					<td v_width="60%" v_height="100%" class="viewpt_36_2_1t tate_kei" type="t">
+                        @viewpt_36_2_1@
+                    </td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<div id="tate_viewpt_36_3" style="display:none">
+		<div class="view_page" page="">
+			<table width="100%" >
+				<tr width="100%" >
+                    <td v_width="100%" v_height="40%" colspan="2" class="viewpt_36_3_1" type="y">
+                        @viewpt_36_3_1@
+                    </td>
+                </tr>
+				<tr width="100%" >
+					<td v_width="40%" v_height="60%" class="viewpt_36_3_3" type="t">
+                        @viewpt_36_3_3@
+                    </td>
+					<td v_width="60%" v_height="60%" class="viewpt_36_3_2 tate_kei" type="y">
+                        @viewpt_36_3_2@
+                    </td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<div id="tate_viewpt_36_3_t" style="display:none">
+		<div class="view_page" page="">
+			<table width="100%" height="100%">
+				<tr width="100%" >
+					<td v_width="60%" v_height="60%" class="viewpt_36_3_2t" type="y">
+                        @viewpt_36_3_2@
+                    </td>
+					<td rowspan="2" v_width="40%" v_height="100%" class="viewpt_36_3_1t tate_kei" type="t">
+                        @viewpt_36_3_1@
+                    </td>
+				</tr>
+				<tr width="100%">
+					<td v_width="60%" v_height="40%" class="viewpt_36_3_3t" type="y">
+                        @viewpt_36_3_3@
+                    </td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<div id="tate_viewpt_36_4" style="display:none">
+		<div class="view_page" page="">
+			<table width="100%" height="100%">
+				<tr>
+					<td v_width="40%" v_height="50%" class="viewpt_36_4_2" type="t">
+                        @viewpt_36_4_2@
+                    </td>
+					<td v_width="60%" v_height="50%" class="viewpt_36_4_1 tate_kei" type="y">
+                        @viewpt_36_4_1@
+                    </td>
+				</tr>
+				<tr>
+					<td v_width="40%" v_height="50%" class="viewpt_36_4_4" type="y">
+                        @viewpt_36_4_4@
+                    </td>
+					<td v_width="60%" v_height="50%" class="viewpt_36_4_3 tate_kei" type="y">
+                        @viewpt_36_4_3@
+                    </td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<div id="tate_viewpt_36_4_t" style="display:none">
+		<div class="view_page" page="">
+			<table width="100%" height="100%">
+				<tr height="66%">
+					<td v_width="50%" v_height="66%" class="viewpt_36_4_2t" type="t">
+                        @viewpt_36_4_2@
+                    </td>
+					<td v_width="50%" v_height="66%" class="viewpt_36_4_1t tate_kei" type="y">
+                        @viewpt_36_4_1@
+                    </td>
+				</tr>
+				<tr height="34%">
+					<td v_width="50%" v_height="34%" class="viewpt_36_4_4t" type="y">
+                        @viewpt_36_4_4@
+                    </td>
+					<td v_width="50%" v_height="34%" class="viewpt_36_4_3t tate_kei" type="y">
+                        @viewpt_36_4_3@
+                    </td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<div id="tate_viewpt_36_5" style="display:none">
+		<div class="view_page" page="">
+			<table width="100%" height="100%">
+				<tr height="100%">
+					<td width="50%">
+						<table width="100%" height="100%">
+							<tr>
+								<td v_width="50%" v_height="33%" class="viewpt_36_5_3" type="y">
+                                    @viewpt_36_5_3@
+                                </td>
+							</tr>
+							<tr>
+								<td v_width="50%" v_height="33%" class="viewpt_36_5_4" type="y">
+                                    @viewpt_36_5_4@
+                                </td>
+							</tr>
+							<tr>
+								<td v_width="50%" v_height="34%" class="viewpt_36_5_5" type="y">
+                                    @viewpt_36_5_5@
+                                </td>
+							</tr>
+						</table>
+					</td>
+					<td width="50%">
+						<table width="100%" height="100%">
+							<tr>
+								<td v_width="50%" v_height="50%" class="viewpt_36_5_1 tate_kei" type="y">
+                                    @viewpt_36_5_1@
+                                </td>
+							</tr>
+							<tr>
+								<td v_width="50%" v_height="50%" class="viewpt_36_5_2 tate_kei" type="y">
+                                    @viewpt_36_5_2@
+                                </td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+
+			</table>
+		</div>
+	</div>
+	<div id="tate_viewpt_36_5_t" style="display:none">
+		<div class="view_page" page="">
+			<table width="100%" height="100%">
+				<tr height="50%">
+					<td width="100%">
+						<table>
+							<tr>
+								<td v_width="50%" v_height="50%" class="viewpt_36_5_2t" type="y" >
+                                    @viewpt_36_5_2@
+                                </td>
+								<td v_width="50%" v_height="50%" class="viewpt_36_5_1t tate_kei" type="y" >
+                                    @viewpt_36_5_1@
+                                </td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<tr height="50%">
+					<td>
+						<table>
+							<tr>
+								<td v_width="33%" v_height="50%" class="viewpt_36_5_5t" type="t">
+                                    @viewpt_36_5_5@
+                                </td>
+								<td v_width="33%" v_height="50%" class="viewpt_36_5_4t tate_kei" type="t">
+                                    @viewpt_36_5_4@
+                                </td>
+								<td v_width="33%" v_height="50%" class="viewpt_36_5_3t tate_kei" type="t">
+                                    @viewpt_36_5_3@
+                                </td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</section>
+</body>
+</html>

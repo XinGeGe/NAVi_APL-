@@ -1,0 +1,31 @@
+//
+//  NADeatilSelectedAlertView.h
+//  NAVi
+//
+//  Created by Liyuanmeng on 2017/7/13.
+//  Copyright © 2017年 dxc. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+@protocol NADeatilSelectedAlertViewDelegate
+-(void)clipClick;
+-(void)printClick;
+-(void)shareClick;
+@end
+
+@interface NADeatilSelectedAlertView : UIView{
+    AGWindowView *windowView;
+}
+@property(assign,nonatomic)id<NADeatilSelectedAlertViewDelegate> delegate;
+@property (nonatomic,strong)UIView *mybackview;
+@property (nonatomic,strong)UIImageView *myAlertView;
+@property (nonatomic,strong)UILabel *clipLab;
+@property (nonatomic,strong)UILabel *printLab;
+@property (nonatomic,strong)UILabel *shareLab;
+@property (nonatomic,strong)UIButton *clipBtn;
+@property (nonatomic,strong)UIButton *printBtn;
+@property (nonatomic,strong)UIButton *shareBtn;
+-(void)show;
+-(void)dismissMyview;
+
+@end

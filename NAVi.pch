@@ -1,0 +1,23 @@
+//
+//  NAVi.pch
+//  NAVi
+//
+//  Created by y fs on 15/5/14.
+//  Copyright (c) 2015年 dxc. All rights reserved.
+//
+#import <Availability.h>
+
+#ifndef __IPHONE_3_0
+#warning "This project uses features only available in iPhone SDK 3.0 and later."
+#endif
+
+#ifdef __OBJC__
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import "Common.h"
+#import "NAFileManager.h"
+#import "Masonry.h"
+#import <ReactiveCocoa/ReactiveCocoa.h>
+#endif
+
+#define areaCode  [[NAFileManager ChangePlistTodic] objectForKey:@"AreaCode"]

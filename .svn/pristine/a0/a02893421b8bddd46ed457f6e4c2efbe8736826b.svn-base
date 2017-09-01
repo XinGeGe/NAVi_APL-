@@ -1,0 +1,532 @@
+//
+//  NADetailSwipeImageViewController.m
+//  NAVi
+//
+//  Created by y fs on 15/6/16.
+//  Copyright (c) 2015年 dxc. All rights reserved.
+//
+
+#import "NADetailSwipeImageViewController.h"
+#import "NASubImageScrollView.h"
+#import "FontUtil.h"
+@interface NADetailSwipeImageViewController ()<SwipeViewDataSource, SwipeViewDelegate>
+@property (nonatomic, strong) SwipeView *mainScrollView;
+@property (nonatomic,strong)UILabel *imageTitle;
+@property (nonatomic,strong)UILabel *imageNoTitle;
+@property (nonatomic,strong)UIView *bgTitleView;
+@property (nonatomic, strong) NSMutableArray *myswipeimageArray;
+@property (nonatomic, assign) NSInteger currentPageIndex;
+
+@end
+
+@implementation NADetailSwipeImageViewController
+
+@synthesize imagearray;
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ImageDetailClick:) name:NOTYImageDetailClick object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(singleClickNoty) name:@"singleClickNoty" object:nil];;
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    //[button setTitle:NSLocalizedString(@"saveStyle", nil) forState:UIControlStateNormal];
+    [button setBackgroundImage:[UIImage imageNamed:@"btn_sendMail"] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(saveAction) forControlEvents:UIControlEventTouchUpInside];
+    [button setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    button.frame = CGRectMake(0, 0, 60, 49);
+    
+    
+    UIBarButtonItem *notloginItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+    if ([self.isfromWhere isEqualToString:TYPE_CLIP]&&!self.isRelevantPhoto) {
+        self.navigationItem.rightBarButtonItem=notloginItem;
+    }
+    
+    self.bgTitleView=[[UIView alloc]init];
+    self.bgTitleView.backgroundColor=[UIColor lightGrayColor];
+    self.bgTitleView.alpha=0.4;
+    [self.view addSubview:self.bgTitleView];
+    
+    self.imageTitle=[[UILabel alloc]init];
+    self.imageTitle.numberOfLines=0;
+    self.imageTitle.font=[FontUtil boldSystemFontOfSize:isPad?20:15];
+    self.imageTitle.textAlignment=NSTextAlignmentCenter;
+    self.imageTitle.backgroundColor=[UIColor clearColor];
+    self.imageTitle.textColor=[UIColor whiteColor];
+    [self.view addSubview:self.imageTitle];
+    
+    self.imageNoTitle=[[UILabel alloc]init];
+    self.imageNoTitle.numberOfLines=0;
+    self.imageNoTitle.font=[FontUtil boldSystemFontOfSize:isPad?20:15];
+    self.imageNoTitle.textAlignment=NSTextAlignmentCenter;
+    self.imageNoTitle.textColor=[UIColor whiteColor];
+    self.imageNoTitle.backgroundColor=[[UIColor lightGrayColor] colorWithAlphaComponent:0.4];
+    [self.view addSubview:self.imageNoTitle];
+
+}
+-(void)saveAction{
+    NSArray *menuItems;
+    
+    menuItems =
+    @[
+      
+      
+      [KxMenuItem menuItem:@"メール送信"
+                     image:nil
+                    target:self
+                    action:@selector(pushMenuItem:)],
+      
+      [KxMenuItem menuItem:@"画像保存"
+                     image:nil
+                    target:self
+                    action:@selector(pushMenuItem:)]
+      
+      ];
+    
+    //    KxMenuItem *first = menuItems[0];
+    //    first.foreColor = [UIColor colorWithRed:47/255.0f green:112/255.0f blue:225/255.0f alpha:1.0];
+    //    first.alignment = NSTextAlignmentCenter;
+    [KxMenu setTitleFont:[FontUtil boldSystemFontOfSize:20]];
+    
+    
+    
+    [KxMenu showMenuInView:self.navigationController.view
+                  fromRect:CGRectMake(self.navigationItem.rightBarButtonItem.customView.frame.origin.x, self.navigationItem.rightBarButtonItem.customView.frame.origin.y, self.navigationItem.rightBarButtonItem.customView.frame.size.width, self.navigationItem.rightBarButtonItem.customView.frame.size.height)
+                 menuItems:menuItems];
+    
+}
+
+- (void) pushMenuItem:(id)sender
+{
+    KxMenuItem *myitem=sender;
+    //NSLog(@"%@", myitem.title);
+    if ([myitem.title isEqualToString:@"メール送信"]) {
+        NASubImageScrollView *subView=(NASubImageScrollView *)self.mainScrollView.currentItemView;
+        UIImage *myimage=subView.imageView.imageView.image;
+        NSData *data = UIImageJPEGRepresentation(myimage,1.0);
+        NSString *pdfname = @"photoToPDF.pdf";
+        [WQPDFManager WQCreatePDFFileWithSrc:data toDestFile:pdfname withPassword:nil];
+        
+        MFMailComposeViewController *mailCompose = [[MFMailComposeViewController alloc] init];
+        if(mailCompose)
+        {
+            //设置代理
+            [mailCompose setMailComposeDelegate:self];
+            
+            NSArray *toAddress = [NSArray arrayWithObject:@""];
+            NSArray *ccAddress = [NSArray arrayWithObject:@""];
+            NSString *emailBody = @"";
+            if (self.noteTitle) {
+                emailBody = self.noteTitle;
+            }
+            
+            //设置收件人
+            [mailCompose setToRecipients:toAddress];
+            //设置抄送人
+            [mailCompose setCcRecipients:ccAddress];
+            //设置邮件内容
+            [mailCompose setMessageBody:emailBody isHTML:YES];
+            
+            NSData* pData = [[NSData alloc]initWithContentsOfFile:[NAFileManager getPDFPath:@"photoToPDF.pdf"]];
+            if (self.mailDoc.publishDate&&self.mailDoc.pageInfoName) {
+                //设置邮件主题
+                [mailCompose setSubject:[NSString stringWithFormat:@" %@ %@",[Util getTheFormatString:self.mailDoc.publishDate],self.mailDoc.pageInfoName]];
+            }
+            
+            //设置邮件附件{mimeType:文件格式|fileName:文件名}
+            [mailCompose addAttachmentData:pData mimeType:@"pdf" fileName:@"photoToPDF.pdf"];
+            //设置邮件视图在当前视图上显示方式
+            [self presentViewController:mailCompose animated:YES completion:nil];
+        }
+        // GA(tag manager)
+        //[TAGManagerUtil pushButtonClickEvent:ENSendMailBtn label:ENSendMailLab];
+        
+    }else if ([myitem.title isEqualToString:@"画像保存"]){
+        NASubImageScrollView *subView=(NASubImageScrollView *)self.mainScrollView.currentItemView;
+        UIImage *myimage=subView.imageView.imageView.image;
+        NSData *data = UIImageJPEGRepresentation(myimage,1.0);
+        UIImageWriteToSavedPhotosAlbum([[UIImage alloc] initWithData:data], self, @selector(imageSavedToPhotosAlbum:didFinishSavingWithError:contextInfo:), nil);
+        // GA(tag manager)
+        //[TAGManagerUtil pushButtonClickEvent:ENSavePhotoBtn label:ENSavePhotoLab];
+    }
+}
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(nullable NSError *)error __OSX_AVAILABLE_STARTING(__MAC_NA,__IPHONE_3_0){
+    
+    switch (result){
+            
+        case MFMailComposeResultCancelled:
+            NSLog(@"Mail send canceled");
+            
+            break;
+            
+        case MFMailComposeResultSaved:
+            NSLog(@"Mail saved…");
+            
+            break;
+            
+        case MFMailComposeResultSent:
+            NSLog(@"Mail sent…");
+            
+            break;
+            
+        case MFMailComposeResultFailed:
+            NSLog(@"Mail send errored: %@…", [error localizedDescription]);
+            
+            break;
+            
+        default:
+            break;
+    }
+    
+    
+    [controller dismissViewControllerAnimated:YES completion:nil];
+}
+- (void)imageSavedToPhotosAlbum:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
+{
+    NSString *message = @"";
+    if (!error) {
+        message = NSLocalizedString(@"image Save Success", nil);
+    }else
+    {
+        //message = [error description];
+        message = NSLocalizedString(@"image Save Fail", nil);
+    }
+    MAIN(^{
+        ITOAST_BOTTOM(message);
+    });
+    
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    NSMutableArray *captionArray=[NSMutableArray arrayWithArray:[self.imageBaseClass.Caption componentsSeparatedByString:@","]];
+    NSString *caption=@"";
+    caption=[captionArray firstObject];
+    self.imageTitle.text=caption;
+    if (caption==nil||self.imageTitle.text.length==0) {
+        self.bgTitleView.hidden=YES;
+    }
+    NSString *imageNo=@"";
+    NSString *myPublishingHistoryInfoContentIdPicture=self.myclipDoc.publishingHistoryInfoContentIdPicture;
+    myPublishingHistoryInfoContentIdPicture = [myPublishingHistoryInfoContentIdPicture stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"A%@",self.myclipDoc.publisherGroupInfoId] withString:@""];
+    NSMutableArray *imageNoArray=[NSMutableArray arrayWithArray:[myPublishingHistoryInfoContentIdPicture componentsSeparatedByString:@"^3$"]];
+    imageNo=[imageNoArray firstObject];
+    if (imageNo) {
+        self.imageNoTitle.text=[NSString stringWithFormat:@"画像番号:%@",imageNo];
+    }
+
+    
+}
+-(void)ImageDetailClick:(NSNotification *)notify{
+    NSDictionary *dic=[notify userInfo];
+    NAMoviePlayerController *playerViewController =[[NAMoviePlayerController alloc]initWithContentURL:[NSURL URLWithString:[dic objectForKey:@"trueUrl"]]];
+    
+    [self presentMoviePlayerViewControllerAnimated:playerViewController];
+}
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+/**
+ * 画面回転の前処理
+ *
+ */
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    [self.presentingViewController willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    [self.mainScrollView reloadData];
+    self.mainScrollView.hidden=YES;
+}
+
+/**
+ * 画面回転の後処理
+ *
+ */
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+    [self.presentingViewController didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+    [self.mainScrollView scrollToItemAtIndex: self.currentPageIndex duration:0.3];
+}
+
+#pragma mark - layout -
+#pragma mark
+/**
+ * mainScrollView初期化（紙面表示用view）
+ *
+ */
+- (SwipeView *)mainScrollView
+{
+    if (!_mainScrollView) {
+        _mainScrollView = [[SwipeView alloc] initWithFrame:CGRectZero];
+        _mainScrollView.backgroundColor = [UIColor clearColor];
+        _mainScrollView.alignment = SwipeViewAlignmentCenter;
+        _mainScrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        _mainScrollView.pagingEnabled = YES;
+        _mainScrollView.wrapEnabled = NO;
+        _mainScrollView.itemsPerPage = 1;
+        _mainScrollView.truncateFinalPage = YES;
+        _mainScrollView.dataSource = self;
+        _mainScrollView.delegate = self;
+        _mainScrollView.opaque = YES;
+        
+        
+    }
+    return _mainScrollView;
+}
+
+ #pragma mark - utility -
+ #pragma mark
+ /**
+ * view初期化
+ *
+ */
+- (void)initViews
+{
+    [super initViews];
+    self.title = NSLocalizedString(@"Note Detail image", nil);
+    self.navigationItem.leftBarButtonItem = self.backBtnItem;
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    [self.view addSubview:self.mainScrollView];
+    self.imageTitle=[[UILabel alloc]init];
+    self.imageTitle.textAlignment=NSTextAlignmentCenter;
+    [self.view addSubview:self.imageTitle];
+}
+/**
+ * view更新
+ *
+ */
+- (void)updateViews
+{
+    CGFloat screenWidth = self.view.frame.size.width;
+    CGFloat screenHeight = self.view.frame.size.height;
+    CGFloat navHeight = CGRectGetMaxY(self.navigationController.navigationBar.frame);
+    
+    //self.imageTitle.frame=CGRectMake(0, navHeight+5, screenWidth,20);
+    CGRect mainFrame = CGRectMake(0, navHeight+30, screenWidth, screenHeight-navHeight-30);
+    self.mainScrollView.frame = mainFrame;
+    
+    self.imageNoTitle.frame=CGRectMake(0, navHeight, screenWidth,20);
+    CGFloat imageHeight=screenHeight-navHeight;
+    if ([Util screenSize].width>[Util screenSize].height) {
+        imageHeight=screenHeight-navHeight-30;
+    }
+    self.imageTitle.frame=CGRectMake(0, imageHeight, screenWidth,60);
+    self.bgTitleView.frame=CGRectMake(0, imageHeight-5, screenWidth,70);
+}
+- (BOOL)isLandscape
+{
+    return (isPad && [Util screenSize].width>[Util screenSize].height);
+}
+#pragma mark - SwipeView Delegate -
+#pragma mark
+- (NSInteger)numberOfItemsInSwipeView:(SwipeView *)swipeView
+{
+    NSInteger count = self.imagearray.count;
+    return count;
+}
+- (UIView *)swipeView:(SwipeView *)swipeView viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view
+{
+    //    NSLog(@"swipeView index %d currentItemIndex %d",index, self.mainScrollView.currentItemIndex);
+    
+    NASubImageScrollView *imageScroll = (NASubImageScrollView *)view;
+    if (!imageScroll) {
+        imageScroll = [[NASubImageScrollView alloc] initWithFrame:self.mainScrollView.bounds];
+        view = imageScroll;
+    }
+    
+   
+    imageScroll.imageBaseClass=self.imageBaseClass;
+    imageScroll.frame = self.mainScrollView.bounds;
+    if ([self isLandscape]) {
+        NSString *myratestr=[NASaveData getExpansion_rate];
+        NSArray *ratearray=[myratestr componentsSeparatedByString:@","];
+        imageScroll.minimumZoomScale = [[ratearray objectAtIndex:0]floatValue];
+        imageScroll.maximumZoomScale = [[ratearray objectAtIndex:3]floatValue]*[NASaveData getLandscapekei];
+    }else{
+        NSString *myratestr=[NASaveData getExpansion_rate];
+        NSArray *ratearray=[myratestr componentsSeparatedByString:@","];
+        imageScroll.minimumZoomScale = [[ratearray objectAtIndex:0]floatValue];
+        imageScroll.maximumZoomScale = [[ratearray objectAtIndex:3]floatValue];
+    }
+    
+    //imageScroll.imageView.isPadLandscape = NO;
+    //    imageScroll.backgroundColor = [UIColor whiteColor];
+    imageScroll.opaque = YES;
+    imageScroll.delegate = self;
+    imageScroll.tag = index + 1;
+    [imageScroll setZoomScale:1];
+    imageScroll.bounces = NO;
+    imageScroll.largeModel = NAImageModelNone;
+    imageScroll.noteDetailBlock = ^(NSArray *array, NSInteger index) {
+        //[self toNoteDetailViewController:array index:index];
+    };
+    
+    __weak __typeof(&*imageScroll)weakimageScroll = imageScroll;
+
+    [imageScroll setImageViewWithurlstr:[CharUtil getRightUrl:[imagearray objectAtIndex:index]]completionBlock:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        if (self.noteDoc) {
+            weakimageScroll.pageDocs=[NSArray arrayWithObjects:self.noteDoc, nil];
+            NSString *noteIndexNo=self.noteDoc.indexNo;
+            curNoteIndexNo=noteIndexNo;
+            CGRect noteRect = [weakimageScroll showNoteViewByIndexNo:noteIndexNo];
+            [weakimageScroll moveWithNote:noteRect];
+            
+        }
+        
+    }];
+    
+   
+    //[imageScroll.imageView.imageView sd_setImageWithURL:[NSURL URLWithString:[imagearray objectAtIndex:index]] placeholderImage:nil];
+   
+//    NSInteger count = self.myswipeimageArray.count;
+//    NADoc *doc = self.myswipeimageArray[count - 1 - index];
+//    [imageScroll LoadingThumbImageView:doc ];
+
+    return view;
+}
+- (void)swipeViewCurrentItemIndexDidChange:(SwipeView *)swipeView
+{
+    NSMutableArray *captionArray=[NSMutableArray arrayWithArray:[self.imageBaseClass.Caption componentsSeparatedByString:@","]];
+    NSString *caption=@"";
+    if (swipeView.currentItemIndex<captionArray.count&&captionArray!=nil) {
+        caption=[captionArray objectAtIndex:swipeView.currentItemIndex];
+    }
+    self.imageTitle.text=caption;
+    if (caption==nil||self.imageTitle.text.length==0) {
+        self.bgTitleView.hidden=YES;
+    }else{
+        self.bgTitleView.hidden=NO;
+    }
+    
+    NSString *imageNo=@"";
+    NSString *myPublishingHistoryInfoContentIdPicture=self.myclipDoc.publishingHistoryInfoContentIdPicture;
+    myPublishingHistoryInfoContentIdPicture = [myPublishingHistoryInfoContentIdPicture stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"A%@",self.myclipDoc.publisherGroupInfoId] withString:@""];
+    NSMutableArray *imageNoArray=[NSMutableArray arrayWithArray:[myPublishingHistoryInfoContentIdPicture componentsSeparatedByString:@"^3$"]];
+    imageNo=[imageNoArray objectAtIndex:swipeView.currentItemIndex];
+    if (imageNo) {
+        self.imageNoTitle.text=[NSString stringWithFormat:@"画像番号:%@",imageNo];
+    }
+
+        
+}
+-(void)singleClickNoty{
+    if (self.imageTitle.text.length&&self.imageTitle.text.length>0) {
+        [self.imageTitle setHidden:!self.imageTitle.isHidden];
+        [self.bgTitleView setHidden:!self.bgTitleView.isHidden];
+    }
+    
+    
+    if(self.imageNoTitle.text.length&&self.imageNoTitle.text.length>0) {
+           [self.imageNoTitle setHidden:!self.imageNoTitle.isHidden];
+    }
+    
+}
+- (void)swipeView:(SwipeView *)swipeView didSelectItemAtIndex:(NSInteger)index
+{
+    //    NALog(@"Selected item at index %@", @(index));
+}
+
+- (void)swipeViewWillBeginDragging:(SwipeView *)swipeView
+{
+    
+    NASubImageScrollView *view = (NASubImageScrollView *)[swipeView itemViewAtIndex:swipeView.currentItemIndex];
+    if (view.zoomScale<1) {
+        [view setZoomScale:1];
+        return;
+    }
+}
+
+- (void)swipeViewDidEndDecelerating:(SwipeView *)swipeView
+{
+    //    NSLog(@"swipeViewDidEndDecelerating %d",swipeView.currentItemIndex);
+    //[self.homeToolBar noteItemEnable:YES];
+    
+    NASubImageScrollView *view = (NASubImageScrollView *)[swipeView itemViewAtIndex:swipeView.currentItemIndex];
+    if (view) {
+        view=(NASubImageScrollView *)self.mainScrollView.currentItemView;
+    }
+    NSInteger count = self.myswipeimageArray.count;
+    
+    if (self.currentPageIndex != count - 1 - swipeView.currentItemIndex) {
+        [view setZoomScale:1];
+    }
+    
+    NADoc *doc=self.myswipeimageArray[count - 1 - swipeView.currentItemIndex];
+    self.currentPageIndex=swipeView.currentItemIndex;
+        if ([NASaveData isHaveNote]) {
+            dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                [view getNoteLayerWithDoc:doc other:nil];
+                
+                if (curNoteIndexNo) {
+                    [view showNoteViewByIndexNo:curNoteIndexNo];
+                    curNoteIndexNo = nil;
+                    curPaperIndexNo = nil;
+                }
+            });
+        }
+        //[view LoadingImageView:doc];
+        
+        if ([doc.whichimage isEqualToString:NALargeimage]) {
+            view.largeModel= NAImageModelDone;
+        }else{
+            view.largeModel = NAImageModelNone;
+        }
+   
+}
+- (void)swipeViewDidEndScrollingAnimation:(SwipeView *)swipeView{
+    self.mainScrollView.hidden=NO;
+}
+#pragma mark - UIScrollView Delegate -
+#pragma mark
+
+
+-(UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView{
+    
+    for (UIView *v in scrollView.subviews){
+        return v;
+    }
+    return nil;
+}
+
+/**
+ * zoom後処理
+ *
+ */
+- (void)scrollViewDidZoom:(UIScrollView *)scrollView {
+    NASubImageScrollView *view = (NASubImageScrollView *)[self.mainScrollView itemViewAtIndex:self.mainScrollView.currentItemIndex];
+    if (scrollView.zoomScale<1) {
+        [scrollView setZoomScale:1];
+        return;
+    }
+    if (scrollView.zoomScale > 1 && view.largeModel == NAImageModelNone) {
+            view.largeModel=NAImageModelLoading;
+        
+      
+    }
+    
+    // imageViewのframeを修正
+    for (UIView *v in scrollView.subviews){
+        if ([v isKindOfClass:NSClassFromString(@"NASubImageView")]) {
+            CGRect rect = v.frame;
+            rect.origin = CGPointZero;
+            
+            if (CGRectGetWidth(scrollView.frame) > CGRectGetWidth(v.frame)) {
+                // imageviewの幅がscrollviewの幅より小さくなった == 1.0倍未満のズームが行われた
+                rect.origin.x = (CGRectGetWidth(scrollView.frame) - CGRectGetWidth(v.frame))/2;
+                rect.size.width=scrollView.frame.size.width;
+            }
+            
+            if (CGRectGetHeight(scrollView.frame) > CGRectGetHeight(v.frame)) {
+                // imageviewの高さがスクロールビューより小さくなった
+                rect.origin.y = (CGRectGetHeight(scrollView.frame) - CGRectGetHeight(v.frame))/2;
+                rect.size.height=scrollView.frame.size.height;
+                
+            }
+            [view.imageView updateFrame4Zoom:rect];
+        }
+    }
+}
+
+@end

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>37115203-8038-4246-85F8-470C60548C30</string>
+	<key>IDESourceControlProjectName</key>
+	<string>NAVi</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>83EC15BF252DE783365722786DA1A4AC4BEC5D7B</key>
+		<string>http://yijiang.liu@192.168.0.10:8081/svn/2013_navi</string>
+		<key>c1d90691-3b61-e311-abd3-0014223ee729++197</key>
+		<string>http://yijiang.liu@192.168.0.10:8081/svn/2013_navi/00_devrepos/NAViH_APL/ios/NAVi_APL</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>NAVi.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>83EC15BF252DE783365722786DA1A4AC4BEC5D7B</key>
+		<string>../..</string>
+		<key>c1d90691-3b61-e311-abd3-0014223ee729++197</key>
+		<string>../.._APL</string>
+	</dict>
+	<key>IDESourceControlProjectRepositoryRootDictionary</key>
+	<dict>
+		<key>c1d90691-3b61-e311-abd3-0014223ee729++197</key>
+		<string>http://yijiang.liu@192.168.0.10:8081/svn/2013_navi</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>http://yijiang.liu@192.168.0.10:8081/svn/2013_navi</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>83EC15BF252DE783365722786DA1A4AC4BEC5D7B</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>83EC15BF252DE783365722786DA1A4AC4BEC5D7B</string>
+			<key>IDESourceControlWCCName</key>
+			<string>NAVi</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.subversion</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>83EC15BF252DE783365722786DA1A4AC4BEC5D7B</string>
+			<key>IDESourceControlWCCName</key>
+			<string>NAVi</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.subversion</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>c1d90691-3b61-e311-abd3-0014223ee729++197</string>
+			<key>IDESourceControlWCCName</key>
+			<string>NAVi_APL</string>
+		</dict>
+	</array>
+</dict>
+</plist>

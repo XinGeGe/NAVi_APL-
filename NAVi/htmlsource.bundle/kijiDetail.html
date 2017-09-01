@@ -1,0 +1,113 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+        <link href="taketori.css" rel="stylesheet" type="text/css">
+            <link href="kijiDetail.css" rel="stylesheet" type="text/css">
+                <link href="swiper-3.4.2.min.css" rel="stylesheet" type="text/css">
+                
+                <script type="text/javascript" src="jquery.min.js"></script>
+                <script type="text/javascript" src="common.js"></script>
+                <script type="text/javascript" src="kijiDetail.js"></script>
+                 <script type="text/javascript" src="swiper-3.4.2.min.js"></script>
+                <style>
+                .tate_kiji_detail_info
+                    {
+                        background-color: #DDD;
+                        z-index: 1;
+                        float:top;
+                        overflow-y:scroll;
+                        width:100%;
+                    }
+                
+                .my_tb_rl {
+                    -webkit-writing-mode:vertical-rl;
+                    float:right;
+                }
+                </style>
+                </head>
+    <body>
+        <!--  横書き用  -->
+        <div id="kiji_detail_area" class="kiji_detail_info" style="display:none">
+            <div class="kdetail_title kiji_detail_title" >
+                @title@
+            </div>
+            <div class="kdetail_text" id="ktext">
+                <div class="kdetail_photo" id="kiji_detail_img" onClick="imageClick()" style="display:none">
+                    <img id="kphoto" src="" srcPath="@srcPath@" class="relatedPhoto" />
+                </div>
+                
+                <div class="kiji_detail_honbun" >
+                    @text@
+                </div>
+                
+                <div class="paper_link_div" style="display:@linkDisplay@">
+                    <div class="kdetail_paper_link_title">
+                        @link_title@
+                    </div>
+                    
+                    <div class="kdetail_paper_link">
+                        <table>
+                            <tr>
+                                <td class="td_list_img" align="center">
+                                    <img class="list_img" id="shimen_img" src="@linkSrcPath@" onClick="linkImageClick()" />
+                                </td>
+                                
+                                <td class="td_list_detail">
+                                    <div class="div_data_title">
+                                        @link_data_title@
+                                    </div>
+                                    <div class="div_data_detail">
+                                        @link_data_detail@
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!--  縦書き用  -->
+        <div id="tate_kiji_detail_area" class="taketori-writingmode-ttb taketori-atsign-ja-jp taketori-lang-ja-jp kiji_detail_info" style="display:none">
+            <div class="taketori-col" id="kiji_detail">
+                
+                <div class="tate_kdetail_title kiji_detail_title" id="tate_kiji_detail_title">
+                    @title@
+                </div>
+                
+                <div id="kiji_detail_honbun_wrap" class="tate_kdetail_text tate_dangumi">
+                    <div class="tate_kiji_detail_img" id="tate_kiji_detail_img" onClick="imageClick()" style="display:none">
+                        <img id="tate_photo" src="" srcPath="@srcPath@" class="relatedPhoto"/>
+                    </div>
+                    
+                    <div class="kiji_detail_honbun tate_kiji_detail_honbun" id="kiji_detail_honbun" >
+                        @text@
+                    </div>
+                    
+                    <div class="tate_paper_link_div taketori-col" style="display:@linkDisplay@" id="tate_paper_link_div">
+                        <div class="kdetail_paper_link_title">
+                            @link_title@
+                        </div>
+                        
+                        <div class="kdetail_paper_link">
+                            <div class="div_data_detail">
+                                @link_data_detail@
+                            </div>
+                            
+                            <div class="div_data_title">
+                                @link_data_title@
+                            </div>
+                            <img class="list_img" id="tate_shimen_img" src="@linkSrcPath@" onClick="linkImageClick()" />
+                        </div>
+                    </div>
+                    
+                    <div class="spaceDiv" id="spaceDiv" style="display:none"> </div>
+                </div>
+            </div>
+        </div>
+        
+        <input type="hidden" id="kijiindexno" name="kijiindexno" value="@kijiIndexNo@">
+            <input type="hidden" id="spanNum" value="@spanNum@">
+                </body>
+</html>

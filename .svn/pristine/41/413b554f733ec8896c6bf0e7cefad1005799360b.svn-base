@@ -1,0 +1,126 @@
+
+<div id='kiji_detail_area' class='kiji_detail_info' style='display:none;background-color:#DDD'>
+    
+    <div id='tag' class='border_tag_description vertical-container' style='width:90%;height:35px;margin:0 auto;margin-top:15px' onclick='editTags()'>
+        <img src='26_1x.png' style='width:20px;height:20px;margin-left:10px'/>
+            <div class= 'kiji_detail_title4' style='text-align:center;margin-left:15px;'>@TagDetail@</div>
+    </div>
+    
+    <div id='description' class='border_tag_description vertical-container' style='width:90%;height:35px;margin:0 auto;margin-top:10px' onclick='editDescription()'>
+        <img src='27_1x.png' style='width:20px;height:20px;margin-left:10px'/>
+            <div  class= 'kiji_detail_title4' style='text-align:center;margin-left:15px;white-space: nowrap;-o-text-overflow:ellipsis;text-overflow: ellipsis;'>
+                @ClipMemo@</div>
+    </div>
+    <div id='pic_content'>
+        <img src='@ClipImagePath@' style='width:100%;background-color:#DDFF22;margin-top:10px'/>
+    </div>
+    
+    <div id='pic_text_content'>
+    <div class='kiji_detail_title1' style='width:100%;text-align:left;margin-top:10px;margin-bottom:10px;font-weight:bold;'>
+        @head_title@
+    </div>
+    <div class='kdetail_text' id='ktext'>
+        <div class='kdetail_photo' id='kiji_detail_img' onClick='imageClick()' style='display:none'>
+            <img id='kphoto' src='' srcPath='@srcPath@' class='relatedPhoto' />
+        </div>
+        
+        <div class='kdetail_shimeninfo kiji_detail_title2' >
+            @title@
+        </div>
+        
+        <div class='kiji_date_title' >
+            @publisj_data@
+        </div>
+        
+        <div class='kiji_detail_honbun1 kiji_detail_title3' >
+            @text@
+        </div>
+        
+    </div>
+    <div class='swiper-container' id='mySwiper1'style='height:60%;background-color:#CCC'>
+        <div class='swiper-wrapper' id='mySwiperDiv1'>
+        </div>
+    </div>
+    </div>
+    <script>
+                          var imagePaths = $('#imgPaths').val().split(',');
+                          if(imagePaths.length == 0){
+                            $('#mySwiper1').hide();
+                          }else{
+                            for(var i = 0; i < imagePaths.length; i++){
+                                $('#mySwiperDiv1').append('<div class=\"swiper-slide\" align=\"center\"><img style=\"width:80%\" src=\"'+imagePaths[i]+'\"> </div>');
+                            }
+                          
+                            var mySwiper1 = new Swiper('#mySwiper1', {
+                                                       observer:true,
+                                                       observeParents:true
+                                                     });
+                            mySwiper1.update(true);
+                          
+                          }
+    </script>
+</div>
+
+<div id='tate_kiji_detail_area' class='my_tb_rl taketori-atsign-ja-jp taketori-lang-ja-jp tate_kiji_detail_info' style='-webkit-overflow-scrolling: touch;'>
+    
+        <div class='tate_kiji_detail_honbun kiji_detail_title1' id='tate_kiji_detail_title000'>
+            @head_title@
+        </div>
+        <div class='kdetail_text' id='kiji_detail_honbun'>
+            <div class='tate_detail_img' id='tate_kiji_detail_img' onClick='imageClick()'>
+                <img id='tate_photo' src='' srcPath='@srcPath@' style='width:150px;height:200px'/>
+            </div>
+            
+            <div class='kiji_detail_title2' style='font-weight:bold;margin-left:20px;margin-right:20px;'>
+                @title@
+            </div>
+            
+            <div class='kiji_detail_honbun1 kiji_detail_title3'>
+                @text@
+            </div>
+        </div>
+        <div class='swiper-container' id='mySwiper2' style='writing-mode:horizontal-tb;width:60%;background-color:#DDD;'>
+            <div class='swiper-wrapper' id='mySwiperDiv2'>
+            </div>
+        </div>
+
+<script>
+$('#tate_kiji_detail_area').scroll(function() {
+                                   
+                                   var nDivWight = $('#tate_kiji_detail_area').width();
+                                   var right = $(this)[0].scrollLeft;
+                                   var width = $(this)[0].scrollWidth;
+                                   
+                                if(nDivWight + right >= width || right == 0){
+                                   window.jsInterface.canViewpagerScroll('true');
+                                }else {
+                                   window.jsInterface.canViewpagerScroll('false');
+                                }
+                            });
+                                   
+                                   var imagePaths = $('#imgPaths').val().split(',');
+                                if(imagePaths == 0){
+                                       $('#mySwiper2').hide();
+                                }else{
+                                       for(var i = 0; i < imagePaths.length; i++){
+                                           $('#mySwiperDiv2').append('<div class=\"swiper-slide\" align=\"center\"><img style=\"width:80%\" src=\"'+imagePaths[i]+'\"> </div>');
+                                }
+                                    var mySwiper = new Swiper('#mySwiper2', {
+                                                direction:'vertical',autoHeight:true,
+                                            });
+                                        mySwiper.update(true);
+                                }
+    </script>
+    
+</div>
+
+<input type='hidden' id='kijiindexno' name='kijiindexno' value='@kijiIndexNo@'>
+<input type='hidden' id='spanNum' value='@spanNum@'>
+<input type='hidden' id='type' value='@type@'>
+<input type='hidden' id='imgPaths' value='@imgPaths@'>
+            
+            
+            
+            
+            
+            

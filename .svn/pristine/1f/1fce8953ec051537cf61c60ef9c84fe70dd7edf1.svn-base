@@ -1,0 +1,21 @@
+0000000000000000000000000000000000000000 e233418ff0af5e73c4f4e675e4a3bcbb3c83a585 dxchenqing <tdmushang@gmail.com> 1424438674 +0800	commit (initial): Initial Commit
+e233418ff0af5e73c4f4e675e4a3bcbb3c83a585 2982bcc0ee7d27d7a5092132f996ffe137a1d544 dxchenqing <tdmushang@gmail.com> 1424870086 +0800	commit: 2/25 Ver001
+2982bcc0ee7d27d7a5092132f996ffe137a1d544 be6ff7e757b3067477b97af5367a387dbf34089f dxchenqing <tdmushang@gmail.com> 1424870820 +0800	commit: Home画面List按钮修正Ver002
+be6ff7e757b3067477b97af5367a387dbf34089f 38a97cbd78ffd2542e2421010c24682b12694522 dxchenqing <tdmushang@gmail.com> 1424956857 +0800	commit: Base 两行Title
+38a97cbd78ffd2542e2421010c24682b12694522 44951b0706928c10f687ba3d6e38c2b5dff4f960 dxchenqing <tdmushang@gmail.com> 1425181192 +0800	commit: Home画面恢复
+44951b0706928c10f687ba3d6e38c2b5dff4f960 fb7531219f18bb0431889e2396ac30fed234cf2d dxchenqing <tdmushang@gmail.com> 1425181339 +0800	commit: 删除Home画面toolbar中左右箭头按钮
+fb7531219f18bb0431889e2396ac30fed234cf2d 19f6193cea8ac0789bd3d6c2053bf1c4cbbc7cf4 dxchenqing <tdmushang@gmail.com> 1425186114 +0800	commit: Home画面左右箭头添加
+19f6193cea8ac0789bd3d6c2053bf1c4cbbc7cf4 72e642ca68e3b92361c7c86972cc0d9ca2b41dc0 dxchenqing <tdmushang@gmail.com> 1425200981 +0800	commit: Home画面Menu表示
+72e642ca68e3b92361c7c86972cc0d9ca2b41dc0 47df8684b592bb5c0d6adfc65895510062225ada dxchenqing <tdmushang@gmail.com> 1425201007 +0800	commit: Grip画面click表示
+47df8684b592bb5c0d6adfc65895510062225ada c15eaafb9091785276aed824c10a2f267dff5e76 dxchenqing <tdmushang@gmail.com> 1425298771 +0800	commit: Detail画面
+c15eaafb9091785276aed824c10a2f267dff5e76 d70ec65ad922f194a6ca397d343af417002eee45 dxchenqing <tdmushang@gmail.com> 1425391454 +0800	commit: Home修改
+d70ec65ad922f194a6ca397d343af417002eee45 660611701b7e1c201aba09828fa7e08c9396fa24 dxchenqing <tdmushang@gmail.com> 1425392725 +0800	commit: search
+660611701b7e1c201aba09828fa7e08c9396fa24 fe46e2b511fb058db1a4c1d51893050935b74b96 dxchenqing <tdmushang@gmail.com> 1425396885 +0800	commit: search picker
+fe46e2b511fb058db1a4c1d51893050935b74b96 30e79226760f44ef2324b74f7851082ca81f5694 dxchenqing <tdmushang@gmail.com> 1425523830 +0800	commit: 新规kind画面
+30e79226760f44ef2324b74f7851082ca81f5694 5e716cae8763112191487116f982366f7c5fcbd1 dxchenqing <tdmushang@gmail.com> 1425693616 +0800	commit: 新规画面
+5e716cae8763112191487116f982366f7c5fcbd1 46a0d2bd8fe905c2eba364290d7e2792aeca8d42 dxchenqing <tdmushang@gmail.com> 1425715364 +0800	commit: login api
+46a0d2bd8fe905c2eba364290d7e2792aeca8d42 8c489352faf32378fb4afc1760203034deac9085 dxchenqing <tdmushang@gmail.com> 1425822641 +0800	commit: Detail
+8c489352faf32378fb4afc1760203034deac9085 36b3474afe29e1d07207fa434bc6e6d4c14cbc41 dxchenqing <tdmushang@gmail.com> 1426253543 +0800	commit: API
+36b3474afe29e1d07207fa434bc6e6d4c14cbc41 c44b51e86b45e1a58cb24b9caacdb84865c90e4b dxchenqing <tdmushang@gmail.com> 1426304225 +0800	commit: Create API
+c44b51e86b45e1a58cb24b9caacdb84865c90e4b f8b277e2b39401b210b955c3f168e4ac7c39f03e dxchenqing <tdmushang@gmail.com> 1426597473 +0800	commit: !
+f8b277e2b39401b210b955c3f168e4ac7c39f03e d6e55d110c5c5dacde7f630d4ad01ea4691d0c45 dxchenqing <tdmushang@gmail.com> 1428203666 +0800	commit: 1

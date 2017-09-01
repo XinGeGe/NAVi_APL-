@@ -1,0 +1,259 @@
+//
+//  NANewClipEditingViewController.m
+//  NAVi
+//
+//  Created by Liyuanmeng on 2017/7/24.
+//  Copyright © 2017年 dxc. All rights reserved.
+//
+
+#import "NANewClipEditingViewController.h"
+#import "FontUtil.h"
+@interface NANewClipEditingViewController ()<UITextViewDelegate>
+{
+    UIImageView *editImageView;
+    UILabel *editLabel;
+    UIView *horLineView;
+    UITextView *editTextView;
+    UIButton *saveBtn;
+    UIButton *cancelBtn;
+    UIView *lineView;
+}
+@end
+
+@implementation NANewClipEditingViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.view.backgroundColor = [UIColor colorWithRed:244/255.0 green:244/255.0 blue:245/255.0 alpha:1];
+    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+    self.navigationItem.leftBarButtonItem = self.backBarItem;
+    [self getClipAPI:_indexNo];
+    [self configControls];
+}
+- (void)getClipAPI:(NSString *)indexNo
+{
+    NSDictionary *param = @{
+                            @"Userid"     :  [NASaveData getLoginUserId],
+                            @"K001"       :  indexNo,
+                            @"K002" :@"4",
+                            };
+    [[NANetworkClient sharedClient] postFavoritesSearch:param completionBlock:^(id favorites, NSError *error) {
+        if (!error) {
+            SHXMLParser *parser = [[SHXMLParser alloc] init];
+            NSDictionary *dic = [parser parseData:favorites];
+            NAClipBaseClass *clipBaseClass = [NAClipBaseClass modelObjectWithDictionary:dic];
+            NSArray *array = clipBaseClass.response.doc;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (array.count != 0) {
+                    NAClipDoc *doc = [array objectAtIndex:0];
+                    editTextView.text = doc.memo;
+
+                }
+                
+            });
+        }else{
+            ITOAST_BOTTOM(error.localizedDescription);
+        }
+    }];
+}
+
+- (void)configControls {
+    [self createControls];
+    [self setPositions];
+    [self setControlProperties];
+}
+- (void)createControls {
+    editImageView = [[UIImageView alloc]init];
+    editLabel = [[UILabel alloc]init];
+    editTextView = [[UITextView alloc]init];
+    lineView = [[UIView alloc]init];
+    horLineView = [[UIView alloc]init];
+    saveBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+}
+- (void)setPositions {
+    [self.view addSubview:editImageView];
+    [editImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view.mas_left).offset(30);
+        make.top.equalTo(self.view.mas_top).offset(2);
+        make.width.height.mas_equalTo(30);
+    }];
+    
+    [self.view addSubview:editLabel];
+    [editLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(editImageView.mas_right).offset(5);
+        make.top.equalTo(self.view.mas_top).offset(5);
+        make.height.mas_equalTo(20);
+    }];
+    
+    [self.view addSubview:horLineView];
+    [horLineView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(editImageView.mas_bottom).offset(8);
+        make.left.equalTo(self.view.mas_left);
+        make.right.equalTo(self.view.mas_right);
+        make.height.mas_equalTo(0.5);
+    }];
+    
+    
+    
+    [self.view addSubview:editTextView];
+    [editTextView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(horLineView.mas_bottom).offset(10);
+        make.left.equalTo(self.view.mas_left).offset(30);
+        make.right.equalTo(self.view.mas_right).offset(-30);
+        make.height.mas_equalTo(100);
+    }];
+    
+    [self.view addSubview:lineView];
+    [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.view.mas_centerX);
+        make.top.equalTo(editTextView.mas_bottom).offset(10);
+        make.width.mas_equalTo(0.5);
+        make.height.mas_equalTo(20);
+    }];
+    
+    if (isPhone) {
+        [self.view addSubview:saveBtn];
+        [saveBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.equalTo(lineView.mas_left).offset( -10);
+            make.top.equalTo(editTextView.mas_bottom).offset(10);
+            make.width.mas_equalTo(116/3*2);
+            make.height.mas_equalTo(34/3*2);
+        }];
+        
+        [self.view addSubview:cancelBtn];
+        [cancelBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(lineView.mas_right).offset(10);
+            make.top.equalTo(editTextView.mas_bottom).offset(10);
+            make.width.mas_equalTo(116/3*2);
+            make.height.mas_equalTo(34/3*2);
+        }];
+    }else{
+        [self.view addSubview:saveBtn];
+        [saveBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.equalTo(lineView.mas_left).offset( -10);
+            make.top.equalTo(editTextView.mas_bottom).offset(10);
+            make.width.mas_equalTo(116);
+            make.height.mas_equalTo(34);
+        }];
+        
+        [self.view addSubview:cancelBtn];
+        [cancelBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(lineView.mas_right).offset(10);
+            make.top.equalTo(editTextView.mas_bottom).offset(10);
+            make.width.mas_equalTo(116);
+            make.height.mas_equalTo(34);
+        }];
+    }
+}
+- (void)setControlProperties {
+    editImageView.image = [UIImage imageNamed:@"11_blue"];
+    
+    editLabel.text = @"メモ編集";
+    if (isPhone) {
+        editLabel.font = [FontUtil systemFontOfSize:13];
+    }else{
+        editLabel.font = [FontUtil systemFontOfSize:15];
+    }
+    horLineView.backgroundColor = [UIColor whiteColor];
+    
+    editTextView.backgroundColor = [UIColor whiteColor];
+    editTextView.layer.cornerRadius = 10;
+    editTextView.layer.masksToBounds = YES;
+    editTextView.delegate = self;
+    //editTextView.text = _memoDetail;
+    
+    [saveBtn setImage:[UIImage imageNamed:@"27_clip_save"] forState:UIControlStateNormal];
+    [saveBtn addTarget:self action:@selector(saveClip) forControlEvents:UIControlEventTouchUpInside];
+    
+    [cancelBtn setImage:[UIImage imageNamed:@"26_btn_clip_cancel"] forState:UIControlStateNormal];
+    [cancelBtn addTarget:self action:@selector(cancelClip) forControlEvents:UIControlEventTouchUpInside];
+    
+}
+- (void)saveClip{
+    if ([editTextView.text isEqualToString:@""]) {
+        ITOAST_BOTTOM(@"ClipMemo nil");
+    }else{
+        [self ClipMemo];
+    }
+}
+//ClipMemo
+- (void)ClipMemo{
+    NSDictionary *param = @{
+                            @"Userid"     :  [NASaveData getLoginUserId],
+                            @"IndexNo"           : _indexNo,
+                            @"memo"         :  editTextView.text,
+                            };
+    [[NANetworkClient sharedClient] ClipMemo:param completionBlock:^(id favorites, NSError *error) {
+        if (!error) {
+            ITOAST_BOTTOM(@"ClipMemo success");
+            [self dismissViewControllerAnimated:YES completion:^{
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadMemo" object:nil];
+            }];
+        }
+    }];
+}
+- (void)cancelClip{
+    editTextView.text = @"";
+    [self dismissViewControllerAnimated:YES completion:^{
+        
+    }];
+}
+- (UIBarButtonItem *)backBarItem
+{
+    if (!_backBarItem) {
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        [button setBackgroundImage:[UIImage imageNamed:@"20_glay"]
+                          forState:UIControlStateNormal];
+        [button addTarget:self action:@selector(backBarItemAction) forControlEvents:UIControlEventTouchUpInside];
+        button.frame = CGRectMake(0, 0, 25, 25);
+        _backBarItem= [[UIBarButtonItem alloc] initWithCustomView:button];
+        
+    }
+    return _backBarItem;
+}
+
+- (void)backBarItemAction{
+    [self dismissViewControllerAnimated:YES completion:^{
+        
+    }];
+}
+/**
+ * 画面回転の前処理
+ *
+ */
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [self getClipAPI:_indexNo];
+    [self configControls];
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    [self.presentingViewController willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+}
+
+/**
+ * 画面回転の後処理
+ *
+ */
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [self configControls];
+    [self getClipAPI:_indexNo];
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+    [self.presentingViewController didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+}
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end

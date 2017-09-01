@@ -1,0 +1,39 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "83EC15BF252DE783365722786DA1A4AC4BEC5D7B+++93B1590",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+    "c1d90691-3b61-e311-abd3-0014223ee729++197+++79598C1" : {
+
+    }
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "83EC15BF252DE783365722786DA1A4AC4BEC5D7B+++17CD3E2" : 0,
+    "c1d90691-3b61-e311-abd3-0014223ee729++197+++79598C1" : 0,
+    "83EC15BF252DE783365722786DA1A4AC4BEC5D7B+++93B1590" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "37115203-8038-4246-85F8-470C60548C30",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "83EC15BF252DE783365722786DA1A4AC4BEC5D7B+++17CD3E2" : "NAVi",
+    "c1d90691-3b61-e311-abd3-0014223ee729++197+++79598C1" : "NAVi_APL",
+    "83EC15BF252DE783365722786DA1A4AC4BEC5D7B+++93B1590" : "NAVi"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "NAVi",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "NAVi.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "http:\/\/yijiang.liu@192.168.0.10:8081\/svn\/2013_navi",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "83EC15BF252DE783365722786DA1A4AC4BEC5D7B+++17CD3E2"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "http:\/\/yijiang.liu@192.168.0.10:8081\/svn\/2013_navi",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "83EC15BF252DE783365722786DA1A4AC4BEC5D7B+++93B1590"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "http:\/\/yijiang.liu@192.168.0.10:8081\/svn\/2013_navi",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "c1d90691-3b61-e311-abd3-0014223ee729++197+++79598C1"
+    }
+  ]
+}

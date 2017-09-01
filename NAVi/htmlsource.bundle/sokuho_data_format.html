@@ -1,0 +1,26 @@
+<div id="view_data_format">
+    <div class="kiji_info" indexNo="@kijiIndexNo@" onClick="noteClick(this)">
+        
+        <!--  記事タイトル  -->
+        <div class="view_data_title">
+            @noteTitle@
+        </div>
+        
+        <!--  記事本文エリア  -->
+        <div class="view_data_honbun">
+            <!--  本文  -->
+            <div class="view_data_honbun_txt">
+                <!--  関連画像  -->
+                <img class="view_data_photo" src="@imgSrc@" style="display:@display@"/>
+                @noteContent@
+            </div>
+        </div>
+        
+        <!--  紙面情報  -->
+        <div class="view_data_shimen_info">
+            @shimenInfo@
+        </div>
+    </div>
+    <!--  紙面IndexNo  -->
+    <input type="hidden" class="view_data_paper_info" paper="@paperInfo@"/>
+</div>

@@ -1,0 +1,67 @@
+PODS:
+  - AFNetworking (2.6.3):
+    - AFNetworking/NSURLConnection (= 2.6.3)
+    - AFNetworking/NSURLSession (= 2.6.3)
+    - AFNetworking/Reachability (= 2.6.3)
+    - AFNetworking/Security (= 2.6.3)
+    - AFNetworking/Serialization (= 2.6.3)
+    - AFNetworking/UIKit (= 2.6.3)
+  - AFNetworking/NSURLConnection (2.6.3):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/NSURLSession (2.6.3):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (2.6.3)
+  - AFNetworking/Security (2.6.3)
+  - AFNetworking/Serialization (2.6.3)
+  - AFNetworking/UIKit (2.6.3):
+    - AFNetworking/NSURLConnection
+    - AFNetworking/NSURLSession
+  - GoogleAnalytics (3.13.0)
+  - GoogleTagManager (3.12.1):
+    - GoogleAnalytics (~> 3.13.0)
+  - Masonry (1.0.2)
+  - MBProgressHUD (1.0.0)
+  - ReactiveCocoa (2.5):
+    - ReactiveCocoa/UI (= 2.5)
+  - ReactiveCocoa/Core (2.5):
+    - ReactiveCocoa/no-arc
+  - ReactiveCocoa/no-arc (2.5)
+  - ReactiveCocoa/UI (2.5):
+    - ReactiveCocoa/Core
+  - SDWebImage (4.1.0):
+    - SDWebImage/Core (= 4.1.0)
+  - SDWebImage/Core (4.1.0)
+  - TAPageControl (0.2.0)
+
+DEPENDENCIES:
+  - AFNetworking (~> 2.6.0)
+  - AFNetworking/NSURLConnection (~> 2.6.0)
+  - AFNetworking/NSURLSession (~> 2.6.0)
+  - AFNetworking/Reachability (~> 2.6.0)
+  - AFNetworking/Security (~> 2.6.0)
+  - AFNetworking/Serialization (~> 2.6.0)
+  - AFNetworking/UIKit (~> 2.6.0)
+  - GoogleTagManager (~> 3.12.1)
+  - Masonry
+  - MBProgressHUD
+  - ReactiveCocoa (~> 2.5.0)
+  - SDWebImage (~> 4.0)
+  - TAPageControl
+
+SPEC CHECKSUMS:
+  AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
+  GoogleAnalytics: fcf1f1cad57ae1a9a53520018f0f680ceeeb8b49
+  GoogleTagManager: d93ce3ea323b5989f07c7cf24a59e69ed36841b6
+  Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
+  MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
+  ReactiveCocoa: e2db045570aa97c695e7aa97c2bcab222ae51f4a
+  SDWebImage: 0e435c14e402a6730315a0fb79f95e68654d55a4
+  TAPageControl: fd11d779bbb5c2464ca2f55dde9e288213ea8a9b
+
+PODFILE CHECKSUM: 4c92ef3a9ad220a47cc23fb420accd5309d36cec
+
+COCOAPODS: 1.2.0

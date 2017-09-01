@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "-[NAHomeProgressView setProgressNum]:NAHomeProgressView.m">
+      </ContextState>
+      <ContextState
+         contextName = "__52-[NABaseClient postPath:parameters:success:failure:]_block_invoke:NABaseClient.m">
+      </ContextState>
+      <ContextState
+         contextName = "__47-[NAHomeViewController getSearchAPIWithMaster:]_block_invoke:NAHomeViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "searchBaseClass.response.doc[0]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "__50-[NASearchResultViewController searchNoteCountAPI]_block_invoke_2:NASearchResultViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "searchBaseClass.response.header.numFound">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[NADetailView updateViews]:NADetailView.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[NAPublicationViewController getPublicationInfo:index:]:NAPublicationViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "list[index]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "__41-[NAHomeViewController searchCurrentApi:]_block_invoke:NAHomeViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.pageArray">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[NASettingViewController tableView:cellForRowAtIndexPath:]:NASettingViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = " cell.detailTextLabel.text">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[NAGripToolbar updateViews]:NAGripToolbar.m">
+      </ContextState>
+      <ContextState
+         contextName = "__56-[NAPublicationViewController getPublicationInfo:index:]_block_invoke239:NAPublicationViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "indexDoc.publicationInfoIdentifier">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[NAHomeViewController updateViews]:NAHomeViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.progressViewBar">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[NADetailViewController initViews]:NADetailViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.fontSize">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[NANewsViewController getSubTitleText:]:NANewsViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.publisherInfoDocs">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[NAHomeProgressView initViews]:NAHomeProgressView.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.frame.size.width">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[NABaseViewController setNavMainTitle:subTitle:]:NABaseViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "sTitle">
+            </PersistentString>
+            <PersistentString
+               value = "mtitle">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[NAHomeViewController getSubTitleText:]:NAHomeViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "doc.publisherInfoId">
+            </PersistentString>
+            <PersistentString
+               value = "findDoc.publisherGroupInfoId">
+            </PersistentString>
+            <PersistentString
+               value = "doc.publicationInfoId">
+            </PersistentString>
+            <PersistentString
+               value = " findDoc.publisherInfoName">
+            </PersistentString>
+            <PersistentString
+               value = "findDoc.publicationInfoId">
+            </PersistentString>
+            <PersistentString
+               value = "doc.publisherGroupInfoId">
+            </PersistentString>
+            <PersistentString
+               value = "findDoc.publisherInfoId">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[NAPublicationViewController tableView:cellForRowAtIndexPath:]:NAPublicationViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[NADownloadManager downloadThumb:index:completionBlock:]:NADownloadManager.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "doc.miniPagePath">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[NAPublicationViewController getSubTitleText:]:NAPublicationViewController.m">
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

@@ -1,0 +1,167 @@
+
+
+"NAVi" = "NAVi";
+//Login
+"User ID" = "ユーザID(メールアドレス)";
+"User PassWord" = "パスワード";
+"Save User Info" = "ログイン情報を保持";
+"Login" = "ログイン";
+"Cancel" = "キャンセル";
+"Done" = "完了";
+"OK" = "OK";
+/*
+ 1:成功
+ 2:ユーザIDまたはパスワードが存在しない
+ 3:ユーザIDが未設定
+ 4:パスワードが未設定
+ 5:使用目的が未設定
+ 6:使用目的が存在しない
+ */
+"Login Success" = "成功!";
+"Login Error With UserId or Password" = "ユーザIDまたはパスワードが存在しない!";
+"Login Error With UserId" = "ユーザIDが未設定!";
+"Login Error With Password" = "パスワードが未設定!";
+"Login Error With UseDevice" = "使用目的が未設定!";
+"Login Error With UseDevice nil" = "使用目的が存在しない!";
+
+//Home
+"Day Journal" = "日付一覧";
+"News List" = "新聞一覧";
+"Publication List" = "まとめ読み";
+"Grip" = "クリップ";
+"Article List" = "記事一覧";
+"Paper List" = "紙面一覧";
+"Menu" = "メニュー";
+"pagebar"="　紙面　";
+"pagebarnospace"="紙面";
+"New News" = "最新表示";
+"Search" = "検索";
+"Digest" = "まとめ読み";
+"Logout" = "ログアウト";
+"Back" = "戻る";
+"Setting" = "　設定　";
+"sokuho" = "トビックス";
+"verdraw" = "縦書き";
+"hordraw" = "横書き";
+"fastnew" = "　速報　";
+"fastnewnospace" = "速報";
+
+//ジャンル
+"Genre List" = "一覧";
+
+//Grip
+"Grip List" = "クリップリスト";
+
+//search
+"Search List" = "検索結果";
+
+//Detail
+"Big Font" = "大";
+"Middle Font" = "中";
+"Small Font" = "小";
+
+//Menu
+"Decision" = "決定";
+"Cancel" = "キャンセル";
+
+//Detail
+"Note Detail" = "記事詳細";
+//Detail image
+"Note Detail image" = "画像詳細";
+
+//cilp delete   lxy
+"Note Delete" = "記事削除";
+
+//setting
+"logout" = "ログアウト";
+//notyfiy
+"notyfiyinfo" ="お知らせ";
+"notyfiy" ="NAVi(APL) 試用版";
+//logininfor
+"logininfor" ="ログイン情報";
+//downloadinfor
+"downloadinfor" ="ダウンロード情報";
+//autologin
+"autologin" ="自動ログイン";
+//alldownload
+"alldownload" ="一括ダウンロード";
+//alldownload
+"firstdownload"="ダウンロード優先順";
+//control
+"control" ="操作";
+//Expansion rate
+"Expansion_rate" ="紙面の拡大率";
+//reset
+"reset" ="リセット";
+//IDclear
+"IDclear" ="ID／パスワードをクリア";
+//delsearchrec
+"delsearchrec" ="検索履歴の削除";
+//deldata
+"deldata" ="全データを削除（初回使用時に戻る）";
+//inf
+"inf" ="情報";
+//verinf
+"verinf" ="バージョン情報";
+
+"loginbtn"="確認";
+"spannum"="記事詳細の表示段数";
+
+
+"thumbimageloading"="低質画取得において...";
+"thumbimagedone"="低質絵が完成し";
+"normalimageloading"="取得に絵で質...";
+"normalimagedone"="の中で質の絵が完成し";
+"imageloading"="取得中";
+"imagedone"="取得完了しました";
+"logininloading"="ログイン中...";
+"messageloading"="読み込み中...";
+
+//Search
+"NO NewsText" ="本文無し";
+"Paper Search" = "紙面検索";
+"Article Search" = "記事検索";
+"Search Comment" = "検索語";
+"Page Day" = "掲載日";
+"From Day" = "掲載日From";
+"To Day" = "掲載日To";
+"Publication" = "媒体";
+"Edition" = "刊種別";
+"SearchRange"="検索範囲";
+"start time should be large at the end time!"="";
+
+"Search Result" = "検索履歴";
+"Search Placeholder" = "記事を検索";
+"Zero Search" = "検索結果は０件です。";
+//読
+"Note to Page" = "関連紙面";
+"Clip to Page" = "切り抜きイメージ";
+//network
+"WiFi Check Message" = "WiFi環境ではありませんが、紙面のダウンロードを実施しますか？";
+"network timeout"="通信エラーが発生しました。";
+"networkerror" = "ネットワークに接続されていません。ローカルデータを使用します。";
+"networkok" = "ネットワーク接続しました、紙面情報を更新中...";
+"please seclect note"="記事を選択してください";
+"note delete alert"="この記事を削除しますか";
+"note saving"="記事保存中...";
+"note saved"="記事保存完了";
+"note deleting"="記事削除中...";
+"note deleted"="記事削除完了";
+"NO Page"="紙面情報がありません";
+"NO Note"="記事がありません";
+"please input userid"="ユーザIDを入力してください";
+"please input password"="パスワードを入力してください";
+"delete done"="削除完了";
+"settingpage"="設定画面";
+"serachpage"="検索画面";
+"clipView"="clip一覧";
+"frist note display"="最初のページの記事を表示する";
+"last note display"="最後のページの記事を表示する";
+"Search NO Note"="検索結果は０件です。";
+
+//note
+"saveStyle"="保存";
+"sendEmail"="メール送信";
+"image Save"="画像保存";
+"image Save Success"="画像を保存しました。";
+"image Save Fail"="画像保存処理が失敗失敗しました";

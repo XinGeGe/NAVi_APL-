@@ -1,0 +1,62 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "cd800ee8-f81b-4992-bc69-8575dafad255++3869+++29BDBF1",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+    "c1d90691-3b61-e311-abd3-0014223ee729++197+++8B394D1" : {
+
+    },
+    "cd800ee8-f81b-4992-bc69-8575dafad255++3869+++3579558" : {
+
+    },
+    "c1d90691-3b61-e311-abd3-0014223ee729++197+++9BE38AC" : {
+
+    },
+    "cd800ee8-f81b-4992-bc69-8575dafad255++3869+++29BDBF1" : {
+
+    }
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "c1d90691-3b61-e311-abd3-0014223ee729++197+++8B394D1" : 0,
+    "cd800ee8-f81b-4992-bc69-8575dafad255++3869+++3579558" : 9223372036854775807,
+    "c1d90691-3b61-e311-abd3-0014223ee729++197+++9BE38AC" : 0,
+    "cd800ee8-f81b-4992-bc69-8575dafad255++3869+++29BDBF1" : 9223372036854775807,
+    "83EC15BF252DE783365722786DA1A4AC4BEC5D7B+++C79008B" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "BC3640B4-0708-42B1-B7C7-A113E7F0CF93",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "c1d90691-3b61-e311-abd3-0014223ee729++197+++8B394D1" : "NAVi_APL",
+    "cd800ee8-f81b-4992-bc69-8575dafad255++3869+++3579558" : "NAVi_APL%20\/",
+    "c1d90691-3b61-e311-abd3-0014223ee729++197+++9BE38AC" : "NAVi_APL",
+    "cd800ee8-f81b-4992-bc69-8575dafad255++3869+++29BDBF1" : "NAVi_APL%20\/",
+    "83EC15BF252DE783365722786DA1A4AC4BEC5D7B+++C79008B" : "NAVi_APL_iOS\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "NAVi",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "NAVi.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "git.oschina.net:taotiechenqing\/FirstProject.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "83EC15BF252DE783365722786DA1A4AC4BEC5D7B+++C79008B"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "http:\/\/yijiang.liu@192.168.0.10:8081\/svn\/2013_navi",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "c1d90691-3b61-e311-abd3-0014223ee729++197+++8B394D1"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "http:\/\/yijiang.liu@192.168.0.10:8081\/svn\/2013_navi",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "c1d90691-3b61-e311-abd3-0014223ee729++197+++9BE38AC"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "git.oschina.net:taotiechenqing\/FirstProject.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "cd800ee8-f81b-4992-bc69-8575dafad255++3869+++29BDBF1"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "http:\/\/192.168.0.10:8081\/svn\/2017_navise",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "cd800ee8-f81b-4992-bc69-8575dafad255++3869+++3579558"
+    }
+  ]
+}
