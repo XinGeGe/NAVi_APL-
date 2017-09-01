@@ -625,12 +625,12 @@
     }
     
     // 記事内容を設定
-    if ([clipDoc.newsText isKindOfClass:[NSString class]]) {
-        NSString *mydetailtext=clipDoc.newsText;
+    if ([clipDoc.newsGroupTitle isKindOfClass:[NSString class]]) {
+        NSString *mydetailtext=clipDoc.newsGroupTitle;
         if ([CharUtil isHaveRubytext:mydetailtext]) {
             cell.isHaveRuby=YES;
             //[cell loadDetailWithisHaveRuby:YES];
-            mydetailtext=[CharUtil deledateTheRT:clipDoc.newsText];
+            mydetailtext=[CharUtil deledateTheRT:clipDoc.newsGroupTitle];
             
             NSString *bundleFile = [[NSBundle mainBundle] pathForResource:@"htmlsource" ofType:@"bundle"];
             NSString *filePath = [NSString stringWithFormat:@"%@/listNote.html",bundleFile];
@@ -638,15 +638,15 @@
             
             if (mydetailtext.length>detailtitlelength) {
                 mydetailtext=[mydetailtext substringWithRange:NSMakeRange(0,detailtitlelength)];
-                mydetailtext=[CharUtil getRightRubytext:clipDoc.newsText NORubytext:mydetailtext];
+                mydetailtext=[CharUtil getRightRubytext:clipDoc.newsGroupTitle NORubytext:mydetailtext];
                 cell.detailtext=mydetailtext;
                 htmlString = [htmlString stringByReplacingOccurrencesOfString:@"@clamp@" withString:@"3"];
                 htmlString = [htmlString stringByReplacingOccurrencesOfString:@"@myContent@" withString:[NSString stringWithFormat:@"%@...",mydetailtext]];
                 [cell.detailWeb loadHTMLString:htmlString baseURL:nil];
             }else{
-                cell.detailtext=clipDoc.newsText;
+                cell.detailtext=clipDoc.newsGroupTitle;
                 htmlString = [htmlString stringByReplacingOccurrencesOfString:@"@clamp@" withString:@"3"];
-                htmlString = [htmlString stringByReplacingOccurrencesOfString:@"@myContent@" withString:clipDoc.newsText];
+                htmlString = [htmlString stringByReplacingOccurrencesOfString:@"@myContent@" withString:clipDoc.newsGroupTitle];
                 [cell.detailWeb loadHTMLString:htmlString baseURL:nil];
                 
             }
@@ -785,7 +785,7 @@
             self.dataSouce = [NSMutableArray arrayWithArray:array];
             [self.tView reloadData];
             [ProgressHUD dismiss];
-            [NASaveData saveClipSelectedBtnTag:999999];
+            [NASaveData saveClipSelectedBtnTag:99999];
             if (self.dataSouce.count == 0) {
                 [[[iToast makeText:NSLocalizedString(@"NO Note", nil)]
                   setGravity:iToastGravityBottom] show];

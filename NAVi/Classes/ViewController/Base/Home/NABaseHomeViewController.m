@@ -44,6 +44,7 @@
     NSMutableArray *localPageArr;//可切换的纸面
     NSInteger changeNo;
     NSInteger isHaveRegion;//是否有地域版
+    NADoc *flgDoc;
 }
 @end
 
@@ -203,23 +204,91 @@
 }
 - (void)selectedData:(NSString *_Nullable)pageNo doc:(NADoc * _Nullable )doc{
     NSLog(@"%@",pageNo);
+    
+    
     for (int i = 0;i< self.pageArray.count ;i++) {
         NADoc *doc2 = [self.pageArray objectAtIndex:i];
-        if ([doc2.pageno isEqualToString:doc.pageno]) {
-            [self.pageArray replaceObjectAtIndex:i withObject:doc];
-            if ([self isLandscape]) {
-                changeNo = i-1;
-            }else{
-                changeNo = self.pageArray.count -i-1;
+        if ([doc2.pageInfoName isEqualToString:doc.pageInfoName]) {
+
+        }else{
+            if ([doc2.pageno isEqualToString:doc.pageno]) {
+                [self.pageArray replaceObjectAtIndex:i withObject:doc];
+                if ([self isLandscape]) {
+                    changeNo = i-1;
+                }else{
+                    changeNo = self.pageArray.count -i-1;
+                }
+                // 紙面情報を編集
+                if (![self isLandscape]) {
+                    self.orientationPageIndex = self.pageArray.count - 1 - self.mainScrollView.currentItemIndex;
+                } else {
+                    self.orientationPageIndex = [[self padLandscapeCount] count] - 1 - self.mainScrollView.currentItemIndex;
+                }
+                
+                NASubImageScrollView *view=(NASubImageScrollView *)self.mainScrollView.currentItemView;
+                curPaperIndexNo = view.imageView.noteView.curPaperIndexNo;
+                [self.mainScrollView removeFromSuperview];
+                _mainScrollView = nil;
+                _mainScrollView = self.mainScrollView;
+                isChangeScreen=YES;
+                
+                
+                [self.view addSubview:self.mainScrollView];
+                [self.view sendSubviewToBack:self.mainScrollView];
+                
+                NSInteger tempPageIndex = 0;
+                _toolBarStyle = 0;
+                if ([self isLandscape]) {    // 後処理
+                    NSArray *pages = [self padLandscapeCount];
+                    if (pages.count > 0) {
+                        tempPageIndex = changeNo;
+                    }
+                    _riliView.hidden = YES;
+                    [self setHorToolBar];
+                }else{
+                    [self resetRiliview];
+                    [self resetHomeToolBar];
+                    _riliView.hidden = NO;
+                    
+                    // 1紙面を表示
+                    if (self.pageArray.count > 0) {
+                        tempPageIndex = changeNo;
+                        
+                    }
+                }
+                if ([self isLogin]) {
+                    if (self.pageArray.count == 1) {
+                        self.mainScrollView.wrapEnabled = NO;
+                        self.mainScrollView.scrollEnabled = NO;
+                    }
+                }else{
+                    self.mainScrollView.wrapEnabled = NO;
+                    self.mainScrollView.scrollEnabled = NO;
+                }
+                UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+                if ([self isLogin]) {
+                    [button setBackgroundImage:[UIImage imageNamed:@"06_blue"]
+                                      forState:UIControlStateNormal];
+                }else{
+                    [button setBackgroundImage:[UIImage imageNamed:@"06_glay"]
+                                      forState:UIControlStateNormal];
+                }
+                [button addTarget:self action:@selector(searchBarItemAction:) forControlEvents:UIControlEventTouchUpInside];
+                button.frame = CGRectMake(0, 0, 25, 25);
+                
+                self.searchBarItem= [[UIBarButtonItem alloc] initWithCustomView:button];
+                self.navigationItem.leftBarButtonItem = self.searchBarItem;
+                // 第１面を表示
+                self.mainScrollView.currentItemIndex = tempPageIndex;
+                [self.mainScrollView scrollToItemAtIndex: tempPageIndex duration:0.3];
+                
+                // 後処理
+                [self swipeViewCurrentItemIndexDidChange:self.mainScrollView];
             }
         }
         
     }
-    self.mainScrollView.currentItemIndex = changeNo;
-    [self.mainScrollView scrollToItemAtIndex: changeNo duration:0.1];
-    // 後処理
-    [self swipeViewCurrentItemIndexDidChange:self.mainScrollView];
-    [self swipeViewDidEndDecelerating:self.mainScrollView];
+    
 }
 //媒体選択
 - (void)chooseDay{
@@ -491,6 +560,7 @@
                                                   button.frame = CGRectMake(0, 0, 25, 25);
                                                   _searchBarItem= [[UIBarButtonItem alloc] initWithCustomView:button];
                                                 self.navigationItem.leftBarButtonItem = _searchBarItem;
+                                                  [self searchCurrentApiChange:flgDoc ByUserid:[NASaveData getDefaultUserID]];
                                               }else if (login.status.integerValue == 2) {
                                                   self.mainScrollView.wrapEnabled = NO;
                                                   self.mainScrollView.scrollEnabled = NO;
@@ -620,18 +690,31 @@
 }
 -(void)showLogo{
     _mylogoview=[[UIImageView alloc]initWithFrame:self.view.frame];
+    
+    [self.view addSubview:_mylogoview];
+    [self.view insertSubview:_mylogoview aboveSubview:self.mainScrollView];
     if ([Util screenSize].width>[Util screenSize].height) {
         if(isPad){
             _mylogoview.image=[UIImage imageNamed:@"nextep_logo_blue_1024_768.png"];
         }else{
             _mylogoview.image=[UIImage imageNamed:@"nextep_logo_blue_667.png"];
         }
-        
+        [_mylogoview mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.mas_equalTo(self.view.mas_centerX);
+            make.centerY.mas_equalTo(self.view.mas_centerY);
+//            make.width.mas_equalTo(self.view.frame.size.height);
+//            make.height.mas_equalTo(self.view.frame.size.height);
+        }];
     }else{
         _mylogoview.image=[UIImage imageNamed:@"nextep_logo_blue.png"];
+        [_mylogoview mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.mas_equalTo(self.view.mas_centerX);
+            make.centerY.mas_equalTo(self.view.mas_centerY);
+//            make.width.mas_equalTo(self.view.frame.size.width);
+//            make.height.mas_equalTo(self.view.frame.size.width);
+        }];
     }
     
-    [self.view insertSubview:_mylogoview aboveSubview:self.mainScrollView];
 }
 -(void)changeUser{
     [self showLogo];
@@ -2556,28 +2639,41 @@
     {
         
         // 全紙面を検索
-        NSDictionary *param = @{
-                                @"K008"       :  doc.editionInfoId,
-                                @"Userid"     :  myUserid,
-                                @"UseDevice"  :  NAUserDevice,
-                                @"Rows"       :  @"100",
-                                @"K004"       :  doc.publisherGroupInfoId,
-                                @"K003"       :  [NSString stringWithFormat:@"%@:%@",doc.publishDate,doc.publishDate],
-                                @"K006"       :  doc.publicationInfoId,
-                                @"K005"       :  doc.publisherInfoId,
-                                @"K014"       :  @"1",
-                                @"K002"       :  @"2",
-                                @"Mode"       :  @"1",
-                                @"Sort"       :  @"K006:asc,K090:asc,K012:asc",
-                                @"Fl"         :  [NSString searchCurrentFl],
-                                };
+        NSDictionary * param = @{
+                                 @"K008"       :  doc.editionInfoId,
+                                 @"Userid"     :  myUserid,
+                                 @"UseDevice"  :  NAUserDevice,
+                                 @"Rows"       :  @"100",
+                                 @"K004"       :  doc.publisherGroupInfoId,
+                                 @"K003"       :  [NSString stringWithFormat:@"%@:%@",doc.publishDate,doc.publishDate],
+                                 @"K006"       :  doc.publicationInfoId,
+                                 @"K005"       :  doc.publisherInfoId,
+                                 @"K014"       :  @"1",
+                                 @"K002"       :  @"2",
+                                 @"Mode"       :  @"1",
+                                 @"Sort"       :  @"K006:asc,K090:asc,K012:asc",
+                                 @"Fl"         :  [NSString searchCurrentFl],
+                                 };
         [[NANetworkClient sharedClient] postSearch:param completionBlock:^(id search, NSError *error) {
             
             if (!error) {
                 SHXMLParser *parser = [[SHXMLParser alloc] init];
                 NSDictionary *dic = [parser parseData:search];
                 NASearchBaseClass *searchBaseClass = [NASearchBaseClass modelObjectWithDictionary:dic];
+                if (searchBaseClass.response.doc==nil||searchBaseClass.response.doc.count<=0) {
+                    NADoc *doc = self.searchPublicationArray[0];
+                    [self searchCurrentApiChange:doc ByUserid:[NASaveData getDefaultUserID]];
+                    return ;
+                }
+                // 紙面XMLを格納
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                    [[NAFileManager sharedInstance] saveSearchFileWithData:search Mydoc:doc];
+                });
+                
                 NSArray *docArr = searchBaseClass.response.doc;
+                NSMutableArray *arr = [[NSMutableArray alloc]init];
+                [arr addObjectsFromArray:docArr];
+                [NADownloadHelper sharedInstance].docs=arr;
                 _regionDic = [[NSMutableDictionary alloc]init];
                 //相同的pageno的不同地域版合集
                 for (int i = 0; i < docArr.count; i++) {
@@ -2615,6 +2711,7 @@
     //地域版全纸面检索
 - (void)searchCurrentApi:(NADoc *)doc ByUserid:(NSString *)myUserid
 {
+    flgDoc = doc;
     [self searchCurrentApiChange:doc ByUserid:myUserid];
     [self.mainScrollView removeFromSuperview];
     isDoneImageTask=NO;
@@ -2692,7 +2789,7 @@
                   @"Mode"       :  @"1",
                   @"Sort"       :  @"K006:asc,K090:asc,K012:asc",
                   @"Fl"         :  [NSString searchCurrentFl],
-                  @"K081"       :  @"30000",
+                  @"K081"       :  areaCode,
                   };
         doc.user_id=[NASaveData getLoginUserId];
         if (![[NASQLHelper sharedInstance]isHavePaperInfoByDoc:doc]) {
@@ -2718,7 +2815,7 @@
                 // 紙面情報初期化
                 [self.pageArray removeAllObjects];
                 [self.pageArray addObjectsFromArray:searchBaseClass.response.doc];
-                [NADownloadHelper sharedInstance].docs=self.pageArray;
+//                [NADownloadHelper sharedInstance].docs=self.pageArray;
                 
                 
 //                [self.pageArray removeAllObjects];

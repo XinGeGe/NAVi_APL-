@@ -12,7 +12,7 @@
                 @ClipMemo@</div>
     </div>
     <div id='pic_content'>
-        <img src='@ClipImagePath@' style='width:100%;background-color:#DDFF22;margin-top:10px'/>
+        <img src='@ClipImagePath@' style='width:100%;margin-top:10px'/>
     </div>
     
     <div id='pic_text_content'>
@@ -44,10 +44,10 @@
     </div>
     <script>
                           var imagePaths = $('#imgPaths').val().split(',');
-                          if(imagePaths.length == 0){
+                          if(imagePaths.length <= 1){
                             $('#mySwiper1').hide();
                           }else{
-                            for(var i = 0; i < imagePaths.length; i++){
+                            for(var i = 1; i < imagePaths.length; i++){
                                 $('#mySwiperDiv1').append('<div class=\"swiper-slide\" align=\"center\"><img style=\"width:80%\" src=\"'+imagePaths[i]+'\"> </div>');
                             }
                           
@@ -99,10 +99,10 @@ $('#tate_kiji_detail_area').scroll(function() {
                             });
                                    
                                    var imagePaths = $('#imgPaths').val().split(',');
-                                if(imagePaths == 0){
+                                if(imagePaths <= 1){
                                        $('#mySwiper2').hide();
                                 }else{
-                                       for(var i = 0; i < imagePaths.length; i++){
+                                       for(var i = 1; i < imagePaths.length; i++){
                                            $('#mySwiperDiv2').append('<div class=\"swiper-slide\" align=\"center\"><img style=\"width:80%\" src=\"'+imagePaths[i]+'\"> </div>');
                                 }
                                     var mySwiper = new Swiper('#mySwiper2', {

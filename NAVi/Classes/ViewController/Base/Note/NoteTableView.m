@@ -70,7 +70,7 @@
     [self.tView addGestureRecognizer:self.singleTap];
     [self.tView addGestureRecognizer:self.longPressGesture];
     
-    
+    self.tView.tableFooterView = [UIView new];
 }
 /**
  * view更新
@@ -261,12 +261,12 @@
 //    }
     cell.lineView.hidden = YES;
     // 記事内容を設定
-    if ([clipDoc.newsText isKindOfClass:[NSString class]]) {
-        NSString *mydetailtext=clipDoc.newsText;
+    if ([clipDoc.newsGroupTitle isKindOfClass:[NSString class]]) {
+        NSString *mydetailtext=clipDoc.newsGroupTitle;
         if ([CharUtil isHaveRubytext:mydetailtext]) {
             cell.isHaveRuby=YES;
             [cell loadDetailWithisHaveRuby:YES];
-            mydetailtext=[CharUtil deledateTheRT:clipDoc.newsText];
+            mydetailtext=[CharUtil deledateTheRT:clipDoc.newsGroupTitle];
             
             NSString *bundleFile = [[NSBundle mainBundle] pathForResource:@"htmlsource" ofType:@"bundle"];
             NSString *filePath = [NSString stringWithFormat:@"%@/listNote.html",bundleFile];
@@ -274,15 +274,15 @@
             
             if (mydetailtext.length>detailtitlelength) {
                 mydetailtext=[mydetailtext substringWithRange:NSMakeRange(0,detailtitlelength)];
-                mydetailtext=[CharUtil getRightRubytext:clipDoc.newsText NORubytext:mydetailtext];
+                mydetailtext=[CharUtil getRightRubytext:clipDoc.newsGroupTitle NORubytext:mydetailtext];
                 cell.detailtext=mydetailtext;
                 htmlString = [htmlString stringByReplacingOccurrencesOfString:@"@clamp@" withString:@"3"];
                 htmlString = [htmlString stringByReplacingOccurrencesOfString:@"@myContent@" withString:[NSString stringWithFormat:@"%@...",mydetailtext]];
                 [cell.detailWeb loadHTMLString:htmlString baseURL:nil];
             }else{
-                cell.detailtext=clipDoc.newsText;
+                cell.detailtext=clipDoc.newsGroupTitle;
                 htmlString = [htmlString stringByReplacingOccurrencesOfString:@"@clamp@" withString:@"3"];
-                htmlString = [htmlString stringByReplacingOccurrencesOfString:@"@myContent@" withString:clipDoc.newsText];
+                htmlString = [htmlString stringByReplacingOccurrencesOfString:@"@myContent@" withString:clipDoc.newsGroupTitle];
                 [cell.detailWeb loadHTMLString:htmlString baseURL:nil];
                 
             }

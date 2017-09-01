@@ -90,12 +90,18 @@
         
         htmlString = [htmlString stringByReplacingOccurrencesOfString:@"@spanNum@" withString:spanNum];
         htmlString = [htmlString stringByReplacingOccurrencesOfString:@"@text@" withString:self.text];
-        htmlString = [htmlString stringByReplacingOccurrencesOfString:@"@title@" withString:self.title];
         NSString *str =self.detailDoc.headlineText;
         NSArray *range = [str componentsSeparatedByString:@"／"];
         NSString *subStr = [range objectAtIndex:0];
-        NSLog(@"%@",subStr);
         htmlString = [htmlString stringByReplacingOccurrencesOfString:@"@head_title@" withString:subStr];
+        if (range.count > 1) {
+            NSRange rangeStr = [str rangeOfString:subStr];//匹配得到的下标
+            NSString *subTitle = [str substringFromIndex:rangeStr.length + 1];
+            htmlString = [htmlString stringByReplacingOccurrencesOfString:@"@title@" withString:subTitle];
+        } else {
+            htmlString = [htmlString stringByReplacingOccurrencesOfString:@"@title@" withString:@""];
+        }
+        
         if ([_isfromWhere isEqualToString:TYPE_CLIP]) {
             htmlString = [htmlString stringByReplacingOccurrencesOfString:@"@type@" withString:@"TYPE_CLIP"];
         }else if ([_isfromWhere isEqualToString:TYPE_NOTE]){
@@ -180,7 +186,7 @@
         NSString *jsString = [NSString stringWithFormat:@"changeHtml(\"%@\");",htmlString];
         [_textView stringByEvaluatingJavaScriptFromString:jsString];
         [self setShowStyle:_isTateShow];
-//        [self changeView:_btnType];
+        [self changeView:_btnType];
         if([_isfromWhere isEqualToString:TYPE_SEARCH] || [_isfromWhere isEqualToString:TYPE_NOTE]||[_isfromWhere isEqualToString:TYPE_HOME]){
             [self searchMiniPagePath];
         }

@@ -147,7 +147,7 @@
     if ([self isLandscape]) {
         self.mainScrollView.frame = CGRectMake(35, 10, screenWidth-35*2, screenHeight-10);
     }else{
-        self.mainScrollView.frame = CGRectMake(0, 0, screenWidth, screenHeight);
+        self.mainScrollView.frame = CGRectMake(0, 45, screenWidth, screenHeight-45);
     }
 
     [self.mainScrollView scrollToItemAtIndex: self.currentPageIndex duration:0.3];
@@ -197,7 +197,7 @@
     if ([self isLandscape]) {
         self.mainScrollView.frame = CGRectMake(35, 10, screenWidth-35*2, screenHeight-10);
     }else{
-        self.mainScrollView.frame = CGRectMake(0, 40, screenWidth, screenHeight-40);
+        self.mainScrollView.frame = CGRectMake(0, 45, screenWidth, screenHeight-45);
     }
     
     
@@ -235,7 +235,7 @@
     if ([self isLandscape]) {
         self.mainScrollView.frame = CGRectMake(35, 10, screenWidth-35*2, screenHeight-10);
     }else{
-        self.mainScrollView.frame = CGRectMake(0, 0, screenWidth, screenHeight);
+        self.mainScrollView.frame = CGRectMake(0,45, screenWidth, screenHeight-45);
     }
     self.imageTitle.frame=CGRectMake(0, screenHeight-60, screenWidth,60);
     self.bgTitleView.frame=CGRectMake(0, screenHeight-70, screenWidth,70);

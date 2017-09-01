@@ -6,8 +6,9 @@
 //  Created by y fs on 15/11/20.
 //  Copyright © 2015年 dxc. All rights reserved.
 //
-#import "NANewClipEditingViewController.h"
 #import "NADetailBaseViewController.h"
+
+#import "NANewClipEditingViewController.h"
 #import "SwipeView.h"
 #import "NAHomeViewController.h"
 #import "JXButton.h"

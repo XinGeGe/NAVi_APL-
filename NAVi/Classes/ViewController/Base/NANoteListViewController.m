@@ -67,9 +67,9 @@
         [_titleArray addObject:doc.pageInfoName];
     }
     _titleArray=(NSMutableArray *)[[_titleArray reverseObjectEnumerator] allObjects];
-    _mianArray=(NSMutableArray *)[[[NAHomeDataShare sharedInstance].homePageArray reverseObjectEnumerator] allObjects];
+    _mianArray=(NSMutableArray *)[[_pageArray reverseObjectEnumerator] allObjects];
     [self loadNoteArray];
-    self.NotePageArray=[NSMutableArray arrayWithArray:[NAHomeDataShare sharedInstance].homePageArray];
+    self.NotePageArray=[NSMutableArray arrayWithArray:_pageArray];
     
     self.delegate = self;
     self.dataSource = self;

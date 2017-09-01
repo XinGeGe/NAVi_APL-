@@ -544,6 +544,10 @@
                     viewFrame.origin.y = 0;
                     addClipScroll.frame = viewFrame;
                     ITOAST_BOTTOM(@"tag deleted");
+                    NSInteger selectTag = [NASaveData getClipSelectedBtnTag];
+                    if (cell.tagId.integerValue == selectTag) {
+                        [[NSNotificationCenter defaultCenter] postNotificationName:NOTYReloadClip object:nil];
+                    }
 //                    if ((addCount + clipArr.count) < 9) {
 //                        [addClipScroll addGestureRecognizer:panGesture];
 //                    }

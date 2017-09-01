@@ -77,7 +77,7 @@
     NSInteger selectTag = [NASaveData getClipSelectedBtnTag];
  
         if (selectTag == btn.tag) {
-            [NASaveData saveClipSelectedBtnTag:999999];
+            [NASaveData saveClipSelectedBtnTag:99999];
         } else {
             [NASaveData saveClipSelectedBtnTag:btn.tag];
         }

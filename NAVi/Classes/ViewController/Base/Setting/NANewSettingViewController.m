@@ -588,7 +588,7 @@
 
     informationChangeLabel.textAlignment = NSTextAlignmentLeft;
     
-    versionLabel.text = @"バージョン   1.0.58";
+    versionLabel.text = @"バージョン   0.0.1";
     versionLabel.textColor = [UIColor whiteColor];
     if (isPhone) {
         versionLabel.font = [FontUtil systemFontOfSize:15];
@@ -661,11 +661,19 @@
         [[NAFileManager sharedInstance] deleteSearchResult];
         [[NAFileManager sharedInstance] deleteDetailInfo];
         [[NASQLHelper sharedInstance]clearFeedTable];
-        [NASaveData saveIsVisitorModel:YES];
-        [NASaveData clearLoginInfo];
+//        [NASaveData saveIsVisitorModel:YES];
+//        [NASaveData clearLoginInfo];
         [self clearCookie];
         [[[iToast makeText:NSLocalizedString(@"delete done", nil)]
           setGravity:iToastGravityBottom] show];
+        NAHomeViewController *home = [[NAHomeViewController alloc] init];
+        home.forwardPage=@"topPage";
+        NABaseNavigationController *nav = [[NABaseNavigationController alloc] initWithRootViewController:home];
+        [self presentViewController:nav animated:NO completion:^{
+            
+            
+        }];
+
     }];
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"いいえ" style:UIAlertActionStyleCancel handler:^(UIAlertAction *_Nonnull action) {
         [alert dismissViewControllerAnimated:YES completion:^{
