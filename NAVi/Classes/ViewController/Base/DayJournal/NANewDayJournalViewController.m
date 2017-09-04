@@ -234,6 +234,7 @@
     _calendarView.dayNew = day;
     _calendarView.select = 0;
     _calendarView.delegate = self;
+    _calendarView.selectChange = 0;
     [_calendarView addTarget:self action:@selector(calendarViewDidChange2:) forControlEvents:UIControlEventValueChanged];
     [self.view addSubview:_calendarView];
     

@@ -159,6 +159,7 @@
     windowView = [[AGWindowView alloc] initAndAddToKeyWindow];
     self.frame =windowView.bounds;
     windowView.supportedInterfaceOrientations = AGInterfaceOrientationMaskAll;
+    windowView.frame = CGRectMake(0, 0, windowView.bounds.size.width, windowView.bounds.size.height - 50);
     if (![windowView.subviews containsObject:self]) {
         [windowView addSubview:self];
     }

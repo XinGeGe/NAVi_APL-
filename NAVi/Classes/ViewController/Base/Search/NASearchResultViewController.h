@@ -23,6 +23,7 @@
 @property (nonatomic,strong) UILabel *labMonthDayHore;
 @property (nonatomic,strong) UILabel *labMianHore;
 @property (nonatomic, strong) NSMutableDictionary *regionDic;
+    @property (nonatomic, assign) NSInteger haveChangeIndex;
 //@property (nonatomic, assign)NSInteger noteNumber;
 //@property (nonatomic, strong) NSMutableDictionary *NoteArray;
 @end

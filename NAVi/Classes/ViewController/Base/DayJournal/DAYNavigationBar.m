@@ -138,6 +138,7 @@
 - (void)prevButtonDidTap:(id)sender {
     self.lastCommand = DAYNaviagationBarCommandPrevious;
     [self sendActionsForControlEvents:UIControlEventValueChanged];
+
 }
 
 - (void)nextButtonDidTap:(id)sender {

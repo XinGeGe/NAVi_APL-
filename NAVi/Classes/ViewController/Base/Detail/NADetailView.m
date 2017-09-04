@@ -245,7 +245,7 @@
 #pragma mark UIWebViewDelegate
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
-    [ProgressHUD show:NSLocalizedString(@"messageloading", nil)];
+//    [ProgressHUD show:NSLocalizedString(@"messageloading", nil)];
     NSString *requestString = [[request URL] absoluteString];
     NSArray *components = [requestString componentsSeparatedByString:@":"];
     if ([components count] > 1 && [(NSString *)[components objectAtIndex:0] isEqualToString:@"naviapp"]) {

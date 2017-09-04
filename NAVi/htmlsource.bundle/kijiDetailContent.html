@@ -27,8 +27,8 @@
         <div class='kdetail_shimeninfo kiji_detail_title2' >
             @title@
         </div>
-        
-        <div class='kiji_date_title' >
+        <meta name='format-detection' content='telephone=no'>
+        <div class='kiji_date_title'>
             @publisj_data@
         </div>
         
@@ -99,7 +99,7 @@ $('#tate_kiji_detail_area').scroll(function() {
                             });
                                    
                                    var imagePaths = $('#imgPaths').val().split(',');
-                                if(imagePaths <= 1){
+                                if(imagePaths.length <= 1){
                                        $('#mySwiper2').hide();
                                 }else{
                                        for(var i = 1; i < imagePaths.length; i++){

@@ -280,6 +280,7 @@
     result.pageArray = _pageArray;
     result.regionDic =_regionDic;
     result.topPageDoc = _topPageDoc;
+    result.haveChangeIndex = _haveChangeIndex;
     result.clipDataSource = _clipDataSource;
     //    result.noteNumber = _noteNumber;
     //     result.NoteArray = _NoteArray;
@@ -357,6 +358,7 @@
     result.serachDate=@"mycurrDoc";
     result.pageArray = _pageArray;
     result.topPageDoc = _topPageDoc;
+    result.haveChangeIndex = _haveChangeIndex;
     result.clipDataSource = _clipDataSource;
 //    result.noteNumber = _noteNumber;
 //     result.NoteArray = _NoteArray;

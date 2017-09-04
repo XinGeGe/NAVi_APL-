@@ -15,6 +15,7 @@
 @property (nonatomic, strong) NSMutableDictionary *regionDic;
 @property (nonatomic, strong) NSMutableArray *pageArray;
 @property (nonatomic, strong) NSMutableArray *clipDataSource;
+    @property (nonatomic, assign) NSInteger haveChangeIndex;
 //@property (nonatomic, assign)NSInteger noteNumber;
 //@property (nonatomic, strong) NSMutableDictionary *NoteArray;
 @end

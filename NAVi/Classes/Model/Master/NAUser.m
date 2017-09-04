@@ -16,9 +16,9 @@ NSString *const kNAUserUseDevice = @"UseDevice";
 NSString *const kNAUserPublisherGroupInfoId = @"PublisherGroupInfoId";
 NSString *const kNAUserTtsFlgP = @"TtsFlg_p";
 //add new
-//NSString *const kNAReleaseAreaInfo = @"ReleaseAreaInfo";
-//NSString *const kNAPublishDayInfo = @"PublishDayInfo";
-//NSString *const kNAUserClass = @"UserClass";
+NSString *const kNAReleaseAreaInfo1 = @"ReleaseAreaInfo";
+NSString *const kNAPublishDayInfo1 = @"PublishDayInfo";
+NSString *const kNAUserClass1 = @"UserClass";
 
 @interface NAUser ()
 
@@ -36,9 +36,9 @@ NSString *const kNAUserTtsFlgP = @"TtsFlg_p";
 @synthesize publisherGroupInfoId = _publisherGroupInfoId;
 @synthesize ttsFlgP = _ttsFlgP;
 //add new
-//@synthesize releaseAreaInfo = _releaseAreaInfo;
-//@synthesize publishDayInfo = _publishDayInfo;
-//@synthesize userClass = _userClass;
+@synthesize releaseAreaInfo1 = _releaseAreaInfo1;
+@synthesize publishDayInfo1 = _publishDayInfo1;
+@synthesize userClass1 = _userClass1;
 
 + (instancetype)modelObjectWithDictionary:(NSDictionary *)dict
 {
@@ -60,9 +60,9 @@ NSString *const kNAUserTtsFlgP = @"TtsFlg_p";
         self.publisherGroupInfoId = [self objectOrNilForKey:kNAUserPublisherGroupInfoId fromDictionary:dict];
         self.ttsFlgP = [self objectOrNilForKey:kNAUserTtsFlgP fromDictionary:dict];
         //add new
-//        self.releaseAreaInfo = [self objectOrNilForKey:kNAReleaseAreaInfo fromDictionary:dict];
-//        self.publishDayInfo = [self objectOrNilForKey:kNAPublishDayInfo fromDictionary:dict];
-//        self.userClass = [self objectOrNilForKey:kNAUserClass fromDictionary:dict];
+        self.releaseAreaInfo1 = [self objectOrNilForKey:kNAReleaseAreaInfo1 fromDictionary:dict];
+        self.publishDayInfo1 = [self objectOrNilForKey:kNAPublishDayInfo1 fromDictionary:dict];
+        self.userClass1 = [self objectOrNilForKey:kNAUserClass1 fromDictionary:dict];
 
     }
     
@@ -81,9 +81,9 @@ NSString *const kNAUserTtsFlgP = @"TtsFlg_p";
     [mutableDict setValue:self.publisherGroupInfoId forKey:kNAUserPublisherGroupInfoId];
     [mutableDict setValue:self.ttsFlgP forKey:kNAUserTtsFlgP];
     //add new
-//    [mutableDict setValue:self.releaseAreaInfo forKey:kNAReleaseAreaInfo];
-//    [mutableDict setValue:self.publishDayInfo forKey:kNAPublishDayInfo];
-//    [mutableDict setValue:self.userClass forKey:kNAUserClass];
+    [mutableDict setValue:self.releaseAreaInfo1 forKey:kNAReleaseAreaInfo1];
+    [mutableDict setValue:self.publishDayInfo1 forKey:kNAPublishDayInfo1];
+    [mutableDict setValue:self.userClass1 forKey:kNAUserClass1];
 
     return [NSDictionary dictionaryWithDictionary:mutableDict];
 }
@@ -115,9 +115,9 @@ NSString *const kNAUserTtsFlgP = @"TtsFlg_p";
     self.publisherGroupInfoId = [aDecoder decodeObjectForKey:kNAUserPublisherGroupInfoId];
     self.ttsFlgP = [aDecoder decodeObjectForKey:kNAUserTtsFlgP];
     //add new
-//    self.releaseAreaInfo = [aDecoder decodeObjectForKey:kNAReleaseAreaInfo];
-//    self.publishDayInfo = [aDecoder decodeObjectForKey:kNAPublishDayInfo];
-//    self.userClass = [aDecoder decodeObjectForKey:kNAUserClass];
+    self.releaseAreaInfo1 = [aDecoder decodeObjectForKey:kNAReleaseAreaInfo1];
+    self.publishDayInfo1 = [aDecoder decodeObjectForKey:kNAPublishDayInfo1];
+    self.userClass1 = [aDecoder decodeObjectForKey:kNAUserClass1];
     return self;
 }
 
@@ -132,9 +132,9 @@ NSString *const kNAUserTtsFlgP = @"TtsFlg_p";
     [aCoder encodeObject:_publisherGroupInfoId forKey:kNAUserPublisherGroupInfoId];
     [aCoder encodeObject:_ttsFlgP forKey:kNAUserTtsFlgP];
     //add new
-//    [aCoder encodeObject:_releaseAreaInfo forKey:kNAReleaseAreaInfo];
-//    [aCoder encodeObject:_publishDayInfo forKey:kNAPublishDayInfo];
-//    [aCoder encodeObject:_userClass forKey:kNAUserClass];
+    [aCoder encodeObject:_releaseAreaInfo1 forKey:kNAReleaseAreaInfo1];
+    [aCoder encodeObject:_publishDayInfo1 forKey:kNAPublishDayInfo1];
+    [aCoder encodeObject:_userClass1 forKey:kNAUserClass1];
 }
 
 - (id)copyWithZone:(NSZone *)zone
@@ -151,9 +151,9 @@ NSString *const kNAUserTtsFlgP = @"TtsFlg_p";
         copy.publisherGroupInfoId = [self.publisherGroupInfoId copyWithZone:zone];
         copy.ttsFlgP = [self.ttsFlgP copyWithZone:zone];
         //add new
-//        copy.releaseAreaInfo = [self.releaseAreaInfo copyWithZone:zone];
-//        copy.publishDayInfo = [self.publishDayInfo copyWithZone:zone];
-//        copy.userClass = [self.userClass copyWithZone:zone];
+        copy.releaseAreaInfo1 = [self.releaseAreaInfo1 copyWithZone:zone];
+        copy.publishDayInfo1 = [self.publishDayInfo1 copyWithZone:zone];
+        copy.userClass1 = [self.userClass1 copyWithZone:zone];
     }
     
     return copy;

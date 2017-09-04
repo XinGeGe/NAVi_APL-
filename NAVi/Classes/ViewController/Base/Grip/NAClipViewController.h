@@ -21,4 +21,5 @@
 @property (nonatomic,strong) UILabel *labYearHore;
 @property (nonatomic,strong) UILabel *labMonthDayHore;
 @property (nonatomic,strong) UILabel *labMianHore;
+@property (nonatomic, assign) NSInteger haveChangeIndex;
 @end

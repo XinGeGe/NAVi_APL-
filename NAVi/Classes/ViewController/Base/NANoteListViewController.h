@@ -40,4 +40,5 @@ typedef void(^selecteddic)(NADoc *doc);
 @property (nonatomic,strong)UIView *viewFour;
 @property (nonatomic,strong)UIView *lineView;
 -(void)controlTheBlockWithdocNote:(NADoc *)doc;
+@property (nonatomic, assign) NSInteger haveChangeIndex;
 @end

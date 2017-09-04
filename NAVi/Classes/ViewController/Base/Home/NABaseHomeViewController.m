@@ -45,6 +45,8 @@
     NSInteger changeNo;
     NSInteger isHaveRegion;//是否有地域版
     NADoc *flgDoc;
+    NSString *ReleaseAreaInfo;
+    NSString *PublishDayInfo;
 }
 @end
 
@@ -66,17 +68,31 @@
 
     if (_homePageArray.count != 0 && _dayNumber ==0) {
         self.pageArray = _homePageArray;
-        [self showMainView];
+        [self showMainViewHave];
         //[self getNoteAPI];
     }else if (_homePageArray.count != 0 && _dayNumber ==1) {
 //        if (_regionFlg == 1) {
-            [self searchCurrentApi:_dayDoc  ByUserid:[NASaveData getDefaultUserID]];
+            [self searchCurrentApiLogin:_dayDoc  ByUserid:[NASaveData getLoginUserId]];
 //        }else{
 //            [self searchCurrentApiNoRegion:_dayDoc  ByUserid:[NASaveData getDefaultUserID]];
 //        }
         
     }else{
-        [self getmasterAPI:[NASaveData getDefaultUserID]];
+        if ([self isLogin]) {
+            [self getmasterAPIHaveLogIn:[NASaveData getLoginUserId]];
+            
+        }else{
+            if ([[NASaveData getDataUserClass] isEqualToString:@"11"]) {
+                [self getmasterAPIHaveLogIn:[NASaveData getLoginUserId]];
+                
+            }else{
+                 [self getmasterAPI:[NASaveData getDefaultUserID]];
+                
+                
+            }
+        }
+        
+        
     }
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeUser) name:@"changeUser" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(UpdateMymodel:) name:@"UpdateMymodel" object:nil];
@@ -129,8 +145,7 @@
         make.height.mas_equalTo(26);
     }];
     localBtn.layer.cornerRadius = 5;
-    localBtn.layer.masksToBounds = YES;
-    //[localBtn setTitle:@"地方版 北海道" forState:UIControlStateNormal];
+    localBtn.layer.masksToBounds = YES;;
     [localBtn.titleLabel setFont:[FontUtil systemFontOfSize:13]];
     localBtn.backgroundColor = [UIColor colorWithRed:135.0/255.0 green:206.0/255.0 blue:250.0/255.0 alpha:1];
     [localBtn addTarget:self action:@selector(chooseLocal) forControlEvents:UIControlEventTouchUpInside];
@@ -171,7 +186,6 @@
     }];
     localBtn2.layer.cornerRadius = 5;
     localBtn2.layer.masksToBounds = YES;
-    //[localBtn setTitle:@"地方版 北海道" forState:UIControlStateNormal];
     [localBtn2.titleLabel setFont:[FontUtil systemFontOfSize:13]];
     localBtn2.backgroundColor = [UIColor colorWithRed:135.0/255.0 green:206.0/255.0 blue:250.0/255.0 alpha:1];
     [localBtn2 addTarget:self action:@selector(chooseLocal2) forControlEvents:UIControlEventTouchUpInside];
@@ -480,7 +494,7 @@
             if ([str isEqualToString:@"10"]) {
                 return YES;
             }
-            return YES;
+            return NO;
         }else{
             return NO;
         }
@@ -531,6 +545,7 @@
                                                   [NASaveData saveAlldownload:[NSNumber numberWithBool:isTempAllDownload]];
                                                   [NASaveData SaveLoginWithID:login.userId withPassWord:login.password];
                                                   [NASaveData saveTimeStamp:login.timeStamp];
+                                                  [NASaveData saveUserId:login.userId];
                                                   [ProgressHUD dismiss];
                                                   self.mainScrollView.wrapEnabled = YES;
                                                   self.mainScrollView.scrollEnabled = YES;
@@ -560,7 +575,7 @@
                                                   button.frame = CGRectMake(0, 0, 25, 25);
                                                   _searchBarItem= [[UIBarButtonItem alloc] initWithCustomView:button];
                                                 self.navigationItem.leftBarButtonItem = _searchBarItem;
-                                                  [self searchCurrentApiChange:flgDoc ByUserid:[NASaveData getDefaultUserID]];
+                                                  [self getmasterAPIHaveLogIn:login.userId];
                                               }else if (login.status.integerValue == 2) {
                                                   self.mainScrollView.wrapEnabled = NO;
                                                   self.mainScrollView.scrollEnabled = NO;
@@ -723,7 +738,16 @@
 //    }
     [ProgressHUD show:NSLocalizedString(@"messageloading", nil)];
     self.searchPublicationArray = [NSMutableArray array];
-    [self getmasterAPI:[NASaveData getDefaultUserID]];
+    if([self isLogin]){
+       [self getmasterAPIHaveLogIn:[NASaveData getLoginUserId]];
+    }else{
+        if ([[NASaveData getDataUserClass] isEqualToString:@"10"]) {
+            [self getmasterAPIHaveLogIn:[NASaveData getLoginUserId]];
+        }else{
+            [self getmasterAPI:[NASaveData getDefaultUserID]];
+        }
+    }
+    
     
     [self updateViews];
     
@@ -1146,6 +1170,9 @@
     [detailSelectView dismissMyview];
     [localPickView dissmissView];
     [localPickView2 dissmissView];
+    if ([self.popoverBackground isShowPopoverView]) {
+        [self.popoverBackground hidePopoverView];
+    }
     if (self.pageArray.count == 0) {
         
     }else{
@@ -1175,19 +1202,20 @@
             }
         }else if (sender.tag == 1004){
             if ([self isLogin]) {
-                if ([self isLandscape]) {
-                    [self setHorToolBar];
-                    self.popoverBackground.currentindex=[self currentIndexInPages:self.mainScrollView.currentItemIndex curPagerIndexNo:nil];
-                }else{
-                    [self resetHomeToolBar];
-                    self.popoverBackground.currentindex=self.mainScrollView.currentItemIndex;
+                if (![self.popoverBackground isShowPopoverView]) {
+                    if ([self isLandscape]) {
+                        [self setHorToolBar];
+                        self.popoverBackground.currentindex=[self currentIndexInPages:self.mainScrollView.currentItemIndex curPagerIndexNo:nil];
+                    }else{
+                        [self resetHomeToolBar];
+                        self.popoverBackground.currentindex=self.mainScrollView.currentItemIndex;
+                    }
+                    
+                    [self.popoverBackground showPopoverView:NAPopoverPaper withInfo:self.pageArray];
+                    // GA(tag manager)
+                    [TAGManagerUtil pushButtonClickEvent:ENPageListBtn label:[self getLabelName]];
+                    _toolBarStyle = 1;
                 }
-                
-                [self.popoverBackground showPopoverView:NAPopoverPaper withInfo:self.pageArray];
-                // GA(tag manager)
-                [TAGManagerUtil pushButtonClickEvent:ENPageListBtn label:[self getLabelName]];
-                _toolBarStyle = 1;
-                
             }else{
                 [self notLoginAction];
             }
@@ -1500,6 +1528,12 @@
                     [[[iToast makeText:NSLocalizedString(@"note Max", nil)]
                       setGravity:iToastGravityBottom] show];
                 });
+            }else if([statusMessage isEqualToString:@"4"]){
+                MAIN(^{
+                    [ProgressHUD dismiss];
+                    [[[iToast makeText:NSLocalizedString(@"すでにスクラップしています", nil)]
+                      setGravity:iToastGravityBottom] show];
+                });
             }else{
                 MAIN(^{
                     [ProgressHUD dismiss];
@@ -1613,9 +1647,28 @@
 //    }
     [ProgressHUD show:NSLocalizedString(@"messageloading", nil)];
     if (self.pageArray.count == 0) {
-        [self getmasterAPI:[NASaveData getDefaultUserID]];
+        if([self isLogin]){
+            [self getmasterAPIHaveLogIn:[NASaveData getLoginUserId]];
+        }else{
+            if ([[NASaveData getDataUserClass] isEqualToString:@"11"]) {
+                [self getmasterAPIHaveLogIn:[NASaveData getLoginUserId]];
+            }else{
+                [self getmasterAPI:[NASaveData getDefaultUserID]];
+            }
+        }
+
+        
     }else {
-        [self searchCurrentApi:self.pageArray[0] ByUserid:[NASaveData getDefaultUserID]];
+        if([self isLogin]){
+            [self searchCurrentApiLogin:self.pageArray[0] ByUserid:[NASaveData getLoginUserId]];
+        }else{
+            if ([[NASaveData getDataUserClass] isEqualToString:@"11"]) {
+                [self searchCurrentApiLogin:self.pageArray[0] ByUserid:[NASaveData getLoginUserId]];
+            }else{
+                [self searchCurrentApi:self.pageArray[0] ByUserid:[NASaveData getDefaultUserID]];
+            }
+        }
+
     }
     // GA(tag manager)
     [TAGManagerUtil pushButtonClickEvent:ENRefreshBtn label:[self getLabelName]];
@@ -1638,6 +1691,7 @@
     search.topPageDoc = _topPageDoc;
     search.clipDataSource = _clipDataSource;
     search.regionDic =_regionDic;
+    search.haveChangeIndex = self.mainScrollView.currentItemIndex;
 //    NSInteger count2 =_NotePageArray.allKeys.count;
 //    search.noteNumber = count2;
 //    search.NoteArray = _NoteArray;
@@ -1661,7 +1715,18 @@
     [ProgressHUD show:NSLocalizedString(@"messageloading", nil)];
     self.forwardPage=@"toSerachLastNewsList";
     if (self.pageArray.count == 0) {
-        [self getmasterAPI:[NASaveData getDefaultUserID]];
+        
+        if([self isLogin]){
+            [self getmasterAPIHaveLogIn:[NASaveData getLoginUserId]];
+        }else{
+            if ([[NASaveData getDataUserClass] isEqualToString:@"11"]) {
+                [self getmasterAPIHaveLogIn:[NASaveData getLoginUserId]];
+            }else{
+                [self getmasterAPI:[NASaveData getDefaultUserID]];
+            }
+        }
+
+        
     }else {
         NADoc *currentDoc = self.pageArray[0];
         NSArray *masterArray=[NASaveData sharedInstance].masterArray;
@@ -1682,8 +1747,19 @@
         NSSortDescriptor *sortDescriptor2 = [[NSSortDescriptor alloc] initWithKey:@"dispOrder1" ascending:YES];
         [publicationArray sortUsingDescriptors:[NSArray arrayWithObjects:sortDescriptor1,sortDescriptor2, nil]];
         NAPublicationInfo *publicationInfo=publicationArray[0];
+        NSString *userId;
+        if([self isLogin]){
+           userId = [NASaveData getLoginUserId];
+        }else{
+            if ([[NASaveData getDataUserClass] isEqualToString:@"11"]) {
+                userId = [NASaveData getDefaultUserID];
+            }else{
+                userId = [NASaveData getDefaultUserID];
+            }
+        }
+
         NSDictionary *param = @{
-                                @"Userid"     :  [NASaveData getDefaultUserID],
+                                @"Userid"     :  userId,
                                 @"UseDevice"  :  NAUserDevice,
                                 @"K090"       :  @"010",
                                 @"Rows"       :  @"1",
@@ -1698,7 +1774,7 @@
                                 @"Fl"         :  [NSString searchWithPublicationInfoId]
                                 };
         NSMutableDictionary *muDic=[NSMutableDictionary dictionaryWithDictionary:param];
-        if ([NASaveData getIsVisitorModel]) {
+        if (![NASaveData getIsVisitorModel]) {
             [muDic setObject:currentDoc.publicationInfoId forKey:@"K006"];
         }
         [[NANetworkClient sharedClient] postSearch:param completionBlock:^(id search, NSError *error) {
@@ -1710,7 +1786,17 @@
                     NADoc *tmpdoc=searchBaseClass.response.doc[0];
                     tmpdoc.publication_disOrder1=currentDoc.publication_disOrder1;
                     tmpdoc.publication_disOrder3=currentDoc.publication_disOrder3;
-                    [self searchCurrentApi:tmpdoc ByUserid:[NASaveData getDefaultUserID]];
+                    if([self isLogin]){
+                         [self searchCurrentApiLogin:tmpdoc ByUserid:[NASaveData getLoginUserId]];
+                    }else{
+                        if ([[NASaveData getDataUserClass] isEqualToString:@"11"]) {
+                            [self searchCurrentApiLogin:tmpdoc ByUserid:[NASaveData getLoginUserId]];
+                        }else{
+                            [self searchCurrentApi:tmpdoc ByUserid:[NASaveData getDefaultUserID]];
+                        }
+                    }
+                    
+                    
                 }
                 
             }else{
@@ -1774,7 +1860,7 @@
         [ProgressHUD show:NSLocalizedString(@"messageloading", nil)];
         isChooseDay = 1;
 //        if (isHaveRegion == 1) {
-            [self searchCurrentApi:doc ByUserid:[NASaveData getDefaultUserID]];
+            [self searchCurrentApiLogin:doc ByUserid:[NASaveData getLoginUserId]];
 //        }else{
 //            [self searchCurrentApiNoRegion:doc ByUserid:[NASaveData getDefaultUserID]];
 //        }
@@ -2106,6 +2192,7 @@
     note.topPageDoc = _topPageDoc;
     note.pageArray = _pageArray;
     note.regionDic = _regionDic;
+    note.haveChangeIndex = self.mainScrollView.currentItemIndex;
     note.clipDataSource = _clipDataSource;
 //    NSInteger count2 =_NotePageArray.allKeys.count;
 //    note.noteNumber = count2;
@@ -2142,6 +2229,7 @@
     grip.pageArray = _pageArray;
     grip.regionDic = _regionDic;
     grip.topPageDoc = _topPageDoc;
+    grip.haveChangeIndex = self.mainScrollView.currentItemIndex;
     if (isChooseDay == 1) {
         grip.clipDataSource = nil;
         grip.clipNumber = 0;
@@ -2316,7 +2404,7 @@
 #pragma mark - API -
 #pragma mark
 
-//masterf
+//masterf  NOT LOGIN
 - (void)getmasterAPI:(NSString *)userID
 {
     NSLog(@"%@",userID);
@@ -2387,11 +2475,17 @@
             }
         }
         if (([self.forwardPage isEqualToString:@"topPage_noUserid"]||[self.forwardPage isEqualToString:@"topPage"])&&self.topPageDoc!=nil) {
-            if ([NASaveData getIsVisitorModel]) {
-                [self searchCurrentApi:self.topPageDoc ByUserid:[NASaveData getDefaultUserID]];
+            if ([self isLogin]) {
+                [self searchCurrentApiLogin:self.topPageDoc ByUserid:[NASaveData getLoginUserId]];
             }else{
-                [self searchCurrentApi:self.topPageDoc ByUserid:[NASaveData getDefaultUserID]];
+                if ([[NASaveData getDataUserClass] isEqualToString:@"11"]) {
+                    [self searchCurrentApiLogin:self.topPageDoc ByUserid:[NASaveData getLoginUserId]];
+                }else{
+                    [self searchCurrentApi:self.topPageDoc ByUserid:[NASaveData getDefaultUserID]];
+                }
             }
+            
+            
             
         }else{
             [self offlineSearchFirstPage];
@@ -2399,12 +2493,118 @@
     }
     
 }
+    //LOGIN
+- (void)getmasterAPIHaveLogIn:(NSString *)userID
+    {
+        NSLog(@"%@",userID);
+        MAIN(^{
+            //        if (![[ProgressHUD shared] isShowing]) {
+            //            [ProgressHUD show:NSLocalizedString(@"messageloading", nil)];
+            //        }
+            [ProgressHUD show:NSLocalizedString(@"messageloading", nil)];
+        });
+        
+        //    NSLog(@"getmasterAPI") ;
+        
+        if ([NACheckNetwork sharedInstance].isHavenetwork){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                NSDictionary *param = @{
+                                        @"Userid"     :  userID,
+                                        @"UseDevice"  :  NAUserDevice,
+                                        };
+                
+                [[NANetworkClient sharedClient] postMasterWithDevice:param completionBlock:^(id master, NSError *error) {
+                    if (!error) {
+                        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                            [[NAFileManager sharedInstance] saveMasterFileWithData:master];
+                        });
+                        SHXMLParser *parser = [[SHXMLParser alloc] init];
+                        NSDictionary *dic = [parser parseData:master];
+                        NAMasterBaseClass *masterBaseClass = [NAMasterBaseClass modelObjectWithDictionary:dic];
+                        [NASaveData sharedInstance].masterArray = masterBaseClass.masterData.publishers.publisherGroupInfo;
 
+                        ReleaseAreaInfo =[[[[dic objectForKey:@"MasterData"] objectForKey:@"Users"] objectForKey:@"User"] objectForKey:@"ReleaseAreaInfo"];
+                        NSString *userClas= [NASaveData getDataUserClass];
+                        if ([userClas isEqualToString:@"10"]) {
+                            PublishDayInfo = [[[[dic objectForKey:@"MasterData"] objectForKey:@"Users"] objectForKey:@"User"] objectForKey:@"PublishDayInfo"];
+                        }
+                        
+                        [self currentUserHaveNotes:masterBaseClass];
+                        [[NADownloadHelper sharedInstance] initSokuhoTask:masterBaseClass];
+                        [self getSearchAPIWithMaster:masterBaseClass];
+                    }else{
+                        ITOAST_BOTTOM(error.localizedDescription);
+                        [ProgressHUD dismiss];
+                    }
+                    
+                }];
+            });
+        }else{
+            self.homeToolBar.ishavesokuho=NO;
+            self.isHavesokuho=NO;
+            
+            NSData *mymaster=[[NAFileManager sharedInstance] readMasterFile];
+            SHXMLParser *parser = [[SHXMLParser alloc] init];
+            NSDictionary *dic = [parser parseData:mymaster];
+            NAMasterBaseClass *masterBaseClass = [NAMasterBaseClass modelObjectWithDictionary:dic];
+            [NASaveData sharedInstance].masterArray = masterBaseClass.masterData.publishers.publisherGroupInfo;
+            [self currentUserHaveNotes:masterBaseClass];
+            
+            [[NADownloadHelper sharedInstance] initSokuhoTask:masterBaseClass];
+            NSArray *publisherGroupInfos = masterBaseClass.masterData.publishers.publisherGroupInfo;
+            self.publisherInfoArray = [NSMutableArray array];
+            for (NAPublisherGroupInfo *publisherGroupInfo in publisherGroupInfos) {
+                for (NAPublisherInfo *publisherInfo in publisherGroupInfo.publisherInfo) {
+                    [self.publisherInfoArray addObject:publisherInfo];
+                    
+                    if (!self.homeToolBar.ishavesokuho) {
+                        for (NAPublicationInfo *publication in publisherInfo.publicationInfo) {
+                            if(publication.content.genrearray.count>0){
+                                self.homeToolBar.ishavesokuho=YES;
+                                self.isHavesokuho=YES;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            if (([self.forwardPage isEqualToString:@"topPage_noUserid"]||[self.forwardPage isEqualToString:@"topPage"])&&self.topPageDoc!=nil) {
+                if ([self isLogin]) {
+                    [self searchCurrentApiLogin:self.topPageDoc ByUserid:[NASaveData getLoginUserId]];
+                }else{
+                    if ([[NASaveData getDataUserClass] isEqualToString:@"11"]) {
+                        [self searchCurrentApiLogin:self.topPageDoc ByUserid:[NASaveData getLoginUserId]];
+                    }else{
+                        [self searchCurrentApi:self.topPageDoc ByUserid:[NASaveData getDefaultUserID]];
+                    }
+                }
+                
+                
+                
+            }else{
+                [self offlineSearchFirstPage];
+            }
+        }
+        
+    }
 - (void)currentUserHaveNotes:(NAMasterBaseClass *)masterBaseClass
 {
     if ([NACheckNetwork sharedInstance].isHavenetwork){
+        NSString *userId;
+        if ([self isLogin]) {
+            userId = [NASaveData getLoginUserId];
+        }else{
+            if ([[NASaveData getDataUserClass] isEqualToString:@"11"]) {
+                userId = [NASaveData getLoginUserId];
+            }else{
+                userId = [NASaveData getDefaultUserID];
+            }
+        }
+
+   
         NSDictionary *param = @{
-                                @"Userid"     :  [NASaveData getDefaultUserID],
+                                @"Userid"     :  userId,
                                 @"UseDevice"  :  NAUserDevice,
                                 @"Rows"       :  @"1",
                                 @"K002"       :  @"4",
@@ -2420,12 +2620,32 @@
                 self.isHaveNote =  searchBaseClass.response.header.numFound.integerValue > 0 ? YES : NO;
                 
                 NSDictionary *alluserdic=[NASaveData getALLUser];
-                NSDictionary *valuedic=[alluserdic objectForKey:[NASaveData getLoginUserId]];
+                NSString *userId;
+                if ([self isLogin]) {
+                    userId = [NASaveData getLoginUserId];
+                }else{
+                    if ([[NASaveData getDataUserClass] isEqualToString:@"11"]) {
+                        userId = [NASaveData getLoginUserId];
+                    }else{
+                        userId = [NASaveData getDefaultUserID];
+                    }
+                }
+
+                NSDictionary *valuedic=[alluserdic objectForKey:userId];
                 NSMutableDictionary *changevaluedic=[NSMutableDictionary dictionaryWithDictionary:valuedic];
                 [changevaluedic setObject:[NSNumber numberWithBool:self.isHaveNote] forKey:ishavenote];
                 
                 NSMutableDictionary *changealluser=[NSMutableDictionary dictionaryWithDictionary:alluserdic];
-                [changealluser setObject:changevaluedic forKey:[NASaveData getDefaultUserID]];
+                if ([self isLogin]) {
+                    [changealluser setObject:changevaluedic forKey:[NASaveData getLoginUserId]];
+                }else{
+                    if ([[NASaveData getDataUserClass] isEqualToString:@"11"]) {
+                        [changealluser setObject:changevaluedic forKey:[NASaveData getLoginUserId]];
+                    }else{
+                       [changealluser setObject:changevaluedic forKey:[NASaveData getDefaultUserID]];
+                    }
+                }
+                
                 [NASaveData saveALLUser:changealluser];
                 
                 
@@ -2443,7 +2663,18 @@
         
         
         NSDictionary *alluserdic=[NASaveData getALLUser];
-        NSDictionary *valuedic=[alluserdic objectForKey:[NASaveData getLoginUserId]];
+        NSString *userId;
+        if ([self isLogin]) {
+            userId = [NASaveData getLoginUserId];
+        }else{
+            if ([[NASaveData getDataUserClass] isEqualToString:@"11"]) {
+                userId = [NASaveData getLoginUserId];
+            }else{
+                userId = [NASaveData getDefaultUserID];
+            }
+        }
+
+        NSDictionary *valuedic=[alluserdic objectForKey:userId];
         
         NSNumber *myhavenote=[valuedic objectForKey:ishavenote];
         self.isHaveNote=myhavenote.boolValue;
@@ -2456,18 +2687,37 @@
 }
 //offline search
 - (void)offlineSearchFirstPage{
-    NSArray *array=[[NASQLHelper sharedInstance]getPaperInfoByUserId:[NASaveData getLoginUserId] ];
+    NSString *userId;
+    if ([self isLogin]) {
+        userId = [NASaveData getLoginUserId];
+    }else{
+        if ([[NASaveData getDataUserClass] isEqualToString:@"11"]) {
+            userId = [NASaveData getLoginUserId];
+        }else{
+            userId = [NASaveData getDefaultUserID];
+        }
+    }
+
+    NSArray *array=[[NASQLHelper sharedInstance]getPaperInfoByUserId:userId];
     self.searchPublicationArray = [[NSMutableArray alloc ]initWithArray:array];
     if (self.searchPublicationArray.count > 0) {
         NADoc *doc = self.searchPublicationArray[0];
-        [self searchCurrentApi:doc ByUserid:[NASaveData getDefaultUserID]];
+        if ([self isLogin]) {
+            [self searchCurrentApiLogin:doc ByUserid:[NASaveData getLoginUserId]];
+        }else{
+            if ([[NASaveData getDataUserClass] isEqualToString:@"11"]) {
+                [self searchCurrentApiLogin:doc ByUserid:[NASaveData getLoginUserId]];
+            }else{
+                [self searchCurrentApi:doc ByUserid:[NASaveData getDefaultUserID]];
+
+            }
+        }
+
+        
+        
     }else{
         dispatch_async(dispatch_get_main_queue(), ^{
             [ProgressHUD dismiss];
-//            [[[iToast makeText:NSLocalizedString(@"NO Page", nil)]
-//              setGravity:iToastGravityBottom] show];
-            //[self toSettingViewContreller];
-            
         });
         
     }
@@ -2475,12 +2725,10 @@
 }
 //search
 -(void)getSearchAPIWithMaster:(NAMasterBaseClass *)masterBaseClass
-{
-    //    NSLog(@"getSearchAPIWithMaster") ;
+{ ;
     self.homeToolBar.ishavesokuho=NO;
     self.isHavesokuho=NO;
     [ProgressHUD show:NSLocalizedString(@"messageloading", nil)];
-//    [ProgressHUD shared].label.text=NSLocalizedString(@"messageloading", nil);
     NSString *K004 = @"";
     NSString *K005 = @"";
     NSString *K006 = @"";
@@ -2490,9 +2738,22 @@
         K004 = myCurrentDoc.publisherGroupInfoId;
         K005 = myCurrentDoc.publisherInfoId;
         K006 = myCurrentDoc.publicationInfoId;
+        NSString *userId;
+        if ([self isLogin]) {
+            userId = [NASaveData getLoginUserId];
+        }else{
+            if ([[NASaveData getDataUserClass] isEqualToString:@"11"]) {
+                userId = [NASaveData getLoginUserId];
+            }else{
+                userId = [NASaveData getDefaultUserID];
+                
+            }
+        }
+
+
         
         NSDictionary *param = @{
-                                @"Userid"     :  [NASaveData getDefaultUserID],
+                                @"Userid"     :  userId,
                                 @"UseDevice"  :  NAUserDevice,
                                 @"K090"       :  @"010",
                                 @"Rows"       :  @"1",
@@ -2553,9 +2814,20 @@
                     self.isHavesokuho=YES;
                 }
                 K006 = publication.publicationInfoIdentifier;
+                NSString *userId;
+                if ([self isLogin]) {
+                    userId = [NASaveData getLoginUserId];
+                }else{
+                    if ([[NASaveData getDataUserClass] isEqualToString:@"11"]) {
+                        userId = [NASaveData getLoginUserId];
+                    }else{
+                        userId = [NASaveData getDefaultUserID];
+                        
+                    }
+                }
                 
                 NSDictionary *param = @{
-                                        @"Userid"     :  [NASaveData getDefaultUserID],
+                                        @"Userid"     :  userId,
                                         @"UseDevice"  :  NAUserDevice,
                                         @"K090"       :  @"010",
                                         @"Rows"       :  @"1",
@@ -2584,8 +2856,6 @@
                         }
                         if (apiCount == 0) {
                             [self searchFirstPage];
-                        }else {
-                            
                         }
                     }else{
                         ITOAST_BOTTOM(error.localizedDescription);
@@ -2599,33 +2869,50 @@
 }
 - (void)searchFirstPage
 {
-//    NSSortDescriptor *sortDescriptor3 = [[NSSortDescriptor alloc] initWithKey:@"publication_disOrder1" ascending:YES];
     NSSortDescriptor *sortDescriptor1 = [[NSSortDescriptor alloc] initWithKey:@"publishDate" ascending:NO];
     NSSortDescriptor *sortDescriptor2 = [[NSSortDescriptor alloc] initWithKey:@"lastUpdateDateAndTime" ascending:NO];
-//    NSSortDescriptor *sortDescriptor2 = [[NSSortDescriptor alloc] initWithKey:@"publicationInfoId" ascending:YES];
     [self.searchPublicationArray sortUsingDescriptors:[NSArray arrayWithObjects:sortDescriptor1, sortDescriptor2, nil]];
     if (self.searchPublicationArray.count > 0) {
         if (([self.forwardPage isEqualToString:@"topPage_noUserid"]||[self.forwardPage isEqualToString:@"topPage"])&&self.topPageDoc!=nil) {
-            if ([NASaveData getIsVisitorModel]) {
-                [self searchCurrentApi:self.topPageDoc ByUserid:[NASaveData getDefaultUserID]];
-                //[self searchCurrentApiChange:self.topPageDoc ByUserid:[NASaveData getDefaultUserID]];
+            if ([self isLogin]) {
+                [self searchCurrentApiLogin:self.topPageDoc ByUserid:[NASaveData getLoginUserId]];
+
             }else{
-                [self searchCurrentApi:self.topPageDoc ByUserid:[NASaveData getDefaultUserID]];
-                //[self searchCurrentApiChange:self.topPageDoc ByUserid:[NASaveData getDefaultUserID]];
+                if ([[NASaveData getDataUserClass] isEqualToString:@"11"]) {
+                    [self searchCurrentApiLogin:self.topPageDoc ByUserid:[NASaveData getLoginUserId]];
+
+                }else{
+                    [self searchCurrentApi:self.topPageDoc ByUserid:[NASaveData getDefaultUserID]];
+
+                    
+                }
             }
+
+            
             
         }else{
             
             NADoc *doc = self.searchPublicationArray[0];
-            [self searchCurrentApi:doc ByUserid:[NASaveData getDefaultUserID]];
-            //[self searchCurrentApiChange:doc ByUserid:[NASaveData getDefaultUserID]];
+            if ([self isLogin]) {
+                [self searchCurrentApiLogin:doc ByUserid:[NASaveData getLoginUserId]];
+                
+            }else{
+                if ([[NASaveData getDataUserClass] isEqualToString:@"11"]) {
+                    [self searchCurrentApiLogin:doc ByUserid:[NASaveData getLoginUserId]];
+                    
+                }else{
+                    [self searchCurrentApi:doc ByUserid:[NASaveData getDefaultUserID]];
+                    
+                    
+                }
+            }
+ 
+            
+            
         }
     }else{
         dispatch_async(dispatch_get_main_queue(), ^{
             [ProgressHUD dismiss];
-//            [[[iToast makeText:NSLocalizedString(@"NO Page", nil)]
-//              setGravity:iToastGravityBottom] show];
-            //[self toSettingViewContreller];
         });
         
     }
@@ -2633,7 +2920,392 @@
         self.forwardPage=@"sukuho";
     }
 }
-    //所有的检索
+    //地域版全纸面检索  NOT LOGIN
+- (void)searchCurrentApi:(NADoc *)doc ByUserid:(NSString *)myUserid
+    {
+        flgDoc = doc;
+        [self searchCurrentApiChange:doc ByUserid:myUserid];
+        [self.mainScrollView removeFromSuperview];
+        isDoneImageTask=NO;
+        _mainScrollView = nil;
+        _mainScrollView = self.mainScrollView;
+        
+        //    if (!self.homeToolBar.isHidden) {
+        //        MAIN(^{
+        //            if ([NASaveData isAlldownload]) {
+        //                [self.progressViewBar setHidden:NO];
+        //            }else{
+        //                [self.progressViewBar setHidden:YES];
+        //            }
+        //        });
+        //
+        //    }
+        
+        //    [_progressViewBar setProgressNum:0.0f];
+        //    [_progressViewBar setTitleText:@""];
+        
+        [[NADownloadHelper sharedInstance] cancel];
+        [[NADownloadHelper sharedInstance] initImageTask];
+        
+        if ([NACheckNetwork sharedInstance].isHavenetwork){
+            
+            // 1~5紙面mini imageをdownload see the MSearchcondition.h
+            NSDictionary *param = @{
+                                    @"K008"       :  doc.editionInfoId,
+                                    @"Userid"     :  myUserid,
+                                    @"UseDevice"  :  NAUserDevice,
+                                    @"Rows"       :  [NSString stringWithFormat:@"%ld", (long)firstDownloadNum],
+                                    @"K004"       :  doc.publisherGroupInfoId,
+                                    @"K003"       :  [NSString stringWithFormat:@"%@:%@",doc.publishDate,doc.publishDate],
+                                    @"K006"       :  doc.publicationInfoId,
+                                    @"K005"       :  doc.publisherInfoId,
+                                    @"K014"       :  @"1",
+                                    @"K002"       :  @"2",
+                                    @"Mode"       :  @"1",
+                                    @"Sort"       :  @"K006:asc,K090:asc,K012:asc",
+                                    @"Fl"         :  [NSString searchCurrentFl]
+                                    };
+            [[NANetworkClient sharedClient] postSearch:param completionBlock:^(id search, NSError *error) {
+                
+                if (!error) {
+                    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                        
+                        SHXMLParser *parser = [[SHXMLParser alloc] init];
+                        NSDictionary *dic = [parser parseData:search];
+                        NASearchBaseClass *searchBaseClass = [NASearchBaseClass modelObjectWithDictionary:dic];
+                        
+                        if (searchBaseClass.response.doc&&searchBaseClass.response.doc.count>0) {
+                            // 紙面image
+                            [[NADownloadHelper sharedInstance] downloadThumb:searchBaseClass.response.doc index:0];
+                            
+                            //　記事
+                            if ([NASaveData isHaveNote]) {
+                                [[NADownloadHelper sharedInstance] downloadNote:searchBaseClass.response.doc start:0 end: searchBaseClass.response.doc.count isSetInDoc:FALSE];
+                            }
+                        }
+                    });
+                }
+            }];
+            // 全紙面を検索
+            param = @{
+                      @"K008"       :  doc.editionInfoId,
+                      @"Userid"     :  myUserid,
+                      @"UseDevice"  :  NAUserDevice,
+                      @"Rows"       :  @"100",
+                      @"K004"       :  doc.publisherGroupInfoId,
+                      @"K003"       :  [NSString stringWithFormat:@"%@:%@",doc.publishDate,doc.publishDate],
+                      @"K006"       :  doc.publicationInfoId,
+                      @"K005"       :  doc.publisherInfoId,
+                      @"K014"       :  @"1",
+                      @"K002"       :  @"2",
+                      @"Mode"       :  @"1",
+                      @"Sort"       :  @"K006:asc,K090:asc,K012:asc",
+                      @"Fl"         :  [NSString searchCurrentFl],
+                      @"K081"       :  areaCode,
+                      };
+            doc.user_id=[NASaveData getDefaultUserID];
+            if (![[NASQLHelper sharedInstance]isHavePaperInfoByDoc:doc]) {
+                [[NASQLHelper sharedInstance]addPaperInfo:doc];
+            }
+            
+            [[NANetworkClient sharedClient] postSearch:param completionBlock:^(id search, NSError *error) {
+                
+                if (!error) {
+                    SHXMLParser *parser = [[SHXMLParser alloc] init];
+                    NSDictionary *dic = [parser parseData:search];
+                    NASearchBaseClass *searchBaseClass = [NASearchBaseClass modelObjectWithDictionary:dic];
+                    if (searchBaseClass.response.doc==nil||searchBaseClass.response.doc.count<=0) {
+                        NADoc *doc = self.searchPublicationArray[0];
+                        [self searchCurrentApi:doc ByUserid:[NASaveData getDefaultUserID]];
+                        return ;
+                    }
+                    // 紙面XMLを格納
+                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                        [[NAFileManager sharedInstance] saveSearchFileWithData:search Mydoc:doc];
+                    });
+                    
+                    // 紙面情報初期化
+                    [self.pageArray removeAllObjects];
+                    [self.pageArray addObjectsFromArray:searchBaseClass.response.doc];
+                    [NADownloadHelper sharedInstance].docs=self.pageArray;
+                    
+                    
+                    // 紙面 download task始め
+                    BACK(^{
+                        NSMutableDictionary *tmpdic=[[NSMutableDictionary alloc]init];
+                        
+                        if ([NASaveData getFirstDownload] == 1) {
+                            [tmpdic setObject:NASOKUHO forKey:@"downloadtype"];
+                            [tmpdic setObject:@"" forKey:@"genreId"];
+                            [[NSNotificationCenter defaultCenter]postNotificationName:@"startDownloadSokuhoTask" object:nil userInfo:tmpdic];
+                        }
+                        
+                        // 紙面
+                        if ([NASaveData getFirstDownload] != 1) {
+                            [tmpdic setObject:NAThumbimage forKey:@"downloadtype"];
+                            [tmpdic setObject:[NSNumber numberWithInteger:firstDownloadNum] forKey:@"imageindex"];
+                            [[NSNotificationCenter defaultCenter]postNotificationName:@"startDownloadImageTask" object:nil userInfo:tmpdic];
+                        }
+                    });
+                    
+                    // 画面表示
+                    [self showMainView];
+                    if (![NASaveData getIsVisitorModel]) {
+                        [NASaveData saveCurrentDoc:doc];
+                    }
+                    
+                    
+                    //　記事
+                    if ([NASaveData isHaveNote]) {
+                        [[NADownloadHelper sharedInstance] downloadNote:self.pageArray start:firstDownloadNum end:self.pageArray.count isSetInDoc:FALSE];
+                    }
+                    //                [self getNoteAPI];
+                }else{
+                    ITOAST_BOTTOM(NSLocalizedString(@"network timeout", nil));
+                    [ProgressHUD dismiss];
+                }
+            }];
+
+            
+        }else{
+            //        MAIN(^{
+            //            ITOAST_BOTTOM(NSLocalizedString(@"networkerror", nil));
+            //        });
+            NSData *mydata=[[NAFileManager sharedInstance] readSearchFileWithdoc:doc];
+            
+            if (mydata) {
+                SHXMLParser *parser = [[SHXMLParser alloc] init];
+                NSDictionary *dic = [parser parseData:mydata];
+                NASearchBaseClass *searchBaseClass = [NASearchBaseClass modelObjectWithDictionary:dic];
+                
+                
+                // 紙面情報初期化
+                [self.pageArray removeAllObjects];
+                [self.pageArray addObjectsFromArray:searchBaseClass.response.doc];
+                
+                [NADownloadHelper sharedInstance].docs=self.pageArray;
+                
+                // download task始め
+                dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                    NSMutableDictionary *tmpdic=[[NSMutableDictionary alloc]init];
+                    [tmpdic setObject:NAThumbimage forKey:@"downloadtype"];
+                    [tmpdic setObject:[NSNumber numberWithInteger:firstDownloadNum] forKey:@"imageindex"];
+                    [[NSNotificationCenter defaultCenter]postNotificationName:@"startDownloadImageTask" object:nil userInfo:tmpdic];
+                });
+                
+                // 画面表示
+                [self showMainView];
+                MAIN(^{
+                    [ProgressHUD dismiss];
+                });
+                //            [self getNoteAPI];
+            }else{
+                [self showMainView];
+                MAIN(^{
+                    [ProgressHUD dismiss];
+                });
+            }
+            
+        }
+    }
+    
+    //LOGIN
+- (void)searchCurrentApiLogin:(NADoc *)doc ByUserid:(NSString *)myUserid
+    {
+        flgDoc = doc;
+        [self searchCurrentApiChange:doc ByUserid:myUserid];
+        [self.mainScrollView removeFromSuperview];
+        isDoneImageTask=NO;
+        _mainScrollView = nil;
+        _mainScrollView = self.mainScrollView;
+        
+        [[NADownloadHelper sharedInstance] cancel];
+        [[NADownloadHelper sharedInstance] initImageTask];
+        
+        if ([NACheckNetwork sharedInstance].isHavenetwork){
+            
+            // 1~5紙面mini imageをdownload see the MSearchcondition.h
+            NSDictionary *param = @{
+                                    @"K008"       :  doc.editionInfoId,
+                                    @"Userid"     :  myUserid,
+                                    @"UseDevice"  :  NAUserDevice,
+                                    @"Rows"       :  [NSString stringWithFormat:@"%ld", (long)firstDownloadNum],
+                                    @"K004"       :  doc.publisherGroupInfoId,
+                                    @"K003"       :  [NSString stringWithFormat:@"%@:%@",doc.publishDate,doc.publishDate],
+                                    @"K006"       :  doc.publicationInfoId,
+                                    @"K005"       :  doc.publisherInfoId,
+                                    @"K014"       :  @"1",
+                                    @"K002"       :  @"2",
+                                    @"Mode"       :  @"1",
+                                    @"Sort"       :  @"K006:asc,K090:asc,K012:asc",
+                                    @"Fl"         :  [NSString searchCurrentFl]
+                                    };
+            [[NANetworkClient sharedClient] postSearch:param completionBlock:^(id search, NSError *error) {
+                
+                if (!error) {
+                    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                        
+                        SHXMLParser *parser = [[SHXMLParser alloc] init];
+                        NSDictionary *dic = [parser parseData:search];
+                        NASearchBaseClass *searchBaseClass = [NASearchBaseClass modelObjectWithDictionary:dic];
+                        
+                        if (searchBaseClass.response.doc&&searchBaseClass.response.doc.count>0) {
+                            // 紙面image
+                            [[NADownloadHelper sharedInstance] downloadThumb:searchBaseClass.response.doc index:0];
+                            
+                            //　記事
+                            if ([NASaveData isHaveNote]) {
+                                [[NADownloadHelper sharedInstance] downloadNote:searchBaseClass.response.doc start:0 end: searchBaseClass.response.doc.count isSetInDoc:FALSE];
+                            }
+                        }
+                    });
+                }
+            }];
+            // 全紙面を検索
+            NSString *str =[NASaveData getDataUserClass];
+            if ([str isEqualToString:@"10"]) {
+                param = @{
+                          @"K008"       :  doc.editionInfoId,
+                          @"Userid"     :  myUserid,
+                          @"UseDevice"  :  NAUserDevice,
+                          @"Rows"       :  @"100",
+                          @"K004"       :  doc.publisherGroupInfoId,
+                          @"K003"       :  [NSString stringWithFormat:@"%@:%@",doc.publishDate,doc.publishDate],
+                          @"K006"       :  doc.publicationInfoId,
+                          @"K005"       :  doc.publisherInfoId,
+                          @"K014"       :  @"1",
+                          @"K002"       :  @"2",
+                          @"Mode"       :  @"1",
+                          @"Sort"       :  @"K006:asc,K090:asc,K012:asc",
+                          @"Fl"         :  [NSString searchCurrentFl],
+                          @"K081"       :  ReleaseAreaInfo,
+                          @"K083"       : PublishDayInfo,
+                          };
+            }else{
+                param = @{
+                          @"K008"       :  doc.editionInfoId,
+                          @"Userid"     :  myUserid,
+                          @"UseDevice"  :  NAUserDevice,
+                          @"Rows"       :  @"100",
+                          @"K004"       :  doc.publisherGroupInfoId,
+                          @"K003"       :  [NSString stringWithFormat:@"%@:%@",doc.publishDate,doc.publishDate],
+                          @"K006"       :  doc.publicationInfoId,
+                          @"K005"       :  doc.publisherInfoId,
+                          @"K014"       :  @"1",
+                          @"K002"       :  @"2",
+                          @"Mode"       :  @"1",
+                          @"Sort"       :  @"K006:asc,K090:asc,K012:asc",
+                          @"Fl"         :  [NSString searchCurrentFl],
+                          @"K081"       :  ReleaseAreaInfo,
+                          };
+            }
+            
+            doc.user_id=[NASaveData getLoginUserId];
+            if (![[NASQLHelper sharedInstance]isHavePaperInfoByDoc:doc]) {
+                [[NASQLHelper sharedInstance]addPaperInfo:doc];
+            }
+            
+            [[NANetworkClient sharedClient] postSearch:param completionBlock:^(id search, NSError *error) {
+                
+                if (!error) {
+                    SHXMLParser *parser = [[SHXMLParser alloc] init];
+                    NSDictionary *dic = [parser parseData:search];
+                    NASearchBaseClass *searchBaseClass = [NASearchBaseClass modelObjectWithDictionary:dic];
+                    if (searchBaseClass.response.doc==nil||searchBaseClass.response.doc.count<=0) {
+                        NADoc *doc = self.searchPublicationArray[0];
+                        [self searchCurrentApiLogin:doc ByUserid:[NASaveData getLoginUserId]];
+                        return ;
+                    }
+                    // 紙面XMLを格納
+                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                        [[NAFileManager sharedInstance] saveSearchFileWithData:search Mydoc:doc];
+                    });
+                    
+                    // 紙面情報初期化
+                    [self.pageArray removeAllObjects];
+                    [self.pageArray addObjectsFromArray:searchBaseClass.response.doc];
+
+                    
+                    
+                    // 紙面 download task始め
+                    BACK(^{
+                        NSMutableDictionary *tmpdic=[[NSMutableDictionary alloc]init];
+                        
+                        if ([NASaveData getFirstDownload] == 1) {
+                            [tmpdic setObject:NASOKUHO forKey:@"downloadtype"];
+                            [tmpdic setObject:@"" forKey:@"genreId"];
+                            [[NSNotificationCenter defaultCenter]postNotificationName:@"startDownloadSokuhoTask" object:nil userInfo:tmpdic];
+                        }
+                        
+                        // 紙面
+                        if ([NASaveData getFirstDownload] != 1) {
+                            [tmpdic setObject:NAThumbimage forKey:@"downloadtype"];
+                            [tmpdic setObject:[NSNumber numberWithInteger:firstDownloadNum] forKey:@"imageindex"];
+                            [[NSNotificationCenter defaultCenter]postNotificationName:@"startDownloadImageTask" object:nil userInfo:tmpdic];
+                        }
+                    });
+                    
+                    // 画面表示
+                    [self showMainView];
+                    if (![NASaveData getIsVisitorModel]) {
+                        [NASaveData saveCurrentDoc:doc];
+                    }
+                    
+                    
+                    //　記事
+                    if ([NASaveData isHaveNote]) {
+                        [[NADownloadHelper sharedInstance] downloadNote:self.pageArray start:firstDownloadNum end:self.pageArray.count isSetInDoc:FALSE];
+                    }
+                    //                [self getNoteAPI];
+                }else{
+                    ITOAST_BOTTOM(NSLocalizedString(@"network timeout", nil));
+                    [ProgressHUD dismiss];
+                }
+            }];
+            
+        }else{
+            //        MAIN(^{
+            //            ITOAST_BOTTOM(NSLocalizedString(@"networkerror", nil));
+            //        });
+            NSData *mydata=[[NAFileManager sharedInstance] readSearchFileWithdoc:doc];
+            
+            if (mydata) {
+                SHXMLParser *parser = [[SHXMLParser alloc] init];
+                NSDictionary *dic = [parser parseData:mydata];
+                NASearchBaseClass *searchBaseClass = [NASearchBaseClass modelObjectWithDictionary:dic];
+                
+                
+                // 紙面情報初期化
+                [self.pageArray removeAllObjects];
+                [self.pageArray addObjectsFromArray:searchBaseClass.response.doc];
+                
+                [NADownloadHelper sharedInstance].docs=self.pageArray;
+                
+                // download task始め
+                dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                    NSMutableDictionary *tmpdic=[[NSMutableDictionary alloc]init];
+                    [tmpdic setObject:NAThumbimage forKey:@"downloadtype"];
+                    [tmpdic setObject:[NSNumber numberWithInteger:firstDownloadNum] forKey:@"imageindex"];
+                    [[NSNotificationCenter defaultCenter]postNotificationName:@"startDownloadImageTask" object:nil userInfo:tmpdic];
+                });
+                
+                // 画面表示
+                [self showMainView];
+                MAIN(^{
+                    [ProgressHUD dismiss];
+                });
+                //            [self getNoteAPI];
+            }else{
+                [self showMainView];
+                MAIN(^{
+                    [ProgressHUD dismiss];
+                });
+            }
+            
+        }
+    }
+
+    //所有的检索 相同pageno放在一起
 - (void)searchCurrentApiChange:(NADoc *)doc ByUserid:(NSString *)myUserid
     {
         
@@ -2661,7 +3333,7 @@
                 NASearchBaseClass *searchBaseClass = [NASearchBaseClass modelObjectWithDictionary:dic];
                 if (searchBaseClass.response.doc==nil||searchBaseClass.response.doc.count<=0) {
                     NADoc *doc = self.searchPublicationArray[0];
-                    [self searchCurrentApiChange:doc ByUserid:[NASaveData getDefaultUserID]];
+                    [self searchCurrentApiChange:doc ByUserid:myUserid];
                     return ;
                 }
                 // 紙面XMLを格納
@@ -2699,147 +3371,6 @@
                     
                 }
                 NSLog(@"%lu",(unsigned long)_regionDic.allKeys.count);
-            }else{
-                ITOAST_BOTTOM(NSLocalizedString(@"network timeout", nil));
-                [ProgressHUD dismiss];
-            }
-        }];
-        
-        
-}
-    //地域版全纸面检索
-- (void)searchCurrentApi:(NADoc *)doc ByUserid:(NSString *)myUserid
-{
-    flgDoc = doc;
-    [self searchCurrentApiChange:doc ByUserid:myUserid];
-    [self.mainScrollView removeFromSuperview];
-    isDoneImageTask=NO;
-    _mainScrollView = nil;
-    _mainScrollView = self.mainScrollView;
-    
-//    if (!self.homeToolBar.isHidden) {
-//        MAIN(^{
-//            if ([NASaveData isAlldownload]) {
-//                [self.progressViewBar setHidden:NO];
-//            }else{
-//                [self.progressViewBar setHidden:YES];
-//            }
-//        });
-//        
-//    }
-    
-//    [_progressViewBar setProgressNum:0.0f];
-//    [_progressViewBar setTitleText:@""];
-    
-    [[NADownloadHelper sharedInstance] cancel];
-    [[NADownloadHelper sharedInstance] initImageTask];
-    
-    if ([NACheckNetwork sharedInstance].isHavenetwork){
-        
-        // 1~5紙面mini imageをdownload see the MSearchcondition.h
-        NSDictionary *param = @{
-                                @"K008"       :  doc.editionInfoId,
-                                @"Userid"     :  myUserid,
-                                @"UseDevice"  :  NAUserDevice,
-                                @"Rows"       :  [NSString stringWithFormat:@"%ld", (long)firstDownloadNum],
-                                @"K004"       :  doc.publisherGroupInfoId,
-                                @"K003"       :  [NSString stringWithFormat:@"%@:%@",doc.publishDate,doc.publishDate],
-                                @"K006"       :  doc.publicationInfoId,
-                                @"K005"       :  doc.publisherInfoId,
-                                @"K014"       :  @"1",
-                                @"K002"       :  @"2",
-                                @"Mode"       :  @"1",
-                                @"Sort"       :  @"K006:asc,K090:asc,K012:asc",
-                                @"Fl"         :  [NSString searchCurrentFl]
-                                };
-        [[NANetworkClient sharedClient] postSearch:param completionBlock:^(id search, NSError *error) {
-            
-            if (!error) {
-                dispatch_async(dispatch_get_global_queue(0, 0), ^{
-                    
-                    SHXMLParser *parser = [[SHXMLParser alloc] init];
-                    NSDictionary *dic = [parser parseData:search];
-                    NASearchBaseClass *searchBaseClass = [NASearchBaseClass modelObjectWithDictionary:dic];
-                    
-                    if (searchBaseClass.response.doc&&searchBaseClass.response.doc.count>0) {
-                        // 紙面image
-                        [[NADownloadHelper sharedInstance] downloadThumb:searchBaseClass.response.doc index:0];
-                        
-                        //　記事
-                        if ([NASaveData isHaveNote]) {
-                            [[NADownloadHelper sharedInstance] downloadNote:searchBaseClass.response.doc start:0 end: searchBaseClass.response.doc.count isSetInDoc:FALSE];
-                        }
-                    }
-                });
-            }
-        }];
-        // 全紙面を検索
-        param = @{
-                  @"K008"       :  doc.editionInfoId,
-                  @"Userid"     :  myUserid,
-                  @"UseDevice"  :  NAUserDevice,
-                  @"Rows"       :  @"100",
-                  @"K004"       :  doc.publisherGroupInfoId,
-                  @"K003"       :  [NSString stringWithFormat:@"%@:%@",doc.publishDate,doc.publishDate],
-                  @"K006"       :  doc.publicationInfoId,
-                  @"K005"       :  doc.publisherInfoId,
-                  @"K014"       :  @"1",
-                  @"K002"       :  @"2",
-                  @"Mode"       :  @"1",
-                  @"Sort"       :  @"K006:asc,K090:asc,K012:asc",
-                  @"Fl"         :  [NSString searchCurrentFl],
-                  @"K081"       :  areaCode,
-                  };
-        doc.user_id=[NASaveData getLoginUserId];
-        if (![[NASQLHelper sharedInstance]isHavePaperInfoByDoc:doc]) {
-            [[NASQLHelper sharedInstance]addPaperInfo:doc];
-        }
-        
-        [[NANetworkClient sharedClient] postSearch:param completionBlock:^(id search, NSError *error) {
-            
-            if (!error) {
-                SHXMLParser *parser = [[SHXMLParser alloc] init];
-                NSDictionary *dic = [parser parseData:search];
-                NASearchBaseClass *searchBaseClass = [NASearchBaseClass modelObjectWithDictionary:dic];
-                if (searchBaseClass.response.doc==nil||searchBaseClass.response.doc.count<=0) {
-                    NADoc *doc = self.searchPublicationArray[0];
-                    [self searchCurrentApi:doc ByUserid:[NASaveData getDefaultUserID]];
-                    return ;
-                }
-                // 紙面XMLを格納
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                    [[NAFileManager sharedInstance] saveSearchFileWithData:search Mydoc:doc];
-                });
-                
-                // 紙面情報初期化
-                [self.pageArray removeAllObjects];
-                [self.pageArray addObjectsFromArray:searchBaseClass.response.doc];
-//                [NADownloadHelper sharedInstance].docs=self.pageArray;
-                
-                
-//                [self.pageArray removeAllObjects];
-//                NSInteger dicCount= _regionDic.allKeys.count;
-//                for (int i = 1; i < dicCount+1; i++) {
-//                    NSArray *arr = [_regionDic objectForKey:[NSString stringWithFormat:@"%d",i]];
-//                    if (arr.count == 1) {
-//                        [self.pageArray addObject:[arr objectAtIndex:0]];
-//                    }else{
-//                        for(int i = 0; i < arr.count; i++) {
-//                            NADoc *doc = [arr objectAtIndex:i];
-//                            NSString *area = doc.releaseAreaInfo;
-//                            if (area.length != 0) {
-//                                if ([area isEqualToString:areaCode]) {
-//                                    [_pageArray addObject:[arr objectAtIndex:i]];
-//                                }else{
-//                                    [localPageArr addObject:[arr objectAtIndex:i]];
-//                                }
-//                            }
-//                            
-//                        }
-//                    }
-//                }
-                
-                
                 // 紙面 download task始め
                 BACK(^{
                     NSMutableDictionary *tmpdic=[[NSMutableDictionary alloc]init];
@@ -2858,8 +3389,6 @@
                     }
                 });
                 
-                // 画面表示
-                [self showMainView];
                 if (![NASaveData getIsVisitorModel]) {
                     [NASaveData saveCurrentDoc:doc];
                 }
@@ -2867,57 +3396,78 @@
                 
                 //　記事
                 if ([NASaveData isHaveNote]) {
-                    [[NADownloadHelper sharedInstance] downloadNote:self.pageArray start:firstDownloadNum end:self.pageArray.count isSetInDoc:FALSE];
+                    [[NADownloadHelper sharedInstance] downloadNote:docArr start:firstDownloadNum end:docArr.count isSetInDoc:FALSE];
                 }
-//                [self getNoteAPI];
             }else{
                 ITOAST_BOTTOM(NSLocalizedString(@"network timeout", nil));
                 [ProgressHUD dismiss];
             }
         }];
         
-    }else{
-//        MAIN(^{
-//            ITOAST_BOTTOM(NSLocalizedString(@"networkerror", nil));
-//        });
-        NSData *mydata=[[NAFileManager sharedInstance] readSearchFileWithdoc:doc];
         
-        if (mydata) {
-            SHXMLParser *parser = [[SHXMLParser alloc] init];
-            NSDictionary *dic = [parser parseData:mydata];
-            NASearchBaseClass *searchBaseClass = [NASearchBaseClass modelObjectWithDictionary:dic];
-            
-            
-            // 紙面情報初期化
-            [self.pageArray removeAllObjects];
-            [self.pageArray addObjectsFromArray:searchBaseClass.response.doc];
-            
-            [NADownloadHelper sharedInstance].docs=self.pageArray;
-            
-            // download task始め
-            dispatch_async(dispatch_get_global_queue(0, 0), ^{
-                NSMutableDictionary *tmpdic=[[NSMutableDictionary alloc]init];
-                [tmpdic setObject:NAThumbimage forKey:@"downloadtype"];
-                [tmpdic setObject:[NSNumber numberWithInteger:firstDownloadNum] forKey:@"imageindex"];
-                [[NSNotificationCenter defaultCenter]postNotificationName:@"startDownloadImageTask" object:nil userInfo:tmpdic];
-            });
-            
-            // 画面表示
-            [self showMainView];
-            MAIN(^{
-                [ProgressHUD dismiss];
-            });
-//            [self getNoteAPI];
-        }else{
-            [self showMainView];
-            MAIN(^{
-                [ProgressHUD dismiss];
-            });
-        }
-        
-    }
 }
+-(void)showMainViewHave{
+    NASubImageScrollView *view=(NASubImageScrollView *)self.mainScrollView.currentItemView;
+    curPaperIndexNo = view.imageView.noteView.curPaperIndexNo;
+    [self.mainScrollView removeFromSuperview];
+    _mainScrollView = nil;
+    _mainScrollView = self.mainScrollView;
+    isChangeScreen=YES;
+    
+    
+    [self.view addSubview:self.mainScrollView];
+    [self.view sendSubviewToBack:self.mainScrollView];
+    
+    NSInteger tempPageIndex = 0;
+    _toolBarStyle = 0;
+    if ([self isLandscape]) {    // 後処理
+        NSArray *pages = [self padLandscapeCount];
+        if (pages.count > 0) {
+            tempPageIndex = _haveChangeIndex;
+        }
+        _riliView.hidden = YES;
+        [self setHorToolBar];
+    }else{
+        [self resetRiliview];
+        [self resetHomeToolBar];
+        _riliView.hidden = NO;
+        
+        // 1紙面を表示
+        if (self.pageArray.count > 0) {
+            tempPageIndex = _haveChangeIndex;
+            
+        }
+    }
+    if ([self isLogin]) {
+        if (self.pageArray.count == 1) {
+            self.mainScrollView.wrapEnabled = NO;
+            self.mainScrollView.scrollEnabled = NO;
+        }
+    }else{
+        self.mainScrollView.wrapEnabled = NO;
+        self.mainScrollView.scrollEnabled = NO;
+    }
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    if ([self isLogin]) {
+        [button setBackgroundImage:[UIImage imageNamed:@"06_blue"]
+                          forState:UIControlStateNormal];
+    }else{
+        [button setBackgroundImage:[UIImage imageNamed:@"06_glay"]
+                          forState:UIControlStateNormal];
+    }
+    [button addTarget:self action:@selector(searchBarItemAction:) forControlEvents:UIControlEventTouchUpInside];
+    button.frame = CGRectMake(0, 0, 25, 25);
+    
+    self.searchBarItem= [[UIBarButtonItem alloc] initWithCustomView:button];
+    self.navigationItem.leftBarButtonItem = self.searchBarItem;
+    // 第１面を表示
+    self.mainScrollView.currentItemIndex = tempPageIndex;
+    [self.mainScrollView scrollToItemAtIndex: tempPageIndex duration:0.3];
+    
+    // 後処理
+    [self swipeViewCurrentItemIndexDidChange:self.mainScrollView];
 
+}
 /**
  * main画面を表示
  *
@@ -3150,6 +3700,7 @@
     button.frame = CGRectMake(0, 0, 25, 25);
     _searchBarItem= [[UIBarButtonItem alloc] initWithCustomView:button];
     self.navigationItem.leftBarButtonItem = _searchBarItem;
+    [self getmasterAPIHaveLogIn:[NASaveData getLoginUserId]];
 }
 - (void)swipeViewCurrentItemIndexDidChange:(SwipeView *)swipeView
 {
@@ -3524,7 +4075,7 @@
  *
  */
 - (void)scrollViewDidZoom:(UIScrollView *)scrollView {
-    
+    btnView.alpha = 0;
     if (scrollView.zoomScale<1) {
         [scrollView setZoomScale:1];
         currentZoom=scrollView.zoomScale;
@@ -3594,6 +4145,11 @@
  *
  */
 -(void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)uiView atScale:(CGFloat)scale {
+    if (scale == 1) {
+        btnView.alpha = 1;
+    } else {
+        btnView.alpha = 0;
+    }
     NASubImageScrollView *view = (NASubImageScrollView *)[self.mainScrollView itemViewAtIndex:self.mainScrollView.currentItemIndex];
     if (view.largeModel != NAImageModelLoading && view.largeModel != NAImageModelDone) {
         NSMutableDictionary *tmpdic=[[NSMutableDictionary alloc]init];

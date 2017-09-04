@@ -104,7 +104,7 @@
     
     [scrollContentView addSubview:editImageView];
     [editImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(scrollContentView.mas_left).offset(30);
+        make.left.equalTo(scrollContentView.mas_left).offset(10);
         make.top.equalTo(scrollContentView.mas_top).offset(2);
         make.width.height.mas_equalTo(30);
     }];
@@ -128,14 +128,14 @@
     if ([self isLandscape]) {
         [editDetailLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(horLineView.mas_bottom).offset(5);
-            make.left.equalTo(scrollContentView.mas_left).offset(30);
+            make.left.equalTo(scrollContentView.mas_left).offset(10);
             make.right.equalTo(scrollContentView.mas_right).offset(-10);
             make.height.mas_equalTo(30);
         }];
     }else{
         [editDetailLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(horLineView.mas_bottom).offset(5);
-            make.left.equalTo(scrollContentView.mas_left).offset(30);
+            make.left.equalTo(scrollContentView.mas_left).offset(10);
             make.right.equalTo(scrollContentView.mas_right).offset(-10);
             make.height.mas_equalTo(60);
         }];
@@ -145,7 +145,7 @@
     [addClipScroll addSubview:clipTableView];
     [clipTableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(editDetailLabel.mas_bottom).offset(5);
-        make.left.equalTo(self.view.mas_left).offset(30);
+        make.left.equalTo(self.view.mas_left).offset(10);
         make.right.equalTo(self.view.mas_right);
         if (clipArr.count > 0) {
             make.height.mas_equalTo(clipArr.count*40);
@@ -229,7 +229,7 @@
 }
 - (void)setControlProperties {
     
-    addClipScroll.delegate = self;
+//    addClipScroll.delegate = self;
     
     editImageView.image = [UIImage imageNamed:@"10_blue"];
     
@@ -271,6 +271,7 @@
         __block BOOL isChangeError = false;
         __block BOOL isAddError = false;
         __block BOOL hasEmpty = false;
+        __block BOOL tooLongName = false;
         [self.view endEditing:YES];
         if (arrChangedTag.count > 0) {
             
@@ -278,8 +279,11 @@
                 if ([doc.tagName isEqualToString:@""]) {
                     hasEmpty = YES;
                 }
+                if (doc.tagName.length > 20) {
+                    tooLongName = YES;
+                }
             }
-            if (!hasEmpty) {
+            if (!hasEmpty && !tooLongName) {
                 for (int i = 0; i < arrChangedTag.count; i++) {
                     NAClipDoc *doc = arrChangedTag[i];
                     
@@ -306,57 +310,64 @@
                 if ([docAdd.tagName isEqualToString:@""]) {
                     [arrAddTagName removeObject:docAdd];
                 }
+                if (docAdd.tagName.length > 20) {
+                    tooLongName = YES;
+                }
             }
             
-            
-            // 创建队列组，可以使多个网络请求异步执行，执行完之后再进行操作
-            dispatch_group_t group = dispatch_group_create();
-            //创建全局队列
-            dispatch_queue_t queue = dispatch_get_global_queue(0, 0);
-            
-            dispatch_group_async(group, queue, ^{
-                // 循环上传数据
-                for (int j = 0; j < arrAddTagName.count; j++) {
-                    //创建dispatch_semaphore_t对象
-                    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-                    
-                    NAClipDoc *docAdd = arrAddTagName[j];
-                    if (![docAdd.tagName isEqualToString:@""]) {
-                        NSDate* dat = [NSDate dateWithTimeIntervalSinceNow:0];
-                        NSTimeInterval a=[dat timeIntervalSince1970]*1000;
-                        NSString *timeString = [NSString stringWithFormat:@"%f", a];
-                        
-                        NSDictionary *param = @{
-                                                @"Userid"     :  [NASaveData getLoginUserId],
-                                                @"TagName"         :  docAdd.tagName,
-                                                @"timestamp"   : timeString,
-                                                @"UseDevice"  :  NAUserDevice,
-                                                };
-                        
-                        [[NANetworkClient sharedClient] saveTag:param completionBlock:^(id favorites, NSError *error) {
-                            dispatch_semaphore_signal(semaphore);
-                            if (!error) {
-                                
-                                isAddError = false;
-                            } else {
-                                isAddError = true;
-                            }
-                        }];
-                        
-                        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
-                    }
-                }
-            });
-            // 当所有队列执行完成之后
-            dispatch_group_notify(group, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            if (!tooLongName) {
+                // 创建队列组，可以使多个网络请求异步执行，执行完之后再进行操作
+                dispatch_group_t group = dispatch_group_create();
+                //创建全局队列
+                dispatch_queue_t queue = dispatch_get_global_queue(0, 0);
                 
-            });
+                dispatch_group_async(group, queue, ^{
+                    // 循环上传数据
+                    for (int j = 0; j < arrAddTagName.count; j++) {
+                        //创建dispatch_semaphore_t对象
+                        dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+                        
+                        NAClipDoc *docAdd = arrAddTagName[j];
+                        if (![docAdd.tagName isEqualToString:@""]) {
+                            NSDate* dat = [NSDate dateWithTimeIntervalSinceNow:0];
+                            NSTimeInterval a=[dat timeIntervalSince1970]*1000;
+                            NSString *timeString = [NSString stringWithFormat:@"%f", a];
+                            
+                            NSDictionary *param = @{
+                                                    @"Userid"     :  [NASaveData getLoginUserId],
+                                                    @"TagName"         :  docAdd.tagName,
+                                                    @"timestamp"   : timeString,
+                                                    @"UseDevice"  :  NAUserDevice,
+                                                    };
+                            
+                            [[NANetworkClient sharedClient] saveTag:param completionBlock:^(id favorites, NSError *error) {
+                                dispatch_semaphore_signal(semaphore);
+                                if (!error) {
+                                    
+                                    isAddError = false;
+                                } else {
+                                    isAddError = true;
+                                }
+                            }];
+                            
+                            dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+                        }
+                    }
+                });
+                // 当所有队列执行完成之后
+                dispatch_group_notify(group, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                    
+                });
+            }
+            
         }
         
         
         if (arrChangedTag.count > 0 || arrAddTagName.count > 0) {
             if (hasEmpty) {
                 ITOAST_BOTTOM(@"空のラベルが存在");
+            } else if (tooLongName) {
+                ITOAST_BOTTOM(@"太长のラベルが存在");
             } else {
                 if (!isChangeError && !isAddError) {
                     ITOAST_BOTTOM(@"saveTag success");
@@ -385,6 +396,9 @@
         }
        
     }];
+    
+    UITapGestureRecognizer *oneTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollTap:)];
+    [addClipScroll addGestureRecognizer:oneTap];
 }
 
 - (void)getTagClipAPI:(BOOL)isSetPositions
@@ -521,6 +535,13 @@
                         }
                     }
                     
+                    for (int j = 0; j < arrChangedTag.count; j++) {
+                        NAClipDoc *doc = arrChangedTag[j];
+                        if ([doc.tagid isEqualToString:cell.tagId]) {
+                            [arrChangedTag removeObject:doc];
+                        }
+                    }
+                    
                     [clipTableView mas_updateConstraints:^(MASConstraintMaker *make) {
                         make.top.equalTo(editDetailLabel.mas_bottom).offset(5);
                         make.left.equalTo(self.view.mas_left).offset(30);
@@ -617,8 +638,8 @@
             } else {
                 make.top.equalTo(clipTableView.mas_bottom).offset(10);
             }
-            make.left.equalTo(scrollContentView.mas_left).offset(30);
-            make.right.mas_equalTo(-40);
+            make.left.equalTo(scrollContentView.mas_left).offset(10);
+            make.right.mas_equalTo(-30);
             make.height.mas_equalTo(30);
         }];
         
@@ -777,7 +798,8 @@
     }];
 }
 
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+- (void)scrollTap:(UITapGestureRecognizer *)sender {
+    addClipScroll.contentOffset = CGPointMake(0, 0);
     [self.view endEditing:YES];
 }
 

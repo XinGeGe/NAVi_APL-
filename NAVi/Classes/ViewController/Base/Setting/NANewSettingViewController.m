@@ -696,11 +696,6 @@
         
         NAHomeViewController *home = [[NAHomeViewController alloc] init];
         home.forwardPage=@"topPage";
-        home.topPageDoc= _topPageDoc;
-        home.regionDic = _regionDic;
-        home.clipDataSource = _clipDataSource;
-        home.homePageArray = _pageArray;
-        home.dayNumber = 0;
         //            home.noteNumber = _noteNumber;
         //             home.NoteArray = _NoteArray;
         NABaseNavigationController *nav = [[NABaseNavigationController alloc] initWithRootViewController:home];

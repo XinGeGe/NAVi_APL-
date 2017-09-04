@@ -14,5 +14,5 @@
 @property (copy, nonatomic) UIColor *highlightTextColor;
 @property (strong, nonatomic) EKEvent *containingEvent;
 @property (strong, nonatomic) id representedObject;
-
+- (void)setSelectedData:(BOOL)selected;
 @end

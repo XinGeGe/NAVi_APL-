@@ -106,15 +106,15 @@
             [_myAlertView mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.right.equalTo(mybackview.mas_right).offset(-[Util screenSize].width/5/2);
                 make.bottom.equalTo(mybackview.mas_bottom).offset(-50);
-                make.height.mas_equalTo(20*self.btnArray.count + 20);
-                make.width.mas_equalTo(60);
+                make.height.mas_equalTo(25*self.btnArray.count + 25);
+                make.width.mas_equalTo(90);
             }];
         }else{
             [_myAlertView mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.right.equalTo(mybackview.mas_right).offset(-[Util screenSize].width/5);
                 make.bottom.equalTo(mybackview.mas_bottom).offset(-50);
-                make.height.mas_equalTo(20*self.btnArray.count + 20);
-                make.width.mas_equalTo(60);
+                make.height.mas_equalTo(30*self.btnArray.count + 30);
+                make.width.mas_equalTo(90);
             }];
         }
     } else {
@@ -165,19 +165,32 @@
             }
             
             if (isPhone) {
-                clipBtn.titleLabel.font = [FontUtil systemFontOfSize:10];
-                
-                [clipBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-                    if (lastBtn) {
-                        make.bottom.equalTo(lastBtn.mas_top);
-                    } else {
-                        make.bottom.equalTo(_myAlertView.mas_bottom);
-                    }
-                    make.left.right.equalTo(_myAlertView);
-                    make.height.mas_equalTo(20);
-                }];
-            } else {
                 clipBtn.titleLabel.font = [FontUtil systemFontOfSize:15];
+                if ([Util screenSize].width >  [Util screenSize].height) {
+                    [clipBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+                        if (lastBtn) {
+                            make.bottom.equalTo(lastBtn.mas_top);
+                        } else {
+                            make.bottom.equalTo(_myAlertView.mas_bottom);
+                        }
+                        make.left.right.equalTo(_myAlertView);
+                        make.height.mas_equalTo(25);
+                    }];
+                }else{
+                    [clipBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+                        if (lastBtn) {
+                            make.bottom.equalTo(lastBtn.mas_top);
+                        } else {
+                            make.bottom.equalTo(_myAlertView.mas_bottom);
+                        }
+                        make.left.right.equalTo(_myAlertView);
+                        make.height.mas_equalTo(30);
+                    }];
+                }
+                
+                
+            } else {
+                clipBtn.titleLabel.font = [FontUtil systemFontOfSize:20];
                 
                 [clipBtn mas_makeConstraints:^(MASConstraintMaker *make) {
                     if (lastBtn) {
@@ -195,19 +208,37 @@
         
         if (lastBtn) {
             if (isPhone) {
-                [_addClipBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.bottom.equalTo(lastBtn.mas_top);
-                    make.left.right.equalTo(_myAlertView);
-                    make.height.mas_equalTo(20);
-                }];
+    
+                if ([Util screenSize].width >  [Util screenSize].height){
+                    [_addClipBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+                        make.bottom.equalTo(lastBtn.mas_top);
+                        make.left.right.equalTo(_myAlertView);
+                        make.height.mas_equalTo(25);
+                    }];
+                    
+                    
+                    [_addClipImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+                        make.top.equalTo(_addClipBtn.mas_top).offset(5);
+                        make.centerX.equalTo(_addClipBtn.mas_centerX);
+                        make.width.mas_equalTo(15);
+                        make.height.mas_equalTo(15);
+                    }];
+              }else{
+                  [_addClipBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+                      make.bottom.equalTo(lastBtn.mas_top);
+                      make.left.right.equalTo(_myAlertView);
+                      make.height.mas_equalTo(30);
+                  }];
+                  
+                  
+                  [_addClipImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+                      make.top.equalTo(_addClipBtn.mas_top).offset(5);
+                      make.centerX.equalTo(_addClipBtn.mas_centerX);
+                      make.width.mas_equalTo(20);
+                      make.height.mas_equalTo(20);
+                  }];
+              }
                 
-                
-                [_addClipImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.top.equalTo(_addClipBtn.mas_top).offset(5);
-                    make.centerX.equalTo(_addClipBtn.mas_centerX);
-                    make.width.mas_equalTo(10);
-                    make.height.mas_equalTo(10);
-                }];
             } else {
                 [_addClipBtn mas_makeConstraints:^(MASConstraintMaker *make) {
                     make.bottom.equalTo(lastBtn.mas_top);
@@ -227,19 +258,39 @@
     } else {
         [_myAlertView addSubview:_addClipBtn];
         if (isPhone) {
-            [_addClipBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.bottom.equalTo(_myAlertView.mas_bottom);
-                make.left.right.equalTo(_myAlertView);
-                make.height.mas_equalTo(20);
-            }];
+            if ([Util screenSize].width >  [Util screenSize].height){
+                [_addClipBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.bottom.equalTo(_myAlertView.mas_bottom);
+                    make.left.right.equalTo(_myAlertView);
+                    make.height.mas_equalTo(25);
+                }];
+                
+                
+                [_addClipImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.top.equalTo(_addClipBtn.mas_top).offset(5);
+                    make.centerX.equalTo(_addClipBtn.mas_centerX);
+                    make.width.mas_equalTo(15);
+                    make.height.mas_equalTo(15);
+                }];
+            }else{
+                [_addClipBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.bottom.equalTo(_myAlertView.mas_bottom);
+                    make.left.right.equalTo(_myAlertView);
+                    make.height.mas_equalTo(30);
+                }];
+                
+                
+                [_addClipImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.top.equalTo(_addClipBtn.mas_top).offset(5);
+                    make.centerX.equalTo(_addClipBtn.mas_centerX);
+                    make.width.mas_equalTo(20);
+                    make.height.mas_equalTo(30);
+                }];
+            }
             
             
-            [_addClipImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.top.equalTo(_addClipBtn.mas_top).offset(5);
-                make.centerX.equalTo(_addClipBtn.mas_centerX);
-                make.width.mas_equalTo(10);
-                make.height.mas_equalTo(10);
-            }];
+            
+            
         } else {
             [_addClipBtn mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.bottom.equalTo(_myAlertView.mas_bottom);

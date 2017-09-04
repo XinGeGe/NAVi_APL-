@@ -28,4 +28,5 @@
 @property (nonatomic,strong) UILabel *labMonthDayHore;
 @property (nonatomic,strong) UILabel *labMianHore;
 @property (nonatomic, strong) NSMutableDictionary *regionDic;
+    @property (nonatomic, assign) NSInteger haveChangeIndex;
 @end

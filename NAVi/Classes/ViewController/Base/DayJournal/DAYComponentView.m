@@ -104,7 +104,16 @@
         self.dotLayer.fillColor = self.containingEvent.calendar.CGColor;
     }
 }
-
+- (void)setSelectedData:(BOOL)selected {
+    if (selected) {
+        self.textLabel.textColor = self.highlightTextColor;
+        self.dotLayer.fillColor = self.highlightTextColor.CGColor;
+    }
+    else {
+        self.textLabel.textColor = self.textColor;
+        self.dotLayer.fillColor = self.containingEvent.calendar.CGColor;
+    }
+}
 - (void)viewDidTap:(id)sender {
     [self sendActionsForControlEvents:UIControlEventTouchUpInside];
 }

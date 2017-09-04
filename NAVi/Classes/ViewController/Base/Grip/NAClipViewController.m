@@ -141,24 +141,24 @@
 -(void)reloadClip{
     MAIN(^{
         [ProgressHUD show:NSLocalizedString(@"messageloading", nil)];
-        if (_clipNumber == 1 && _clipDataSource.count != 0) {
-            self.dataSouce = _clipDataSource;
-            [self.tView reloadData];
-            [ProgressHUD dismiss];
-        }else{
-            [self getClipAPI];
-        }
+//        if (_clipNumber == 1 && _clipDataSource.count != 0) {
+//            self.dataSouce = _clipDataSource;
+//            [self.tView reloadData];
+//            [ProgressHUD dismiss];
+//        }else{
+//            [self getClipAPI];
+//        }
     });
     
-    //[self getClipAPI];
+    [self getClipAPI];
     self.clipArray = [NSMutableArray array];
-    if (_clipNumber == 1 && _clipDataSource.count != 0) {
-        self.dataSouce = _clipDataSource;
-        [self.tView reloadData];
-        [ProgressHUD dismiss];
-    }else{
-        [self getClipAPI];
-    }
+//    if (_clipNumber == 1 && _clipDataSource.count != 0) {
+//        self.dataSouce = _clipDataSource;
+//        [self.tView reloadData];
+//        [ProgressHUD dismiss];
+//    }else{
+//        [self getClipAPI];
+//    }
     // prpertyファイルから記事情報を取得
     NSDictionary *dic=[NAFileManager ChangePlistTodic];
     titlelength=[[dic objectForKey:NANewsTitleLengthkey] integerValue];
@@ -319,6 +319,7 @@
     home.clipDataSource = self.dataSouce;
     home.homePageArray = _pageArray;
     home.regionDic = _regionDic;
+    home.haveChangeIndex = _haveChangeIndex;
 //    home.noteNumber = _noteNumber;
 //    home.NoteArray = _NoteArray;
     NABaseNavigationController *nav = [[NABaseNavigationController alloc] initWithRootViewController:home];
@@ -339,6 +340,7 @@
     note.topPageDoc= _topPageDoc;
     note.regionDic = _regionDic;
     note.clipDataSource = self.dataSouce;
+    note.haveChangeIndex = _haveChangeIndex;
 //    note.noteNumber = _noteNumber;
 //    note.NotePageArray = _NoteArray;
     NABaseNavigationController *nav = [[NABaseNavigationController alloc] initWithRootViewController:note];
@@ -449,6 +451,7 @@
     search.topPageDoc = _topPageDoc;
     search.regionDic =_regionDic;
     search.clipDataSource = _clipDataSource;
+    search.haveChangeIndex = _haveChangeIndex;
 //    search.noteNumber = _noteNumber;
 //    search.NoteArray = _NoteArray;
     NABaseNavigationController *nav = [[NABaseNavigationController alloc] initWithRootViewController:search];
@@ -724,7 +727,7 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
 
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"削除しますか？" message:nil preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"この記事を削除しますか？" message:nil preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"はい" style:UIAlertActionStyleDefault handler:^(UIAlertAction *_Nonnull action) {
             
             NAClipDoc *clipDoc = self.dataSouce[indexPath.row];
@@ -822,7 +825,7 @@
             NSDictionary *dic = [parser parseData:favorites];
             NAClipBaseClass *clipBaseClass = [NAClipBaseClass modelObjectWithDictionary:dic];
             NSArray *array = clipBaseClass.response.doc;
-            _clipTagArray = [[NSMutableArray alloc] initWithArray:array];
+            _clipTagArray=(NSMutableArray *)[[array reverseObjectEnumerator] allObjects];
             dispatch_async(dispatch_get_main_queue(), ^{
                 
                 [ProgressHUD dismiss];

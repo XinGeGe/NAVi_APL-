@@ -710,6 +710,12 @@
                         [[[iToast makeText:NSLocalizedString(@"note Max", nil)]
                           setGravity:iToastGravityBottom] show];
                     });
+                }else if([statusMessage isEqualToString:@"4"]){
+                    MAIN(^{
+                        [ProgressHUD dismiss];
+                        [[[iToast makeText:NSLocalizedString(@"すでにスクラップしています", nil)]
+                          setGravity:iToastGravityBottom] show];
+                    });
                 }else{
                     MAIN(^{
                         [ProgressHUD dismiss];

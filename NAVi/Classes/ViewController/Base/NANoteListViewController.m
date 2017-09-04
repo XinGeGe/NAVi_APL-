@@ -387,6 +387,7 @@
     search.topPageDoc = _topPageDoc;
     search.regionDic =_regionDic;
     search.clipDataSource = _clipDataSource;
+    search.haveChangeIndex = _haveChangeIndex;
 //    search.noteNumber = _noteNumber;
 //    search.NoteArray = _NotePageArray;
     NABaseNavigationController *nav = [[NABaseNavigationController alloc] initWithRootViewController:search];
@@ -591,6 +592,7 @@
     home.clipDataSource = _clipDataSource;
     home.dayNumber = 0;
     home.regionDic = _regionDic;
+    home.haveChangeIndex = _haveChangeIndex;
 //    home.noteNumber = _noteNumber;
 //    home.NoteArray = _NotePageArray;
     NABaseNavigationController *nav = [[NABaseNavigationController alloc] initWithRootViewController:home];
@@ -617,6 +619,7 @@
     grip.topPageDoc = _topPageDoc;
     grip.clipDataSource = _clipDataSource;
     grip.clipNumber = 1;
+    grip.haveChangeIndex = _haveChangeIndex;
 //    grip.noteNumber = _noteNumber;
 //    grip.NoteArray = _NotePageArray;
     NABaseNavigationController *nav = [[NABaseNavigationController alloc] initWithRootViewController:grip];

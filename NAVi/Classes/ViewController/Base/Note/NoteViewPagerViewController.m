@@ -279,7 +279,7 @@
     NSInteger index = [arrayOfViewControllerButton indexOfObject:sender];
     [_pageViewController setViewControllers:@[arrayOfViewController[index]] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
     if ([self.delegate respondsToSelector:@selector(viewPagerViewController:selectNowIndex:)]) {
-        [self.delegate viewPagerViewController:self selectNowIndex:index];
+        [self.delegate viewPagerViewController:self  selectNowIndex:index];
     }
     [self scrollViewOffset:sender];
     

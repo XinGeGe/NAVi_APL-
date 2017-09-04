@@ -136,10 +136,6 @@ void UncaughtExceptionHandler(NSException *exception) {
 }
 -(void)doLogin{
     if ([NASaveData isLogin]) {
-        NAHomeViewController *topPage=[[NAHomeViewController alloc]init];
-        NABaseNavigationController *nav = [[NABaseNavigationController alloc] initWithRootViewController:topPage];
-        [self.window setRootViewController:nav];
-        [self.window makeKeyAndVisible];
         [self getLoginAPIWithUsername:[NASaveData getLoginUserId] ThePassword:[NASaveData getLoginPassWord]];
     }else{
         NAHomeViewController *topPage=[[NAHomeViewController alloc]init];
@@ -333,9 +329,9 @@ performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionH
     
     NSString *defaultuserid=[dic objectForKey:NADEFAULTUSERID];
     [NASaveData saveDefaultUserID:defaultuserid];
-//    if ([NASaveData getLoginUserId]==nil) {
-//         [NASaveData saveUserId:defaultuserid];
-//    }
+    if ([NASaveData getLoginUserId]==nil) {
+         [NASaveData saveUserId:defaultuserid];
+    }
     NSString *defaultuserPass=[dic objectForKey:NADEFAULTUSERPASS];
     [NASaveData saveDefaultUserPass:defaultuserPass];
     
@@ -482,11 +478,14 @@ performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionH
                                                   [NASaveData saveIsVisitorModel:NO];
                                                   [NASaveData SaveLoginWithID:login.userId withPassWord:login.password];
                                                   [NASaveData saveTimeStamp:login.timeStamp];
-                                                  
+                                                  [NASaveData saveUserId:login.userId];
                                                   [NASaveData saveUserInfo:[NSNumber numberWithBool:isTempAutoLogin]];
                                                   [NASaveData saveAlldownload:[NSNumber numberWithBool:isTempAllDownload]];
                                                   [NASaveData saveDataUserClass:login.userClass];
-
+                                                  NAHomeViewController *topPage=[[NAHomeViewController alloc]init];
+                                                  NABaseNavigationController *nav = [[NABaseNavigationController alloc] initWithRootViewController:topPage];
+                                                  [self.window setRootViewController:nav];
+                                                  [self.window makeKeyAndVisible];
                                                   
                                               }else if (login.status.integerValue == 2) {
                                                   

@@ -42,7 +42,7 @@
         make.top.equalTo(self.contentView.mas_top).offset(2);
         make.height.mas_equalTo(30);
         make.left.equalTo(self.contentView.mas_left);
-        make.right.equalTo(self.contentView.mas_right).offset(-40);
+        make.right.equalTo(self.contentView.mas_right).offset(-30);
     }];
     [self.clipTextField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.mas_equalTo(0);
@@ -51,7 +51,7 @@
         make.top.equalTo(_clipView.mas_top);
     }];
     [self.deleteClipBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self.contentView.mas_right).offset(-20);
+        make.right.equalTo(self.contentView.mas_right).offset(-10);
         make.width.mas_equalTo(15);
         make.height.mas_equalTo(15);
         make.top.equalTo(_clipView.mas_top).offset(8);

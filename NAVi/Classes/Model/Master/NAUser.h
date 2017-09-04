@@ -19,9 +19,9 @@
 @property (nonatomic, strong) NSString *userIdentifier;
 @property (nonatomic, strong) NSString *index;
 //add new
-//@property (nonatomic, strong) NSString *releaseAreaInfo;
-//@property (nonatomic, strong) NSString *publishDayInfo;
-//@property (nonatomic, strong) NSString *userClass;
+@property (nonatomic, strong) NSString *releaseAreaInfo1;
+@property (nonatomic, strong) NSString *publishDayInfo1;
+@property (nonatomic, strong) NSString *userClass1;
 
 
 
