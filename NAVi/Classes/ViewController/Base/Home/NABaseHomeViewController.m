@@ -47,6 +47,8 @@
     NADoc *flgDoc;
     NSString *ReleaseAreaInfo;
     NSString *PublishDayInfo;
+    NSInteger noteNUmber;
+    BOOL btn1004Select;
 }
 @end
 
@@ -98,7 +100,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(UpdateMymodel:) name:@"UpdateMymodel" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getListselectindex:) name:@"getListselectindex" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(singleClickNoty) name:@"singleClickNoty" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(doubleClickNoty) name:@"doubleClickNoty" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(doubleClickNoty:) name:@"doubleClickNoty" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(drawFirstnote) name:NOTYDrawFirstnote object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(toSerachLastNewsList) name:NOTYReloadPage object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(noteChanged:) name:NOTYNOTECHANGE object:nil];
@@ -152,6 +154,7 @@
     btnView.hidden = YES;
     localBtn.hidden = YES;
     _toolBarStyle = 0;
+    btn1004Select = NO;
     [self setRiliview];
     
     btnView2 = [[UIView alloc]init];
@@ -252,6 +255,7 @@
                 
                 NSInteger tempPageIndex = 0;
                 _toolBarStyle = 0;
+                btn1004Select = NO;
                 if ([self isLandscape]) {    // 後処理
                     NSArray *pages = [self padLandscapeCount];
                     if (pages.count > 0) {
@@ -389,6 +393,7 @@
         [self.homeToolBar setHidden:!self.homeToolBar.hidden];
         if ( detailCancel == YES) {
             _toolBarStyle = 0;
+            btn1004Select = NO;
             if ([self isLandscape]) {
                 [self setHorToolBar];
             }else{
@@ -405,6 +410,7 @@
 //        }
         currentdate=nil;
         _toolBarStyle = 0;
+        btn1004Select = NO;
         if ([self isLandscape]) {
             [self setHorToolBar];
         }else{
@@ -427,6 +433,7 @@
     } else {
 //        [self.progressViewBar setHidden:YES];
         _toolBarStyle = 0;
+        btn1004Select = NO;
         if ([self isLandscape]) {
             [self setHorToolBar];
         }else{
@@ -449,7 +456,7 @@
     }
 }
 
--(void)doubleClickNoty{
+-(void)doubleClickNoty:(NSNotification *)noti {
     btnView.hidden = YES;
     localBtn.hidden = YES;
     btnView2.hidden = YES;
@@ -458,11 +465,25 @@
     [localPickView2 dissmissView];
     [detailSelectView dismissMyview];
     NASubImageScrollView *view = (NASubImageScrollView *)[self.mainScrollView itemViewAtIndex:self.mainScrollView.currentItemIndex];
-    [self scrollViewDidEndZooming:view withView:view atScale:1];
+    NSString *scaleStr = [noti.userInfo objectForKey:@"scale"];
+    NSNumber *tapNote = [noti.userInfo objectForKey:@"tapNote"];
+    if (tapNote.boolValue) {
+        if (local1 == 1) {
+            btnView.hidden = YES;
+            localBtn.hidden = YES;
+        }
+    } else if (scaleStr.floatValue == 1) {
+        if (local1 == 1) {
+            btnView.hidden = NO;
+            localBtn.hidden = NO;
+        }
+    }
+//    [self scrollViewDidEndZooming:view withView:view atScale:1];
     if (view.indexHaveOrNo == 0) {
         _toolBarStyle = 2;
     }else{
         _toolBarStyle = 0;
+        btn1004Select = NO;
     }
     if ([self isLandscape]) {
         [self setHorToolBar];
@@ -904,6 +925,7 @@
         return;
     }
     _toolBarStyle = 0;
+    btn1004Select = NO;
     // 紙面情報を編集
     if (![self isLandscape]) {
         self.orientationPageIndex = self.pageArray.count - 1 - self.mainScrollView.currentItemIndex;
@@ -962,6 +984,7 @@
         
         NSInteger tempPageIndex = 0;
         _toolBarStyle = 0;
+        btn1004Select = NO;
         if ([self isLandscape]) {    // 後処理
             NSArray *pages = [self padLandscapeCount];
             if (pages.count > 0) {
@@ -1170,15 +1193,20 @@
     [detailSelectView dismissMyview];
     [localPickView dissmissView];
     [localPickView2 dissmissView];
-    if ([self.popoverBackground isShowPopoverView]) {
-        [self.popoverBackground hidePopoverView];
-    }
+    
     if (self.pageArray.count == 0) {
         
     }else{
+        // 单独对1004做顺序调整 详见sender == 1004
+        if (sender.tag != 1004) {
+            if ([self.popoverBackground isShowPopoverView]) {
+                [self.popoverBackground hidePopoverView];
+            }
+        }
         if (sender.tag == 1001) {
             if ([self isLogin]) {
                 _toolBarStyle = 0;
+                btn1004Select = NO;
                 if ([self isLandscape]) {
                     [self setHorToolBar];
                 }else{
@@ -1202,20 +1230,29 @@
             }
         }else if (sender.tag == 1004){
             if ([self isLogin]) {
-                if (![self.popoverBackground isShowPopoverView]) {
-                    if ([self isLandscape]) {
-                        [self setHorToolBar];
-                        self.popoverBackground.currentindex=[self currentIndexInPages:self.mainScrollView.currentItemIndex curPagerIndexNo:nil];
-                    }else{
-                        [self resetHomeToolBar];
-                        self.popoverBackground.currentindex=self.mainScrollView.currentItemIndex;
-                    }
-                    
-                    [self.popoverBackground showPopoverView:NAPopoverPaper withInfo:self.pageArray];
-                    // GA(tag manager)
-                    [TAGManagerUtil pushButtonClickEvent:ENPageListBtn label:[self getLabelName]];
+                
+                btn1004Select = !btn1004Select;
+                if (btn1004Select) {
                     _toolBarStyle = 1;
+                } else {
+                    _toolBarStyle = 0;
                 }
+                if ([self.popoverBackground isShowPopoverView]) {
+                    [self.popoverBackground hidePopoverView];
+                }
+                if ([self isLandscape]) {
+                    [self setHorToolBar];
+                    self.popoverBackground.currentindex=[self currentIndexInPages:self.mainScrollView.currentItemIndex curPagerIndexNo:nil];
+                }else{
+                    [self resetHomeToolBar];
+                    self.popoverBackground.currentindex=self.mainScrollView.currentItemIndex;
+                }
+                
+                [self.popoverBackground showPopoverView:NAPopoverPaper withInfo:self.pageArray];
+                // GA(tag manager)
+                [TAGManagerUtil pushButtonClickEvent:ENPageListBtn label:[self getLabelName]];
+                
+               
             }else{
                 [self notLoginAction];
             }
@@ -1453,6 +1490,7 @@
         [self.popoverBackground hidePopoverView];
         NSInteger tag = ((NSNumber *)object).integerValue;
         _toolBarStyle = 0;
+        btn1004Select = NO;
         if ([self isLandscape]) {
             _riliView.hidden = YES;
             [self setHorToolBar];
@@ -1476,6 +1514,7 @@
 }
 - (void)resetToolBar{
     _toolBarStyle = 0;
+    btn1004Select = NO;
     if ([self isLandscape]) {
         _riliView.hidden = YES;
         [self setHorToolBar];
@@ -1691,7 +1730,19 @@
     search.topPageDoc = _topPageDoc;
     search.clipDataSource = _clipDataSource;
     search.regionDic =_regionDic;
-    search.haveChangeIndex = self.mainScrollView.currentItemIndex;
+    NSInteger count = self.pageArray.count;
+    if (![self isLandscape]) {
+        search.haveChangeIndex=count - 1 - self.mainScrollView.currentItemIndex;
+        
+    }else{
+        NSArray *pageSort = [self padLandscapeCount];
+        NSInteger landCount = pageSort.count;
+        NSArray *sort = pageSort[landCount - 1 - self.mainScrollView.currentItemIndex];
+        NSNumber *aDocIndex = sort[0];
+        search.haveChangeIndex=aDocIndex.integerValue;
+        
+    }
+    search.isfromWhere = @"HOME";
 //    NSInteger count2 =_NotePageArray.allKeys.count;
 //    search.noteNumber = count2;
 //    search.NoteArray = _NoteArray;
@@ -2176,11 +2227,7 @@
             doc = self.pageArray[aDocIndex.integerValue];
             other =  self.pageArray[otherDocIndex.integerValue];
             
-            if (istwo==1) {
-                note.myselectIndex=aDocIndex.integerValue;
-            }else{
-                note.myselectIndex=otherDocIndex.integerValue;
-            }
+            note.myselectIndex=aDocIndex.integerValue;
             
         }
         
@@ -2192,7 +2239,6 @@
     note.topPageDoc = _topPageDoc;
     note.pageArray = _pageArray;
     note.regionDic = _regionDic;
-    note.haveChangeIndex = self.mainScrollView.currentItemIndex;
     note.clipDataSource = _clipDataSource;
 //    NSInteger count2 =_NotePageArray.allKeys.count;
 //    note.noteNumber = count2;
@@ -2201,7 +2247,7 @@
         isNotelistChange=YES;
         [self controlTheBlockWithdoc:doc];
     };
-    
+    note.isfromWhereNoteChange = @"HOME";
     NABaseNavigationController *nav = [[NABaseNavigationController alloc] initWithRootViewController:note];
     [self presentViewController:nav animated:NO completion:^{
         
@@ -2229,7 +2275,6 @@
     grip.pageArray = _pageArray;
     grip.regionDic = _regionDic;
     grip.topPageDoc = _topPageDoc;
-    grip.haveChangeIndex = self.mainScrollView.currentItemIndex;
     if (isChooseDay == 1) {
         grip.clipDataSource = nil;
         grip.clipNumber = 0;
@@ -2238,6 +2283,21 @@
         grip.clipNumber = 1;
     }
     
+    
+    NSInteger count = self.pageArray.count;
+    if (![self isLandscape]) {
+        grip.haveChangeIndex=count - 1 - self.mainScrollView.currentItemIndex;
+        
+    }else{
+        NSArray *pageSort = [self padLandscapeCount];
+        NSInteger landCount = pageSort.count;
+        NSArray *sort = pageSort[landCount - 1 - self.mainScrollView.currentItemIndex];
+        NSNumber *aDocIndex = sort[0];
+        grip.haveChangeIndex=aDocIndex.integerValue;
+        
+    }
+    grip.isfromWhere = @"HOME";
+
 //    NSInteger count2 =_NotePageArray.allKeys.count;
 //    grip.noteNumber = count2;
 //    grip.NoteArray = _NoteArray;
@@ -3407,8 +3467,6 @@
         
 }
 -(void)showMainViewHave{
-    NASubImageScrollView *view=(NASubImageScrollView *)self.mainScrollView.currentItemView;
-    curPaperIndexNo = view.imageView.noteView.curPaperIndexNo;
     [self.mainScrollView removeFromSuperview];
     _mainScrollView = nil;
     _mainScrollView = self.mainScrollView;
@@ -3418,26 +3476,37 @@
     [self.view addSubview:self.mainScrollView];
     [self.view sendSubviewToBack:self.mainScrollView];
     
-    NSInteger tempPageIndex = 0;
+    
     _toolBarStyle = 0;
-    if ([self isLandscape]) {    // 後処理
-        NSArray *pages = [self padLandscapeCount];
-        if (pages.count > 0) {
-            tempPageIndex = _haveChangeIndex;
-        }
-        _riliView.hidden = YES;
-        [self setHorToolBar];
+    btn1004Select = NO;
+    NSInteger count = self.pageArray.count;
+    if (count - 1 - _haveChangeIndex>=count||count<=0) {
+        return;
+    }
+    if (![self isLandscape]) {
+        noteNUmber = _haveChangeIndex;
     }else{
-        [self resetRiliview];
-        [self resetHomeToolBar];
-        _riliView.hidden = NO;
-        
-        // 1紙面を表示
-        if (self.pageArray.count > 0) {
-            tempPageIndex = _haveChangeIndex;
+        NSInteger changeIndex = _haveChangeIndex;
+        NSArray *pages = [self padLandscapeCount];
+        for (int i = 0; i < pages.count; i++) {
+            NSArray *number = pages[i];
+            if (number.count == 1) {
+                NSNumber *a = number[0];
+                if (a.integerValue == changeIndex) {
+                    noteNUmber = i;
+                }
+            }else if (number.count == 2){
+                NSNumber *a = number[0];
+                NSNumber *b = number[1];
+                if (a.integerValue == changeIndex || b.integerValue == changeIndex) {
+                    noteNUmber = i;
+                }
+            }
             
         }
+        
     }
+
     if ([self isLogin]) {
         if (self.pageArray.count == 1) {
             self.mainScrollView.wrapEnabled = NO;
@@ -3461,8 +3530,8 @@
     self.searchBarItem= [[UIBarButtonItem alloc] initWithCustomView:button];
     self.navigationItem.leftBarButtonItem = self.searchBarItem;
     // 第１面を表示
-    self.mainScrollView.currentItemIndex = tempPageIndex;
-    [self.mainScrollView scrollToItemAtIndex: tempPageIndex duration:0.3];
+    self.mainScrollView.currentItemIndex = noteNUmber;
+    [self.mainScrollView scrollToItemAtIndex: noteNUmber duration:0.3];
     
     // 後処理
     [self swipeViewCurrentItemIndexDidChange:self.mainScrollView];
@@ -3516,6 +3585,7 @@
         self.mainScrollView.scrollEnabled = NO;
     }
     _toolBarStyle = 0;
+    btn1004Select = NO;
     if ([self isLandscape]) {
         _riliView.hidden = YES;
         [self setHorToolBar];
@@ -3597,7 +3667,7 @@
         
         NSInteger count = self.pageArray.count;
         NADoc *doc = self.pageArray[count - 1 - index];
-        [self setRiliTitle:doc withOther:nil];
+//        [self setRiliTitle:doc withOther:nil];
         if ([doc.whichimage isEqualToString:NANormalimage]||[doc.whichimage isEqualToString:NALargeimage]) {
             [imageScroll LoadingNormalImageView:doc other:nil];
         }else{
@@ -3659,6 +3729,7 @@
     }
     
     _toolBarStyle = 0;
+    btn1004Select = NO;
     if ([self isLandscape]) {
         [self setHorToolBar];
     }else{
@@ -4075,7 +4146,7 @@
  *
  */
 - (void)scrollViewDidZoom:(UIScrollView *)scrollView {
-    btnView.alpha = 0;
+//    btnView.alpha = 0;
     if (scrollView.zoomScale<1) {
         [scrollView setZoomScale:1];
         currentZoom=scrollView.zoomScale;
@@ -4145,11 +4216,18 @@
  *
  */
 -(void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)uiView atScale:(CGFloat)scale {
-    if (scale == 1) {
-        btnView.alpha = 1;
+    if (scale < 1.1) {
+        if (local1 == 1) {
+            btnView.hidden = NO;
+            localBtn.hidden = NO;
+        }
     } else {
-        btnView.alpha = 0;
+        if (local1 == 1) {
+            btnView.hidden = YES;
+            localBtn.hidden = YES;
+        }
     }
+    NSLog(@"%f", scale);
     NASubImageScrollView *view = (NASubImageScrollView *)[self.mainScrollView itemViewAtIndex:self.mainScrollView.currentItemIndex];
     if (view.largeModel != NAImageModelLoading && view.largeModel != NAImageModelDone) {
         NSMutableDictionary *tmpdic=[[NSMutableDictionary alloc]init];
@@ -4495,27 +4573,27 @@
     if (month.length == 1 && day.length == 1) {
         [attString addAttribute:NSFontAttributeName
          
-                          value:[FontUtil systemFontOfSize:25]
+                          value:[FontUtil systemFontOfSizeMedium:25]
          
                           range:NSMakeRange(0, 1)];
         [attString addAttribute:NSFontAttributeName
          
-                          value:[FontUtil systemFontOfSize:15]
+                          value:[FontUtil systemFontOfSizeMedium:15]
          
                           range:NSMakeRange(2, 1)];
         [attString addAttribute:NSFontAttributeName
          
-                          value:[FontUtil systemFontOfSize:25]
+                          value:[FontUtil systemFontOfSizeMedium:25]
          
                           range:NSMakeRange(4, 1)];
         [attString addAttribute:NSFontAttributeName
          
-                          value:[FontUtil systemFontOfSize:15]
+                          value:[FontUtil systemFontOfSizeMedium:15]
          
                           range:NSMakeRange(6, 1)];
         [attString addAttribute:NSFontAttributeName
          
-                          value:[FontUtil systemFontOfSize:15]
+                          value:[FontUtil systemFontOfSizeMedium:15]
          
                           range:NSMakeRange(8, 3)];
         _labMonthDay.attributedText = attString;
@@ -4524,27 +4602,27 @@
     }else if (month.length == 1 && day.length == 2) {
         [attString addAttribute:NSFontAttributeName
          
-                          value:[FontUtil systemFontOfSize:25]
+                          value:[FontUtil systemFontOfSizeMedium:25]
          
                           range:NSMakeRange(0, 1)];
         [attString addAttribute:NSFontAttributeName
          
-                          value:[FontUtil systemFontOfSize:15]
+                          value:[FontUtil systemFontOfSizeMedium:15]
          
                           range:NSMakeRange(2, 1)];
         [attString addAttribute:NSFontAttributeName
          
-                          value:[FontUtil systemFontOfSize:25]
+                          value:[FontUtil systemFontOfSizeMedium:25]
          
                           range:NSMakeRange(4, 2)];
         [attString addAttribute:NSFontAttributeName
          
-                          value:[FontUtil systemFontOfSize:15]
+                          value:[FontUtil systemFontOfSizeMedium:15]
          
                           range:NSMakeRange(7, 1)];
         [attString addAttribute:NSFontAttributeName
          
-                          value:[FontUtil systemFontOfSize:15]
+                          value:[FontUtil systemFontOfSizeMedium:15]
          
                           range:NSMakeRange(9, 3)];
         _labMonthDay.attributedText = attString;
@@ -4553,27 +4631,27 @@
     }else if (month.length == 2 && day.length == 1) {
         [attString addAttribute:NSFontAttributeName
          
-                          value:[FontUtil systemFontOfSize:25]
+                          value:[FontUtil systemFontOfSizeMedium:25]
          
                           range:NSMakeRange(0, 2)];
         [attString addAttribute:NSFontAttributeName
          
-                          value:[FontUtil systemFontOfSize:15]
+                          value:[FontUtil systemFontOfSizeMedium:15]
          
                           range:NSMakeRange(3, 1)];
         [attString addAttribute:NSFontAttributeName
          
-                          value:[FontUtil systemFontOfSize:25]
+                          value:[FontUtil systemFontOfSizeMedium:25]
          
                           range:NSMakeRange(5, 1)];
         [attString addAttribute:NSFontAttributeName
          
-                          value:[FontUtil systemFontOfSize:15]
+                          value:[FontUtil systemFontOfSizeMedium:15]
          
                           range:NSMakeRange(7, 1)];
         [attString addAttribute:NSFontAttributeName
          
-                          value:[FontUtil systemFontOfSize:15]
+                          value:[FontUtil systemFontOfSizeMedium:15]
          
                           range:NSMakeRange(9, 3)];
         _labMonthDay.attributedText = attString;
@@ -4582,27 +4660,27 @@
     }else if (month.length == 2 && day.length == 2) {
         [attString addAttribute:NSFontAttributeName
          
-                          value:[FontUtil systemFontOfSize:25]
+                          value:[FontUtil systemFontOfSizeMedium:25]
          
                           range:NSMakeRange(0, 2)];
         [attString addAttribute:NSFontAttributeName
          
-                          value:[FontUtil systemFontOfSize:15]
+                          value:[FontUtil systemFontOfSizeMedium:15]
          
                           range:NSMakeRange(3, 1)];
         [attString addAttribute:NSFontAttributeName
          
-                          value:[FontUtil systemFontOfSize:25]
+                          value:[FontUtil systemFontOfSizeMedium:25]
          
                           range:NSMakeRange(5, 2)];
         [attString addAttribute:NSFontAttributeName
          
-                          value:[FontUtil systemFontOfSize:15]
+                          value:[FontUtil systemFontOfSizeMedium:15]
          
                           range:NSMakeRange(8, 1)];
         [attString addAttribute:NSFontAttributeName
          
-                          value:[FontUtil systemFontOfSize:15]
+                          value:[FontUtil systemFontOfSizeMedium:15]
          
                           range:NSMakeRange(10, 3)];
         _labMonthDay.attributedText = attString;
@@ -4772,7 +4850,7 @@
         leftView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenwidth/2-40, 49)];
     }
     _labYearHore = [[UILabel alloc]init];
-    _labYearHore.font = [FontUtil systemFontOfSize:10];
+    _labYearHore.font = [FontUtil systemFontOfSizeMedium:10];
     _labYearHore.text = _labYearDetail;
     [leftView addSubview:_labYearHore];
     
@@ -4781,7 +4859,7 @@
     [leftView addSubview:_labMonthDayHore];
     
     _labMianHore = [[UILabel alloc]init];
-    _labMianHore.font = [FontUtil systemFontOfSize:10];
+    _labMianHore.font = [FontUtil systemFontOfSizeMedium:10];
     _labMianHore.numberOfLines = 2;
     _labMianHore.lineBreakMode = NSLineBreakByWordWrapping;
     _labMianHore.text = _labMianDetail;
@@ -5035,7 +5113,7 @@
         make.height.mas_equalTo(20);
     }];
     _labYear.textAlignment = NSTextAlignmentCenter;
-    [_labYear setFont:[FontUtil systemFontOfSize:10]];
+    [_labYear setFont:[FontUtil systemFontOfSizeMedium:10]];
     [_labYear setTextColor:[UIColor blackColor]];
     
     _viewThree = [[UIView alloc]init];
@@ -5057,7 +5135,7 @@
         make.width.mas_equalTo(40);
         make.height.mas_equalTo(35);
     }];
-    _labMian.font = [FontUtil systemFontOfSize:12];
+    _labMian.font = [FontUtil systemFontOfSizeMedium:12];
     _labMian.numberOfLines = 2;
     _labMian.lineBreakMode = NSLineBreakByWordWrapping;
     [_labMian setTextColor:[UIColor blackColor]];

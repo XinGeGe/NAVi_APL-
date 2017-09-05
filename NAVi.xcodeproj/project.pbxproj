@@ -182,6 +182,30 @@
 		0A487EDE1F22BD0F00AC5FAC /* YJDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A487EDC1F22BD0F00AC5FAC /* YJDatePickerView.m */; };
 		0A487EDF1F22BD0F00AC5FAC /* YJDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A487EDC1F22BD0F00AC5FAC /* YJDatePickerView.m */; };
 		0A487EE01F22BD0F00AC5FAC /* YJDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A487EDC1F22BD0F00AC5FAC /* YJDatePickerView.m */; };
+		0A5587B51F5DE83F00F25536 /* TazuganeGothicStdN-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0A5587B01F5DE83F00F25536 /* TazuganeGothicStdN-Bold.otf */; };
+		0A5587B61F5DE83F00F25536 /* TazuganeGothicStdN-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0A5587B01F5DE83F00F25536 /* TazuganeGothicStdN-Bold.otf */; };
+		0A5587B71F5DE83F00F25536 /* TazuganeGothicStdN-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0A5587B01F5DE83F00F25536 /* TazuganeGothicStdN-Bold.otf */; };
+		0A5587B81F5DE83F00F25536 /* TazuganeGothicStdN-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0A5587B01F5DE83F00F25536 /* TazuganeGothicStdN-Bold.otf */; };
+		0A5587B91F5DE83F00F25536 /* TazuganeGothicStdN-Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0A5587B11F5DE83F00F25536 /* TazuganeGothicStdN-Book.otf */; };
+		0A5587BA1F5DE83F00F25536 /* TazuganeGothicStdN-Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0A5587B11F5DE83F00F25536 /* TazuganeGothicStdN-Book.otf */; };
+		0A5587BB1F5DE83F00F25536 /* TazuganeGothicStdN-Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0A5587B11F5DE83F00F25536 /* TazuganeGothicStdN-Book.otf */; };
+		0A5587BC1F5DE83F00F25536 /* TazuganeGothicStdN-Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0A5587B11F5DE83F00F25536 /* TazuganeGothicStdN-Book.otf */; };
+		0A5587BD1F5DE83F00F25536 /* TazuganeGothicStdN-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0A5587B21F5DE83F00F25536 /* TazuganeGothicStdN-Light.otf */; };
+		0A5587BE1F5DE83F00F25536 /* TazuganeGothicStdN-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0A5587B21F5DE83F00F25536 /* TazuganeGothicStdN-Light.otf */; };
+		0A5587BF1F5DE83F00F25536 /* TazuganeGothicStdN-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0A5587B21F5DE83F00F25536 /* TazuganeGothicStdN-Light.otf */; };
+		0A5587C01F5DE83F00F25536 /* TazuganeGothicStdN-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0A5587B21F5DE83F00F25536 /* TazuganeGothicStdN-Light.otf */; };
+		0A5587C11F5DE83F00F25536 /* TazuganeGothicStdN-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0A5587B31F5DE83F00F25536 /* TazuganeGothicStdN-Medium.otf */; };
+		0A5587C21F5DE83F00F25536 /* TazuganeGothicStdN-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0A5587B31F5DE83F00F25536 /* TazuganeGothicStdN-Medium.otf */; };
+		0A5587C31F5DE83F00F25536 /* TazuganeGothicStdN-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0A5587B31F5DE83F00F25536 /* TazuganeGothicStdN-Medium.otf */; };
+		0A5587C41F5DE83F00F25536 /* TazuganeGothicStdN-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0A5587B31F5DE83F00F25536 /* TazuganeGothicStdN-Medium.otf */; };
+		0A5587C51F5DE83F00F25536 /* TazuganeGothicStdN-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0A5587B41F5DE83F00F25536 /* TazuganeGothicStdN-Thin.otf */; };
+		0A5587C61F5DE83F00F25536 /* TazuganeGothicStdN-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0A5587B41F5DE83F00F25536 /* TazuganeGothicStdN-Thin.otf */; };
+		0A5587C71F5DE83F00F25536 /* TazuganeGothicStdN-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0A5587B41F5DE83F00F25536 /* TazuganeGothicStdN-Thin.otf */; };
+		0A5587C81F5DE83F00F25536 /* TazuganeGothicStdN-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0A5587B41F5DE83F00F25536 /* TazuganeGothicStdN-Thin.otf */; };
+		0A5587CB1F5F631B00F25536 /* NAClipEditTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A5587CA1F5F631B00F25536 /* NAClipEditTextView.m */; };
+		0A5587CC1F5F631B00F25536 /* NAClipEditTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A5587CA1F5F631B00F25536 /* NAClipEditTextView.m */; };
+		0A5587CD1F5F631B00F25536 /* NAClipEditTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A5587CA1F5F631B00F25536 /* NAClipEditTextView.m */; };
+		0A5587CE1F5F631B00F25536 /* NAClipEditTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A5587CA1F5F631B00F25536 /* NAClipEditTextView.m */; };
 		0AA46E511F2BD88000F63E43 /* NAShowClipAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AA46E501F2BD88000F63E43 /* NAShowClipAlertView.m */; };
 		0AA46E521F2BD88000F63E43 /* NAShowClipAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AA46E501F2BD88000F63E43 /* NAShowClipAlertView.m */; };
 		0AA46E531F2BD88000F63E43 /* NAShowClipAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AA46E501F2BD88000F63E43 /* NAShowClipAlertView.m */; };
@@ -849,6 +873,13 @@
 		0A487ECA1F211A4500AC5FAC /* NANewSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NANewSettingViewController.m; sourceTree = "<group>"; };
 		0A487EDB1F22BD0F00AC5FAC /* YJDatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJDatePickerView.h; sourceTree = "<group>"; };
 		0A487EDC1F22BD0F00AC5FAC /* YJDatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJDatePickerView.m; sourceTree = "<group>"; };
+		0A5587B01F5DE83F00F25536 /* TazuganeGothicStdN-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "TazuganeGothicStdN-Bold.otf"; sourceTree = "<group>"; };
+		0A5587B11F5DE83F00F25536 /* TazuganeGothicStdN-Book.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "TazuganeGothicStdN-Book.otf"; sourceTree = "<group>"; };
+		0A5587B21F5DE83F00F25536 /* TazuganeGothicStdN-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "TazuganeGothicStdN-Light.otf"; sourceTree = "<group>"; };
+		0A5587B31F5DE83F00F25536 /* TazuganeGothicStdN-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "TazuganeGothicStdN-Medium.otf"; sourceTree = "<group>"; };
+		0A5587B41F5DE83F00F25536 /* TazuganeGothicStdN-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "TazuganeGothicStdN-Thin.otf"; sourceTree = "<group>"; };
+		0A5587C91F5F631B00F25536 /* NAClipEditTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NAClipEditTextView.h; sourceTree = "<group>"; };
+		0A5587CA1F5F631B00F25536 /* NAClipEditTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NAClipEditTextView.m; sourceTree = "<group>"; };
 		0AA46E4F1F2BD88000F63E43 /* NAShowClipAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NAShowClipAlertView.h; sourceTree = "<group>"; };
 		0AA46E501F2BD88000F63E43 /* NAShowClipAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NAShowClipAlertView.m; sourceTree = "<group>"; };
 		0AA46E551F2BE36D00F63E43 /* NAAddClipViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NAAddClipViewController.h; sourceTree = "<group>"; };
@@ -2087,10 +2118,10 @@
 				F0A9729A1BFEE783007D4D96 /* NADetailBaseViewController.m */,
 				F0E9AF901BD8749E00F4E228 /* NADetailSwipeImageViewController.h */,
 				F0E9AF911BD8749E00F4E228 /* NADetailSwipeImageViewController.m */,
-				F0A9729F1BFF04D7007D4D96 /* NADetailViewController.h */,
-				F0A972A01BFF04D7007D4D96 /* NADetailViewController.m */,
 				F0E9AF921BD8749E00F4E228 /* NADetailView.h */,
 				F0E9AF931BD8749E00F4E228 /* NADetailView.m */,
+				F0A9729F1BFF04D7007D4D96 /* NADetailViewController.h */,
+				F0A972A01BFF04D7007D4D96 /* NADetailViewController.m */,
 				F0E9AF961BD8749E00F4E228 /* NAMoviePlayerController.h */,
 				F0E9AF971BD8749E00F4E228 /* NAMoviePlayerController.m */,
 				F0E9AF981BD8749E00F4E228 /* NANotePageView.h */,
@@ -2127,6 +2158,8 @@
 				F0E9AFA01BD8749E00F4E228 /* NAGripToolbar.m */,
 				0A0E40181F2694C3009D9FD2 /* NANewClipEditingViewController.h */,
 				0A0E40191F2694C3009D9FD2 /* NANewClipEditingViewController.m */,
+				0A5587C91F5F631B00F25536 /* NAClipEditTextView.h */,
+				0A5587CA1F5F631B00F25536 /* NAClipEditTextView.m */,
 				0A0E401E1F2694EA009D9FD2 /* NANewChooseClipViewController.h */,
 				0A0E401F1F2694EA009D9FD2 /* NANewChooseClipViewController.m */,
 				0A0E40241F26A9A8009D9FD2 /* ChooseClipCollectionViewCell.h */,
@@ -2371,6 +2404,11 @@
 		F0E9B0F61BD87CCD00F4E228 /* Akita */ = {
 			isa = PBXGroup;
 			children = (
+				0A5587B01F5DE83F00F25536 /* TazuganeGothicStdN-Bold.otf */,
+				0A5587B11F5DE83F00F25536 /* TazuganeGothicStdN-Book.otf */,
+				0A5587B21F5DE83F00F25536 /* TazuganeGothicStdN-Light.otf */,
+				0A5587B31F5DE83F00F25536 /* TazuganeGothicStdN-Medium.otf */,
+				0A5587B41F5DE83F00F25536 /* TazuganeGothicStdN-Thin.otf */,
 				0A02381B1F2FEACB00D1FA87 /* MTLmr3m.ttf */,
 				F0E9B0F71BD87CCD00F4E228 /* GTM-K5J64D */,
 				F0E9B0F81BD87CCD00F4E228 /* Images.xcassets */,
@@ -2564,8 +2602,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A5587C51F5DE83F00F25536 /* TazuganeGothicStdN-Thin.otf in Resources */,
+				0A5587B91F5DE83F00F25536 /* TazuganeGothicStdN-Book.otf in Resources */,
+				0A5587BD1F5DE83F00F25536 /* TazuganeGothicStdN-Light.otf in Resources */,
 				F0E9AF081BD86C7E00F4E228 /* ProgressHUD.bundle in Resources */,
 				0A02381C1F2FEACB00D1FA87 /* MTLmr3m.ttf in Resources */,
+				0A5587C11F5DE83F00F25536 /* TazuganeGothicStdN-Medium.otf in Resources */,
 				0A07CFC21F51ED6600373170 /* .gitkeep in Resources */,
 				0A00BFAE1F54C1C90099B276 /* FSActionSheet_cancel@3x.png in Resources */,
 				F0E9B1081BD87CE800F4E228 /* Images.xcassets in Resources */,
@@ -2575,6 +2617,7 @@
 				0A07CFC61F51ED6600373170 /* .gitkeep in Resources */,
 				0A00BFAA1F54C1C90099B276 /* FSActionSheet_cancel@2x.png in Resources */,
 				F0763C621B4CC5D600DE97E6 /* htmlsource.bundle in Resources */,
+				0A5587B51F5DE83F00F25536 /* TazuganeGothicStdN-Bold.otf in Resources */,
 				F0E9B10B1BD87CE800F4E228 /* Localizable.strings in Resources */,
 				F0E9B10A1BD87CE800F4E228 /* init.plist in Resources */,
 				F0E9B1071BD87CE800F4E228 /* GTM-K5J64D in Resources */,
@@ -2585,8 +2628,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A5587C61F5DE83F00F25536 /* TazuganeGothicStdN-Thin.otf in Resources */,
+				0A5587BA1F5DE83F00F25536 /* TazuganeGothicStdN-Book.otf in Resources */,
+				0A5587BE1F5DE83F00F25536 /* TazuganeGothicStdN-Light.otf in Resources */,
 				F0E9AF091BD86C7E00F4E228 /* ProgressHUD.bundle in Resources */,
 				0A02381D1F2FEACB00D1FA87 /* MTLmr3m.ttf in Resources */,
+				0A5587C21F5DE83F00F25536 /* TazuganeGothicStdN-Medium.otf in Resources */,
 				0A07CFC31F51ED6600373170 /* .gitkeep in Resources */,
 				0A00BFAF1F54C1C90099B276 /* FSActionSheet_cancel@3x.png in Resources */,
 				F0E9B0FD1BD87CCD00F4E228 /* Images.xcassets in Resources */,
@@ -2596,6 +2643,7 @@
 				0A07CFC71F51ED6600373170 /* .gitkeep in Resources */,
 				0A00BFAB1F54C1C90099B276 /* FSActionSheet_cancel@2x.png in Resources */,
 				C098506B1BD76973000AF3D0 /* htmlsource.bundle in Resources */,
+				0A5587B61F5DE83F00F25536 /* TazuganeGothicStdN-Bold.otf in Resources */,
 				F0E9B1001BD87CCD00F4E228 /* Localizable.strings in Resources */,
 				F0E9B0FF1BD87CCD00F4E228 /* init.plist in Resources */,
 				F0E9B0FC1BD87CCD00F4E228 /* GTM-K5J64D in Resources */,
@@ -2612,13 +2660,18 @@
 				0A00BFAC1F54C1C90099B276 /* FSActionSheet_cancel@2x.png in Resources */,
 				0A07CFC81F51ED6600373170 /* .gitkeep in Resources */,
 				F0E9B1131BD87D1500F4E228 /* Images.xcassets in Resources */,
+				0A5587C71F5DE83F00F25536 /* TazuganeGothicStdN-Thin.otf in Resources */,
 				0A00BFB01F54C1C90099B276 /* FSActionSheet_cancel@3x.png in Resources */,
 				F0314BE41CF7CA2800411DE6 /* TOWebViewControllerLocalizable.strings in Resources */,
 				C09850DF1BD7697F000AF3D0 /* Podfile in Resources */,
 				C09850E61BD7697F000AF3D0 /* htmlsource.bundle in Resources */,
 				F0E9B1161BD87D1500F4E228 /* Localizable.strings in Resources */,
+				0A5587C31F5DE83F00F25536 /* TazuganeGothicStdN-Medium.otf in Resources */,
 				F0E9B1151BD87D1500F4E228 /* init.plist in Resources */,
+				0A5587B71F5DE83F00F25536 /* TazuganeGothicStdN-Bold.otf in Resources */,
 				F0E9B1121BD87D1500F4E228 /* GTM-K5J64D in Resources */,
+				0A5587BF1F5DE83F00F25536 /* TazuganeGothicStdN-Light.otf in Resources */,
+				0A5587BB1F5DE83F00F25536 /* TazuganeGothicStdN-Book.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2626,8 +2679,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A5587C81F5DE83F00F25536 /* TazuganeGothicStdN-Thin.otf in Resources */,
+				0A5587BC1F5DE83F00F25536 /* TazuganeGothicStdN-Book.otf in Resources */,
+				0A5587C01F5DE83F00F25536 /* TazuganeGothicStdN-Light.otf in Resources */,
 				F0E9AF0B1BD86C7E00F4E228 /* ProgressHUD.bundle in Resources */,
 				0A02381F1F2FEACB00D1FA87 /* MTLmr3m.ttf in Resources */,
+				0A5587C41F5DE83F00F25536 /* TazuganeGothicStdN-Medium.otf in Resources */,
 				0A07CFC51F51ED6600373170 /* .gitkeep in Resources */,
 				0A00BFB11F54C1C90099B276 /* FSActionSheet_cancel@3x.png in Resources */,
 				F0E9B11E1BD87D2000F4E228 /* Images.xcassets in Resources */,
@@ -2637,6 +2694,7 @@
 				0A07CFC91F51ED6600373170 /* .gitkeep in Resources */,
 				0A00BFAD1F54C1C90099B276 /* FSActionSheet_cancel@2x.png in Resources */,
 				C09851761BD76DAE000AF3D0 /* htmlsource.bundle in Resources */,
+				0A5587B81F5DE83F00F25536 /* TazuganeGothicStdN-Bold.otf in Resources */,
 				F0E9B1211BD87D2000F4E228 /* Localizable.strings in Resources */,
 				F0E9B1201BD87D2000F4E228 /* init.plist in Resources */,
 				F0E9B11D1BD87D2000F4E228 /* GTM-K5J64D in Resources */,
@@ -2936,6 +2994,7 @@
 				F0E9B0251BD8749E00F4E228 /* NAGripToolbar.m in Sources */,
 				F0E9B0151BD8749E00F4E228 /* NAMoviePlayerController.m in Sources */,
 				0A3540241F168957007A8109 /* DAYNavigationBar.m in Sources */,
+				0A5587CB1F5F631B00F25536 /* NAClipEditTextView.m in Sources */,
 				F09955531CE04FBB00920D52 /* BRScrollBarView.m in Sources */,
 				0A00BF7E1F54C1A70099B276 /* UIView+XLExtension.m in Sources */,
 				622F12131AB0657E00CB2A6D /* NAFileManager.m in Sources */,
@@ -3013,6 +3072,7 @@
 				C0984FFC1BD76973000AF3D0 /* NAContent.m in Sources */,
 				F0E9B02E1BD8749E00F4E228 /* NAImageScrollView.m in Sources */,
 				F0E9B05E1BD8749E00F4E228 /* NASubPagerView.m in Sources */,
+				0A5587CC1F5F631B00F25536 /* NAClipEditTextView.m in Sources */,
 				C0984FFD1BD76973000AF3D0 /* UIAlertView+Additions.m in Sources */,
 				F0E9AF471BD86DF500F4E228 /* NACheckNetwork.m in Sources */,
 				F09C2F5D1CAB6F8100B677CA /* WQPDFManager.m in Sources */,
@@ -3285,6 +3345,7 @@
 				F0E9AF7E1BD871F600F4E228 /* NASDoc.m in Sources */,
 				C09850B41BD7697F000AF3D0 /* NSString+NAAPI.m in Sources */,
 				0A07CFD01F51ED6600373170 /* TTGTextTagCollectionView.m in Sources */,
+				0A5587CD1F5F631B00F25536 /* NAClipEditTextView.m in Sources */,
 				C09850B81BD7697F000AF3D0 /* NAPublishers.m in Sources */,
 				F0E9B02B1BD8749E00F4E228 /* NAHomeProgressView.m in Sources */,
 				0A00BFA41F54C1C90099B276 /* FSActionSheetConfig.m in Sources */,
@@ -3455,6 +3516,7 @@
 				F0E9AF7F1BD871F600F4E228 /* NASDoc.m in Sources */,
 				C09851491BD76DAE000AF3D0 /* NSString+NAAPI.m in Sources */,
 				0A07CFD11F51ED6600373170 /* TTGTextTagCollectionView.m in Sources */,
+				0A5587CE1F5F631B00F25536 /* NAClipEditTextView.m in Sources */,
 				C098514D1BD76DAE000AF3D0 /* NAPublishers.m in Sources */,
 				F0E9B02C1BD8749E00F4E228 /* NAHomeProgressView.m in Sources */,
 				0A00BFA51F54C1C90099B276 /* FSActionSheetConfig.m in Sources */,

@@ -163,7 +163,7 @@
 "note saved"="記事保存完了";
 "note indexNo error"="指定されたIndexNoが不正です";
 "note Max"="クリップ数が上限に達しているため、保存できません。";
-"note do save error"="クリップ保存処理でエラーが発生しました";
+"note do save error"="すでにスクラップしています";
 
 "note deleting"="記事削除中...";
 "note deleted"="記事削除完了";
