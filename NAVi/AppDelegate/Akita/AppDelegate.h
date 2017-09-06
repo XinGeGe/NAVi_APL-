@@ -21,7 +21,7 @@
 
 
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate,NALoginAlertViewDelegate,NAAgreementViewDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 

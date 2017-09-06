@@ -1046,10 +1046,10 @@
                         //分享结果回调方法
                         UIActivityViewControllerCompletionHandler myblock = ^(NSString *type,BOOL completed){
                             if (completed) {
-                                [[[iToast makeText:NSLocalizedString(@"Share succeed", nil)]
+                                [[[iToast makeText:NSLocalizedString(@"share succeed", nil)]
                                   setGravity:iToastGravityBottom] show];
                             } else {
-                                [[[iToast makeText:NSLocalizedString(@"Share fail", nil)]
+                                [[[iToast makeText:NSLocalizedString(@"share failed", nil)]
                                   setGravity:iToastGravityBottom] show];
                             }
                         };

@@ -227,12 +227,21 @@
         todayMonth = [[Util getSystemDate] substringWithRange:NSMakeRange(4, 2)];
         
     }
+
     _calendarView.nowMonthArray = _nowMonthArray;
-    _calendarView.publishDate = month;
-    _calendarView.toDayMonth = todayMonth;
-    _calendarView.monthNew = month;
-    _calendarView.dayNew = day;
+    _calendarView.publishDate = month;//最新数据的月份
+    _calendarView.toDayMonth = todayMonth;//当前月
+    _calendarView.monthNew = month;//最新数据的月份
+    _calendarView.dayNew = day;//最新数据的天
     _calendarView.select = 0;
+    
+    NSDateFormatter  *dateformatter=[[NSDateFormatter alloc] init];
+    NSLocale *locale = [[NSLocale alloc]  initWithLocaleIdentifier:[[NSLocale preferredLanguages]  objectAtIndex:0]];
+    [dateformatter setLocale:locale];
+    [dateformatter setDateFormat:@"yyyyMMdd"];
+    NSDate * date1 = [dateformatter dateFromString:self.currDoc.publishDate];
+    _calendarView.selectedDate = date1;//最新数据的日期
+    
     _calendarView.delegate = self;
     _calendarView.selectChange = 0;
     [_calendarView addTarget:self action:@selector(calendarViewDidChange2:) forControlEvents:UIControlEventValueChanged];

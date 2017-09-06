@@ -91,7 +91,7 @@ body {
     padding-right: 8px;
     background-color: #DDD;
     color: #111111;
-    font-family: "ヒラギノ",serif;
+    font-family: "TazuganeGothicStdN-Light",serif;
     
     -webkit-overflow-scrolling:touch;
 }
@@ -208,6 +208,7 @@ body {
     line-height: 22px;
     padding-bottom:10px;
     color:#929394;
+    font-family: "TazuganeGothicStdN-Light",serif;
 }
 .tate_kiji_detail_honbun {
     padding-top:5px;
@@ -215,10 +216,17 @@ body {
     font-weight:bold;
     margin-right:5px;
     margin-left:10px;
-    font-family: "ヒラギノ",serif;
+    font-family: "TazuganeGothicStdN-Medium",serif;
     /*    border-bottom: 1px solid #777;*/
 }
 
+.kiji_detail_title2 {
+    font-family: "TazuganeGothicStdN-Medium",serif;
+}
+
+.kiji_detail_title4 {
+    font-family: "TazuganeGothicStdN-Light",serif;
+}
 
 .kdetail_paper_link_title {
     text-indent: 10px;

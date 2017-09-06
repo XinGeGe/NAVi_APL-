@@ -62,6 +62,7 @@ void UncaughtExceptionHandler(NSException *exception) {
     [[NASQLHelper sharedInstance] CreateMyPaperTable];
     [[NADownloadHelper sharedInstance] initTask];
     NAHomeViewController *topPage=[[NAHomeViewController alloc]init];
+    topPage.load = 1;
     NABaseNavigationController *nav = [[NABaseNavigationController alloc] initWithRootViewController:topPage];
     [self.window setRootViewController:nav];
     [self.window makeKeyAndVisible];
@@ -139,32 +140,14 @@ void UncaughtExceptionHandler(NSException *exception) {
         [self getLoginAPIWithUsername:[NASaveData getLoginUserId] ThePassword:[NASaveData getLoginPassWord]];
     }else{
         NAHomeViewController *topPage=[[NAHomeViewController alloc]init];
+        topPage.load = 0;
         NABaseNavigationController *nav = [[NABaseNavigationController alloc] initWithRootViewController:topPage];
         [self.window setRootViewController:nav];
         [self.window makeKeyAndVisible];
     }
 
 }
--(void)IAgree{
-     NAHomeViewController *topPage=[[NAHomeViewController alloc]init];
-    NABaseNavigationController *nav = [[NABaseNavigationController alloc] initWithRootViewController:topPage];
-    [self.window setRootViewController:nav];
-    [self.window makeKeyAndVisible];
-}
--(void)loginClick:(NSString *)username Password:(NSString *)password{
-   
-    [self getLoginAPIWithUsername:username ThePassword:password];
-}
--(void)switchDidChange:(BOOL)isAutoLogin TheAllDownload:(BOOL)isAllDownload{
-    isTempAutoLogin=isAutoLogin;
-    isTempAllDownload=isAllDownload;
-}
 
--(void)cancelLoginClick{
-    NAHomeViewController *topPage=[[NAHomeViewController alloc]init];
-    NABaseNavigationController *nav = [[NABaseNavigationController alloc] initWithRootViewController:topPage];
-    [self.loginViewController presentViewController:nav animated:YES completion:nil];
-}
 -(void)ClearTheoldfile{
     NSDictionary *dic=[NASaveData getALLUser];
     NSArray *myusersarray=[dic allKeys];
@@ -483,6 +466,7 @@ performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionH
                                                   [NASaveData saveAlldownload:[NSNumber numberWithBool:isTempAllDownload]];
                                                   [NASaveData saveDataUserClass:login.userClass];
                                                   NAHomeViewController *topPage=[[NAHomeViewController alloc]init];
+                                                  topPage.load = 0;
                                                   NABaseNavigationController *nav = [[NABaseNavigationController alloc] initWithRootViewController:topPage];
                                                   [self.window setRootViewController:nav];
                                                   [self.window makeKeyAndVisible];
@@ -525,9 +509,6 @@ performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionH
                                               [ProgressHUD dismiss];
                                               
                                           }
-//                                          NASettingViewController *setvc = [[NASettingViewController alloc] init];
-//                                          NABaseNavigationController *nav = [[NABaseNavigationController alloc] initWithRootViewController:setvc];
-//                                          [self.loginViewController presentViewController:nav animated:NO completion:nil];
                                       }];
 }
 

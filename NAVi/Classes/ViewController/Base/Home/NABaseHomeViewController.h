@@ -53,7 +53,7 @@
 @property (nonatomic, strong) NSMutableArray *searchPublicationArray;
 @property (nonatomic, strong) NSArray *searchArticleArray;
 @property (nonatomic, strong) NSMutableArray *publisherInfoArray;
-
+@property (nonatomic, assign) NSInteger load;
 @property (nonatomic, strong) UIImageView *mylogoview;
 @property (nonatomic, assign) BOOL swipDownloading;
 

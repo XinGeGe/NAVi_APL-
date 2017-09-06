@@ -1,0 +1,302 @@
+/*=====================================
+	スタイルリセット
+ =======================================*/
+html, body, h1, h2, h3, h4, h5, h6, ul, ol, dl, li, dt, dd, p,
+header, hgroup, section, article, aside, hgroup, footer, figure,
+figcaption, nav {
+    margin: 0;
+    padding: 0;
+    font-size: 100%;
+}
+.highlight {
+    background-color: yellow;
+    font-style: normal;
+}
+table {
+    border-collapse: collapse;
+}
+th, td {
+    padding: 0px;
+}
+
+/*===============================
+ 基本スタイル
+ ================================*/
+
+body {
+    font-family: "ＭＳ Ｐゴシック";
+}
+
+/*========================
+	記事詳細 画面
+ =========================*/
+.kiji_detail_info
+{
+    background-color: #FFF;
+    z-index: 1;
+    -webkit-overflow-scrolling:touch;
+    overflow-y:auto;
+    height:100%;
+}
+
+.kdetail_shimeninfo
+/*{
+	line-height: 16px;
+	font-size: 14px;
+	color: #FFF;
+	background-color: #2567ab;
+	text-indent: 5px;
+	height:16px;
+	width:100%;
+ }*/
+{
+    text-size:25px;
+    line-height: 26px;
+    font-weight: bold;
+    font-family: "ヒラギノ",serif;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: left;
+    width:100%;
+    
+}
+
+/* 記事タイトル */
+.kdetail_title {
+    font-weight: bold;
+    font-family: "ヒラギノ",serif;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    /*    bo9/+rder-bottom: 1px solid #AAF;*/
+    text-align: left;
+}
+
+/* 縦書き用 記事詳細タイトル */
+.tate_kdetail_title {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-weight: bold;
+    
+    background-color: #DDD;
+}
+
+/* 記事テキスト */
+.kdetail_text
+{
+    
+    font-weight: normal;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 8px;
+    padding-right: 8px;
+    background-color: #DDD;
+    color: #111111;
+    font-family: "TazuganeGothicStdN-Light",serif;
+    
+    -webkit-overflow-scrolling:touch;
+}
+
+/* 縦書き用 記事テキスト */
+.tate_kdetail_text
+{
+    font-weight: normal;
+    text-align:justify;
+    
+    color: #111111;
+    font-family: "ヒラギノ",serif;
+    
+    -webkit-overflow-scrolling:touch;
+}
+
+/* 関連画像 */
+/*.kdetail_photo
+ {
+ cursor: pointer;
+ float: right;
+ width: 50%;
+ text-align: center;
+ outline: none;
+ }
+ 
+ .relatedPhoto {
+ 
+ width: 90%;
+ }*/
+
+.kdetail_photo
+
+
+
+
+
+
+{
+    cursor: pointer;
+    float: center;
+    text-align: center;
+    outline: none;
+}
+
+.relatedPhoto {
+    
+    width: 50%;
+}
+
+/* 記事詳細 画像 */
+.kiji_detail_img {
+    text-align: center;
+    overflow: hidden;
+    width: 50%;
+}
+
+/* 縦書き用 段組設定 */
+.tate_dangumi {
+    margin-right: 5px;
+    margin-top: 5px;
+    
+    column-gap: 20px;
+    -moz-column-gap: 20px;
+    -webkit-column-gap: 20px;
+    -o-column-gap: 20px;
+    -ms-column-gap: 20px;
+    
+    column-count: auto;
+    -moz-column-count: auto;
+    -webkit-column-count: auto;
+    -o-column-count: auto;
+    -ms-column-count: auto;
+    
+    -moz-column-rule: 1px solid #777;
+    -webkit-column-rule: 1px solid #777;
+    column-rule: 1px solid #777;
+}
+
+/* 記事詳細 画像 */
+.tate_detail_img {
+    text-align: center;
+    overflow: hidden;
+}
+
+/*------------------------------
+ 記事詳細 フォントサイズ
+ -------------------------------*/
+.kiji_detail_title {
+    font-size: 22px;
+    line-height: 26px;
+}
+
+.kiji_detail_honbun {
+    font-size:30px;
+    font-weight: bold;
+    font-family: "ヒラギノ",serif;
+    padding-left: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #DDD;
+    /*    border-bottom: 1px solid #AAF;*/
+    text-align: center;
+}
+
+.kiji_detail_honbun1 {
+    font-size: 18px;
+    line-height: 22px;
+    padding-right: 5px;
+    background-color: #DDD;
+}
+.kiji_date_title{
+    font-size 15px;
+    line-height: 22px;
+    padding-bottom:10px;
+    color:#929394;
+    font-family: "TazuganeGothicStdN-Light",serif;
+}
+.tate_kiji_detail_honbun {
+    padding-top:5px;
+    text-overflow: ellipsis;
+    font-weight:bold;
+    margin-right:5px;
+    margin-left:10px;
+    font-family: "TazuganeGothicStdN-Medium",serif;
+    /*    border-bottom: 1px solid #777;*/
+}
+
+.kiji_detail_title2 {
+    font-family: "TazuganeGothicStdN-Medium",serif;
+}
+
+.kiji_detail_title4 {
+    font-family: "TazuganeGothicStdN-Light",serif;
+}
+
+.kdetail_paper_link_title {
+    text-indent: 10px;
+    clear: both;
+    background-color: #CCC;
+    color: #FFF;
+    font-size: 12px;
+    line-height: 14px;
+    font-weight: bold;
+    
+    text-shadow: none;
+    -moz-text-shadow: none;
+    -webkit-text-shadow: none;
+}
+
+div.kdetail_paper_link {
+    width: 100%;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+div.kdetail_paper_link td.td_list_img {
+    padding: 5px;
+}
+.list_img {
+    width: 90px;
+    height: auto;
+}
+
+/*------------------
+ リストテーブル要素
+ --------------------*/
+.td_list_detail {
+    text-align: left;
+    padding: 2px;
+}
+
+.div_data_title {
+    font-size: 27px;
+    font-weight: bold;
+    margin-bottom: 4px;
+    color: #000000;
+}
+.div_data_detail {
+    font-size: 22px;
+    color: #777777;
+}
+
+.paper_link_div {
+    padding-top: 10px;
+}
+
+.tate_paper_link_div {
+    padding-right: 10px;
+}
+.tate_kiji_detail_info
+{
+    background-color: #DDD;
+    z-index: 1;
+    overflow-y: hidden;
+    overflow-x: scroll;
+}
+.border_tag_description {
+    background-color:#FFF;
+    border-radius:10px;
+}
+.vertical-container{
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: left;
+}

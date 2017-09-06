@@ -194,3 +194,10 @@
 //web
 "close web"="閉じる";
 
+//share
+"share success" = "成功を共有する";
+"share failed" = "共有に失敗しました";
+
+//tag
+"tag deleted" = "正常に削除されました";
+"save tag success" = "ラベル成功を保存";

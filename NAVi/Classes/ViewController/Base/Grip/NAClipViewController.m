@@ -55,6 +55,7 @@
         [self resetHomeToolBar];
         [_showClipView dismissMyview];
     }
+//   [self reloadClip];
    [self setDairy];
 }
 
@@ -343,7 +344,7 @@
     if ([_isfromWhere isEqualToString:@"NOTE"]) {
         note.myselectIndex = _pageArray.count - 1- _haveChangeIndex;
     }else if ([_isfromWhere isEqualToString:@"HOME"]){
-        note.myselectIndex = _haveChangeIndex;
+        note.myselectIndex = _pageArray.count - 1- _haveChangeIndex;;
     }
     
    

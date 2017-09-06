@@ -370,7 +370,7 @@
                 ITOAST_BOTTOM(@"太长のラベルが存在");
             } else {
                 if (!isChangeError && !isAddError) {
-                    ITOAST_BOTTOM(@"saveTag success");
+                    ITOAST_BOTTOM(@"save tag success");
                 }
                 [self dismissViewControllerAnimated:YES completion:^{
                     
@@ -732,33 +732,6 @@
 //        [addClipScroll removeGestureRecognizer:panGesture];
 //    }
     
-}
-
-
-//renameTag
-- (void)renameTag{
-    NSDictionary *param = @{
-                            @"Userid"     :  [NASaveData getLoginUserId],
-                            @"TagId"         :  @"004",//TODO
-                            @"TagName"         :  @"lalalalal",//TODO
-                            };
-    [[NANetworkClient sharedClient] renameTag:param completionBlock:^(id favorites, NSError *error) {
-        if (!error) {
-            ITOAST_BOTTOM(@"tag rename success");
-        }
-    }];
-}
-//saveTag
-- (void)saveTag{
-    NSDictionary *param = @{
-                            @"Userid"     :  [NASaveData getLoginUserId],
-                            @"TagName"         :  @"lalalalal",//TODO
-                            };
-    [[NANetworkClient sharedClient] saveTag:param completionBlock:^(id favorites, NSError *error) {
-        if (!error) {
-            ITOAST_BOTTOM(@"saveTag success");
-        }
-    }];
 }
 
 - (UIBarButtonItem *)backBarItem
