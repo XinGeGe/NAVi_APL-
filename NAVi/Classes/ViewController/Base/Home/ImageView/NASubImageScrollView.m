@@ -73,7 +73,7 @@
 -(void)setImageViewWithurlstr:(NSString *)imagestr completionBlock:(MyImageCompletionBlock)completion{
     [self.imageView.noteView clearNote];
     [self.imageView.imageView sd_setImageWithURL:[NSURL URLWithString:imagestr] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL){
-        [self.imageView updateFrame4Image:self.bounds];
+        [self.imageView updateFrame4Image:self.bounds isFromHome:NO];
         if (completion) {
             completion(image,error,cacheType,imageURL);
         }
@@ -115,7 +115,7 @@
                     doc.whichimage = NAThumbimage;
                 }
                 [myimageview setImage:image];
-                [self.imageView updateFrame4Image:self.bounds];
+                [self.imageView updateFrame4Image:self.bounds isFromHome:NO];
             });
                            
         }else {
@@ -152,7 +152,7 @@
             if (image) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [myimageview setImage:image];
-                    [self.imageView updateFrame4Image:self.bounds];
+                    [self.imageView updateFrame4Image:self.bounds isFromHome:NO];
                 });
             }else {
                  NSLog(@"NO image");

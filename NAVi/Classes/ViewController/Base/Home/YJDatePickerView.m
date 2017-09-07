@@ -81,9 +81,9 @@ static CGFloat mainViewWidth, screenWidth;
         [pickerLabel setTextAlignment:NSTextAlignmentCenter];
         [pickerLabel setBackgroundColor:[UIColor clearColor]];
         if (isPhone) {
-            [pickerLabel setFont:[FontUtil boldSystemFontOfSize:15]];
+            [pickerLabel setFont:[FontUtil systemFontOfSize:15]];
         }else{
-            [pickerLabel setFont:[FontUtil boldSystemFontOfSize:40]];
+            [pickerLabel setFont:[FontUtil systemFontOfSize:40]];
         }
     }
     pickerLabel.text=[self pickerView:pickerView titleForRow:row forComponent:component];

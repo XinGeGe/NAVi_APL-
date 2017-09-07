@@ -88,11 +88,11 @@
     UILabel *mLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, titleWidth, 14)];
     mLabel.backgroundColor = [UIColor clearColor];
     mLabel.textAlignment = NSTextAlignmentCenter;
-    mLabel.font = [FontUtil boldSystemFontOfSize:12];
+    mLabel.font = [FontUtil systemFontOfSize:12];
     UILabel *sLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 15, titleWidth, 20)];
     sLabel.backgroundColor = [UIColor clearColor];
     sLabel.textAlignment = NSTextAlignmentCenter;
-    sLabel.font = [FontUtil boldSystemFontOfSize:16];
+    sLabel.font = [FontUtil systemFontOfSize:16];
     sLabel.textColor = [UIColor blackColor];
     
     [titleView addSubview:mLabel];
@@ -104,15 +104,15 @@
         publication.textColor=[UIColor redColor];
         if (isPad) {
             publication.frame=CGRectMake(0, 15, 100, 20);
-            publication.font=[FontUtil boldSystemFontOfSize:14];
+            publication.font=[FontUtil systemFontOfSize:14];
         }else{
             mLabel.frame=CGRectMake(0, 0, titleWidth, 10);
-            mLabel.font = [FontUtil boldSystemFontOfSize:10];
+            mLabel.font = [FontUtil systemFontOfSize:10];
             sLabel.frame= CGRectMake(0, 11, titleWidth, 20);
-            sLabel.font = [FontUtil boldSystemFontOfSize:14];
+            sLabel.font = [FontUtil systemFontOfSize:14];
             publication.frame=CGRectMake(0, 30, titleWidth, 14);
             publication.textAlignment = NSTextAlignmentCenter;
-            publication.font=[FontUtil boldSystemFontOfSize:12];
+            publication.font=[FontUtil systemFontOfSize:12];
         }
         
         //[titleView addSubview:publication];

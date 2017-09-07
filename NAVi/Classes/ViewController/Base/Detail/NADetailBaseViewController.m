@@ -1153,7 +1153,7 @@
     }else{
         leftView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenwidth/5, 49)];
     }
-    //leftView.backgroundColor = [UIColor redColor];
+//    leftView.backgroundColor = [UIColor redColor];
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [leftView addSubview:backBtn];
     if (isPhone) {
@@ -1217,9 +1217,9 @@
     
     UIView *rightView;
     if (isPhone) {
-        rightView = [[UIView alloc]initWithFrame:CGRectMake(screenwidth/4, 0, screenwidth/4, 44)];
+        rightView = [[UIView alloc]initWithFrame:CGRectMake(screenwidth/3-20, 0, screenwidth/3-20, 44)];
     }else{
-        rightView = [[UIView alloc]initWithFrame:CGRectMake(screenwidth/4, 0, screenwidth/4, 49)];
+        rightView = [[UIView alloc]initWithFrame:CGRectMake(screenwidth/3-20, 0, screenwidth/3-20, 49)];
     }
 //    rightView.backgroundColor = [UIColor greenColor];
     JXButton  *btn4 = [JXButton buttonWithType:UIButtonTypeCustom];

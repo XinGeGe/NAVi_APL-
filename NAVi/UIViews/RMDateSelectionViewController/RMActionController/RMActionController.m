@@ -199,7 +199,7 @@ typedef NS_ENUM(NSInteger, RMActionControllerAnimationStyle) {
     //Setup properties of elements
     self.headerTitleLabel.backgroundColor = [UIColor clearColor];
     self.headerTitleLabel.textColor = [UIColor grayColor];
-    self.headerTitleLabel.font = [FontUtil boldSystemFontOfSize:[UIFont smallSystemFontSize]];
+    self.headerTitleLabel.font = [FontUtil systemFontOfSize:[UIFont smallSystemFontSize]];
     self.headerTitleLabel.translatesAutoresizingMaskIntoConstraints = NO;
     self.headerTitleLabel.textAlignment = NSTextAlignmentCenter;
     self.headerTitleLabel.numberOfLines = 0;
@@ -907,7 +907,7 @@ typedef NS_ENUM(NSInteger, RMActionControllerAnimationStyle) {
     [actionButton addTarget:self action:@selector(viewTapped:) forControlEvents:UIControlEventTouchUpInside];
     
     if(self.style == RMActionStyleCancel) {
-        actionButton.titleLabel.font = [FontUtil boldSystemFontOfSize:[UIFont buttonFontSize]];
+        actionButton.titleLabel.font = [FontUtil systemFontOfSize:[UIFont buttonFontSize]];
     } else {
         actionButton.titleLabel.font = [FontUtil systemFontOfSize:[UIFont buttonFontSize]];
     }

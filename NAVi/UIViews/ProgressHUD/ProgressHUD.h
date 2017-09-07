@@ -14,7 +14,7 @@
 #import "AGWindowView.h"
 #import "FontUtil.h"
 //-------------------------------------------------------------------------------------------------------------------------------------------------
-#define HUD_STATUS_FONT			[FontUtil boldSystemFontOfSize:16]
+#define HUD_STATUS_FONT			[FontUtil systemFontOfSize:16]
 //#define HUD_STATUS_COLOR		[UIColor blackColor]
 #define HUD_STATUS_COLOR		[UIColor whiteColor]
 #define HUD_SPINNER_COLOR		[UIColor whiteColor]

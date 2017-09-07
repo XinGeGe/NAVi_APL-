@@ -17,7 +17,8 @@
     NALoginAlertView *myalertview;
     BOOL isTempAutoLogin;
     BOOL isTempAllDownload;
-    
+    NSString *ReleaseAreaInfo;
+    NSString *PublishDayInfo;
 }
 @property (nonatomic, strong) UIButton *backBtn;
 @property (nonatomic, strong) UIImageView *pictureView;
@@ -34,7 +35,9 @@
     [super viewDidLoad];
     self.navigationItem.leftBarButtonItem = self.backBarItem;
     self.view.backgroundColor = [UIColor colorWithRed:244.0/255.0 green:244.0/255.0 blue:245.0/255.0 alpha:1];
-    
+    ReleaseAreaInfo = [NASaveData getReleaseAreaInfo];
+    PublishDayInfo = [NASaveData getDataPublishDayInfo];
+
 }
 - (UIBarButtonItem *)backBarItem
 {
@@ -80,22 +83,44 @@
         month = [self.currDoc.publishDate substringWithRange:NSMakeRange(4, 2)];
         date = [NSString stringWithFormat:@"%@%ld01:%@",year,month.integerValue -1,[Util getSystemDate]];
     }
-    
-    param = @{
-              @"Userid"     :  [NASaveData getDefaultUserID],
-              @"K090"       :  @"010",
-              @"Rows"       :  @"99",
-              @"K003"       :  date,
-              @"K004"       :  doc.publisherGroupInfoId,
-              @"K006"       :  doc.publicationInfoId,
-              @"K005"       :  doc.publisherInfoId,
-              @"K014"       :  @"1",
-              @"UseDevice"  :  NAUserDevice,
-              @"K002"       :  @"2",
-              @"Mode"       :  @"1",
-              @"Sort"       :  @"K003:desc,K008:asc,K012:asc",
-              @"Fl"         :  [NSString searchDateSelectedFl]
-              };
+    if (![PublishDayInfo isEqualToString:@""] && PublishDayInfo != nil ) {
+        param = @{
+                  @"Userid"     :  [NASaveData getDefaultUserID],
+                  @"K090"       :  @"010",
+                  @"Rows"       :  @"99",
+                  @"K003"       :  date,
+                  @"K004"       :  doc.publisherGroupInfoId,
+                  @"K006"       :  doc.publicationInfoId,
+                  @"K005"       :  doc.publisherInfoId,
+                  @"K014"       :  @"1",
+                  @"UseDevice"  :  NAUserDevice,
+                  @"K002"       :  @"2",
+                  @"Mode"       :  @"1",
+                  @"Sort"       :  @"K003:desc,K008:asc,K012:asc",
+                  @"Fl"         :  [NSString searchDateSelectedFl],
+                  @"K081"       :  ReleaseAreaInfo,
+                  @"K083"       : PublishDayInfo,
+                  };
+    }else{
+        param = @{
+                  @"Userid"     :  [NASaveData getDefaultUserID],
+                  @"K090"       :  @"010",
+                  @"Rows"       :  @"99",
+                  @"K003"       :  date,
+                  @"K004"       :  doc.publisherGroupInfoId,
+                  @"K006"       :  doc.publicationInfoId,
+                  @"K005"       :  doc.publisherInfoId,
+                  @"K014"       :  @"1",
+                  @"UseDevice"  :  NAUserDevice,
+                  @"K002"       :  @"2",
+                  @"Mode"       :  @"1",
+                  @"Sort"       :  @"K003:desc,K008:asc,K012:asc",
+                  @"Fl"         :  [NSString searchDateSelectedFl],
+                  @"K081"       :  ReleaseAreaInfo,
+                  };
+        
+    }
+
     [[NANetworkClient sharedClient] postSearch:param completionBlock:^(id search, NSError *error) {
         if (error) {
             ITOAST_BOTTOM(NSLocalizedString(@"network timeout", nil));
@@ -228,13 +253,18 @@
         
     }
 
+//    NSDictionary *dictt = [[NSDictionary alloc] initWithObjectsAndKeys:@"20170731",@"publishDate",@"1",@"regionViewFlg", nil];
+//    [_nowMonthArray addObject:dictt];
+//    NSDictionary *dictt1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"20170902",@"publishDate",@"1",@"regionViewFlg", nil];
+//    [_nowMonthArray addObject:dictt1];
+//    NSDictionary *dict1t = [[NSDictionary alloc] initWithObjectsAndKeys:@"20171002",@"publishDate",@"1",@"regionViewFlg", nil];
+//    [_nowMonthArray addObject:dict1t];
     _calendarView.nowMonthArray = _nowMonthArray;
     _calendarView.publishDate = month;//最新数据的月份
-    _calendarView.toDayMonth = todayMonth;//当前月
     _calendarView.monthNew = month;//最新数据的月份
     _calendarView.dayNew = day;//最新数据的天
     _calendarView.select = 0;
-    
+    _calendarView.toDayMonth = todayMonth;//当前月
     NSDateFormatter  *dateformatter=[[NSDateFormatter alloc] init];
     NSLocale *locale = [[NSLocale alloc]  initWithLocaleIdentifier:[[NSLocale preferredLanguages]  objectAtIndex:0]];
     [dateformatter setLocale:locale];

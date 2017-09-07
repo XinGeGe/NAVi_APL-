@@ -106,7 +106,7 @@
     note.regionDic = _regionDic;
     note.topPageDoc= _topPageDoc;
     note.clipDataSource = _clipDataSource;
-    note.myselectIndex = _haveChangeIndex;
+    note.myselectIndex = _pageArray.count - 1 - _haveChangeIndex;
 //    note.noteNumber = _noteNumber;
 //     note.NotePageArray = _NoteArray;
     NABaseNavigationController *nav = [[NABaseNavigationController alloc] initWithRootViewController:note];
@@ -771,7 +771,7 @@
     [_labMonthDayHore mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(10);
         make.top.equalTo(_labYearHore.mas_bottom);
-        make.width.mas_equalTo(120);
+        make.width.mas_equalTo(150);
         make.height.mas_equalTo(35);
         
     }];

@@ -152,7 +152,7 @@
     if (!_titleLbl) {
         _titleLbl = [[UILabel alloc] initWithFrame:CGRectZero];
         _titleLbl.backgroundColor = [UIColor clearColor];
-        _titleLbl.font = [FontUtil boldSystemFontOfSize:18];
+        _titleLbl.font = [FontUtil systemFontOfSize:18];
         _titleLbl.numberOfLines=1;
         _titleLbl.userInteractionEnabled=NO;
     }

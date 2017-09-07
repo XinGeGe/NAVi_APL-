@@ -41,7 +41,6 @@
 - (void)updateFrame:(CGRect)frame
 {
     self.frame = frame;
-    
     if (!self.isTwoPage) {
         self.imageView.frame = self.bounds;
         self.otherImageView.hidden = YES;
@@ -124,27 +123,90 @@
  * Frame更新(forImage)
  *
  */
-- (void)updateFrame4Image:(CGRect)superRect
+- (void)updateFrame4Image:(CGRect)superRect isFromHome:(BOOL)formHome
 {
     NSInteger count = self.isTwoPage ? 2 : 1;
     
-    if (self.imageView.image) {
-        CGSize size = self.imageView.image.size;
-        CGFloat width = superRect.size.width / count;
-        CGFloat height = superRect.size.height;
-        CGRect frame = superRect;
-        if ((size.width / size.height) > (width / height)) {
-            frame.size.height = size.height * width / size.width;
-            frame.origin.y = (height - frame.size.height) / 2;
-            _offx = 0;
-            _offy = frame.origin.y;
-        }else {
-            frame.size.width = size.width * height / size.height * count;
-            frame.origin.x = (width * count - frame.size.width) / 2;
-            _offx=frame.origin.x;
-            _offy = 0;
+    if (formHome) {
+        if (self.imageView.image) {
+            CGSize size = self.imageView.image.size;
+            CGFloat width = superRect.size.width / count;
+            CGFloat height = superRect.size.height;
+            CGRect frame = superRect;
+            if ((size.width / size.height) > (width / height)) {
+                frame.size.height = size.height * width / size.width;
+                frame.origin.y = (height - frame.size.height) / 2;
+                _offx = 0;
+                _offy = frame.origin.y;
+            }else {
+                frame.size.width = size.width * height / size.height * count;
+                frame.origin.x = (width * count - frame.size.width) / 2;
+                _offx=frame.origin.x;
+                _offy = 0;
+            }
+            [self updateFrame:frame];
         }
-        [self updateFrame:frame];
+    } else {
+        if (self.imageView.image) {
+            CGSize imageSize = self.imageView.image.size;
+            CGFloat widthBgView = superRect.size.width / count;
+            CGFloat heightBgView = superRect.size.height;
+            CGRect newBgFrame = superRect;
+            
+            if (imageSize.width > imageSize.height) {
+                if (imageSize.width >= widthBgView) {
+                    newBgFrame.size.width = 0.9 * newBgFrame.size.width;
+                    newBgFrame.size.height = imageSize.height * widthBgView / imageSize.width;
+                    newBgFrame.origin.y = (heightBgView - newBgFrame.size.height) / 2;
+                    newBgFrame.origin.x = 0.05 * newBgFrame.size.width;
+                    _offx = newBgFrame.origin.x;
+                    _offy = newBgFrame.origin.y;
+                } else {
+                    newBgFrame.size.width = imageSize.width;
+                    newBgFrame.size.height = imageSize.height * widthBgView / imageSize.width;
+                    newBgFrame.origin.y = (heightBgView - imageSize.height) / 2;
+                    newBgFrame.origin.x = (widthBgView - newBgFrame.size.width) / 2;
+                    _offx=newBgFrame.origin.x;
+                    _offy = newBgFrame.origin.y;
+                }
+            } else {
+                if (imageSize.height >= heightBgView) {
+                    newBgFrame.size.height = 0.9 * newBgFrame.size.height;
+                    newBgFrame.size.width = imageSize.width * heightBgView / imageSize.height;
+                    newBgFrame.origin.x = (widthBgView - newBgFrame.size.width) / 2;
+                    newBgFrame.origin.y = 0.05 * newBgFrame.size.height;
+                    _offx=newBgFrame.origin.x;
+                    _offy = newBgFrame.origin.y;
+                } else {
+                    newBgFrame.size.height = imageSize.height;
+                    newBgFrame.size.width = imageSize.width * heightBgView / imageSize.height;
+                    newBgFrame.origin.y = (heightBgView - imageSize.height) / 2;
+                    newBgFrame.origin.x = (widthBgView - newBgFrame.size.width) / 2;
+                }
+            }
+        
+        
+//            if ((imageSize.width / imageSize.height) > (widthBgView / heightBgView)) {
+//                
+//                newBgFrame.size.height = imageSize.height * widthBgView / imageSize.width;
+//                newBgFrame.origin.y = (heightBgView - newBgFrame.size.height) / 2;
+//                _offx = 0;
+//                _offy = newBgFrame.origin.y;
+//                newBgFrame.origin.x = 0.05 * newBgFrame.size.width;
+//                newBgFrame.size.width = 0.9 * newBgFrame.size.width;
+//            }else {
+//                newBgFrame.size.width = imageSize.width * heightBgView / imageSize.height * count;
+//                newBgFrame.size.height = 0.9 * newBgFrame.size.height;
+//                newBgFrame.origin.y = 0.05 * newBgFrame.size.height;
+//                newBgFrame.origin.x = (widthBgView * count - newBgFrame.size.width) / 2;
+//                _offx=newBgFrame.origin.x;
+//                _offy = 0;
+//            }
+             [self updateFrame:newBgFrame];
+    }
+    
+    
+       
 //        if (isPad) {
 //            [self updateFrame:frame];
 //        }else{
@@ -163,7 +225,7 @@
         _imageView = [[UIImageView alloc] initWithFrame:self.bounds];
         _imageView.opaque = YES;
         //_imageView.clipsToBounds = YES;
-        _imageView.contentMode = UIViewContentModeScaleAspectFill;
+        _imageView.contentMode = UIViewContentModeScaleAspectFit;
     }
     return _imageView;
 }

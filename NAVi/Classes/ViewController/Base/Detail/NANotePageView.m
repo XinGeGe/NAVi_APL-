@@ -80,7 +80,7 @@
 {
     if (!_titleLabel) {
         _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, 20, width - 100, 60)];
-        _titleLabel.font = [FontUtil boldSystemFontOfSize:25];
+        _titleLabel.font = [FontUtil systemFontOfSize:25];
     }
     return _titleLabel;
 }

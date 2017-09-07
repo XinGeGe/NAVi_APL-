@@ -158,7 +158,7 @@
         _titleLabel.textAlignment = NSTextAlignmentCenter;
         _titleLabel.adjustsFontSizeToFitWidth = YES;
         _titleLabel.textColor = [UIColor blackColor];
-        _titleLabel.font = [FontUtil boldSystemFontOfSize:14];
+        _titleLabel.font = [FontUtil systemFontOfSize:14];
     }
     return _titleLabel;
 }
@@ -170,7 +170,7 @@
         _mainTitleLabel.textAlignment = NSTextAlignmentCenter;
         _mainTitleLabel.adjustsFontSizeToFitWidth = YES;
         _mainTitleLabel.textColor = [UIColor whiteColor];
-        _mainTitleLabel.font = [FontUtil boldSystemFontOfSize:12];
+        _mainTitleLabel.font = [FontUtil systemFontOfSize:12];
         
     }
     return _mainTitleLabel;

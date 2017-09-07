@@ -79,7 +79,7 @@
         _savaImageTipLabel.textColor = [UIColor whiteColor];
         _savaImageTipLabel.backgroundColor = [UIColor colorWithRed:0.1f green:0.1f blue:0.1f alpha:0.90f];
         _savaImageTipLabel.textAlignment = NSTextAlignmentCenter;
-        _savaImageTipLabel.font = [UIFont boldSystemFontOfSize:17];
+        _savaImageTipLabel.font = [UIFont systemFontOfSize:17];
     }
     return _savaImageTipLabel;
 }

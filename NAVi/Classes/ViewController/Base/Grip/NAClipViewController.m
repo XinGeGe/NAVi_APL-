@@ -44,7 +44,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadClip) name:NOTYReloadClip object:nil];
-    [self reloadClip];
+//    [self reloadClip];
 
 }
 - (void)viewWillAppear:(BOOL)animated{
@@ -55,7 +55,7 @@
         [self resetHomeToolBar];
         [_showClipView dismissMyview];
     }
-//   [self reloadClip];
+   [self reloadClip];
    [self setDairy];
 }
 
@@ -810,6 +810,7 @@
             }
         });
         }else{
+            [ProgressHUD dismiss];
             ITOAST_BOTTOM(error.localizedDescription);
             //[self dismissViewControllerAnimated:YES completion:nil];
         }
@@ -985,7 +986,7 @@
     [_labMonthDayHore mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(10);
         make.top.equalTo(_labYearHore.mas_bottom);
-        make.width.mas_equalTo(120);
+        make.width.mas_equalTo(150);
         make.height.mas_equalTo(35);
         
     }];

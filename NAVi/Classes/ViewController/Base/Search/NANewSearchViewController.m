@@ -17,7 +17,8 @@
     UITableView *tabSearchHistory;
     UIButton *paperBtn;
     UIButton *clipBtn;
-    
+    NSString *ReleaseAreaInfo;
+    NSString *PublishDayInfo;
 }
 @property (nonatomic, strong) NSArray *searchResults;
 @end
@@ -37,6 +38,9 @@
     UIView *titleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, titleWidth, self.navigationController.navigationBar.frame.size.height)];
     //titleView.backgroundColor = [UIColor colorWithRed:117.0/255.0 green:117.0/255.0 blue:117.0/255.0 alpha:1];
     self.navigationItem.titleView = titleView;
+    ReleaseAreaInfo = [NASaveData getReleaseAreaInfo];
+    PublishDayInfo = [NASaveData getDataPublishDayInfo];
+    
     
     paperBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [titleView addSubview:paperBtn];
@@ -267,15 +271,31 @@
 }
 - (void)searchFavoriteAPI:(NSString *)keyword
 {
-    
-    NSDictionary *param = @{
-                            @"Userid"     :  [NASaveData getLoginUserId],
-                            @"Rows"       :  @"999",
-                            @"Keyword"    :  keyword,
-                            @"K002"       :  @"4",
-                            @"Mode"       :  @"1",
-                            @"Fl"         :  [NSString clipListFl],
-                            };
+    NSDictionary *param;
+    if (![PublishDayInfo isEqualToString:@""] && PublishDayInfo != nil ) {
+        param = @{
+                  @"Userid"     :  [NASaveData getLoginUserId],
+                  @"Rows"       :  @"999",
+                  @"Keyword"    :  keyword,
+                  @"K002"       :  @"4",
+                  @"Mode"       :  @"1",
+                  @"Fl"         :  [NSString clipListFl],
+                  @"K081"       :  ReleaseAreaInfo,
+                  @"K083"       : PublishDayInfo,
+                  };
+    }else{
+        param = @{
+                  @"Userid"     :  [NASaveData getLoginUserId],
+                  @"Rows"       :  @"999",
+                  @"Keyword"    :  keyword,
+                  @"K002"       :  @"4",
+                  @"Mode"       :  @"1",
+                  @"Fl"         :  [NSString clipListFl],
+                  @"K081"       :  ReleaseAreaInfo,
+                  };
+        
+    }
+
     [[NANetworkClient sharedClient] postFavoritesSearch:param completionBlock:^(id favorites, NSError *error) {
         if (!error) {
             SHXMLParser *parser = [[SHXMLParser alloc] init];
@@ -325,23 +345,44 @@
 //    NSString *searchStr = [self whiteSpaceChange:keyword];
 //    NSString *search = [self convertToFullwidth:searchStr];
     NSString *userId = [NASaveData getDefaultUserID];
-    
-    NSDictionary *searchParam = @{
-                                  @"Userid"     :  userId,
-                                  @"Rows"       :  @"15",
-                                  @"K002"       :  @"4",
-                                  @"Mode"       :  @"1",
-                                  @"K003"       :  @"20000101:20991231",
-                                  @"K004"       :  @"KM",
-                                  @"K005"       :  @"K",
-                                  @"K006"       :  @"S01",
-                                  @"K008"       :  @"M",
-                                  @"UseDevice"  :  NAUserDevice,
-                                  @"Keyword"    :  keyword,
-                                  @"Fl"         :  [NSString searchCurrentAtricleFl],
-                                  @"Sort"       :  @"K053:desc,K032:desc",
-                                  
-                                  };
+    NSDictionary *searchParam;
+    if (![PublishDayInfo isEqualToString:@""] && PublishDayInfo != nil ) {
+        searchParam = @{
+                        @"Userid"     :  userId,
+                        @"Rows"       :  @"999",
+                        @"K002"       :  @"4",
+                        @"Mode"       :  @"1",
+                        @"K003"       :  @"20000101:20991231",
+                        @"K004"       :  @"KM",
+                        @"K005"       :  @"K",
+                        @"K006"       :  @"S01",
+                        @"K008"       :  @"M",
+                        @"UseDevice"  :  NAUserDevice,
+                        @"Keyword"    :  keyword,
+                        @"Fl"         :  [NSString searchCurrentAtricleFl],
+                        @"Sort"       :  @"K053:desc,K032:desc",
+                        @"K081"       :  ReleaseAreaInfo,
+                        @"K083"       : PublishDayInfo,
+                  };
+    }else{
+        searchParam = @{
+                        @"Userid"     :  userId,
+                        @"Rows"       :  @"999",
+                        @"K002"       :  @"4",
+                        @"Mode"       :  @"1",
+                        @"K003"       :  @"20000101:20991231",
+                        @"K004"       :  @"KM",
+                        @"K005"       :  @"K",
+                        @"K006"       :  @"S01",
+                        @"K008"       :  @"M",
+                        @"UseDevice"  :  NAUserDevice,
+                        @"Keyword"    :  keyword,
+                        @"Fl"         :  [NSString searchCurrentAtricleFl],
+                        @"Sort"       :  @"K053:desc,K032:desc",
+                        @"K081"       :  ReleaseAreaInfo,
+                  };
+        
+    }
     
     [ProgressHUD show:NSLocalizedString(@"messageloading", nil)];
     

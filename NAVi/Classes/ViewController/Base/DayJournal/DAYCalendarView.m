@@ -74,7 +74,12 @@
     self.selectedIndicatorColor = [UIColor colorWithRed:234/255.0 green:115/255.0 blue:160/255.0 alpha:1];
     //blue
     self.beforeIndicatorColor = [UIColor colorWithRed:103.0/255.0 green:165.0/255.0 blue:224.0/255.0 alpha:1];
-    self.indicatorRadius = 15;
+    if (isPhone) {
+        self.indicatorRadius = 15;
+    }else{
+        self.indicatorRadius = 25;
+    }
+    
     self.navigationBarView = [[DAYNavigationBar alloc] init];
     self.navigationBarView.translatesAutoresizingMaskIntoConstraints = NO;
     self.navigationBarView.textLabel.text = self.navigationBarTitle;
@@ -351,10 +356,19 @@
     comps.day = day;
     comps.month = month;
     comps.year = year;
-    
-    
-    
-    
+    if ((self.selectedIndicatorView && self.selectedIndicatorView.attachingView == view)) {
+        [view setSelected:YES];
+    }else {
+        [view setSelected:NO];
+    }
+    [view setSelectedData:NO];
+    view.textColor = self.componentTextColor;
+    view.highlightTextColor = self.highlightedComponentTextColor;
+    view.representedObject = comps;
+    view.textLabel.alpha = self->_visibleMonth == month ? 1.0 : 0.5;//没有数据的字在当前月黑色,上一个月或者下一个月灰色
+    view.textLabel.font = [FontUtil systemFontOfSize:16];
+    view.textLabel.text = [NSString stringWithFormat:@"%d", (int) day];
+
     for (NSDictionary *nowSelectedDate in _nowMonthArray) {
         NSString *month2 = nil;
         NSString *publishDate = [nowSelectedDate objectForKey:@"publishDate"];
@@ -372,6 +386,7 @@
         }
         //有数据的日期
         if ([month2 integerValue] == month && [day2 integerValue] == day) {
+            view.textLabel.alpha = 1.0;
             DAYIndicatorView *_nowMonthView = [[DAYIndicatorView alloc] init];
             _nowMonthView.selectDay = day2;
             _nowMonthView.selectMonth = month2;
@@ -396,13 +411,11 @@
             }
             //跟当前选择的日期一致
             if (month == monthdate.integerValue && day == daydate.integerValue) {
-                _nowMonthView.color = self.selectedIndicatorColor;
                 self->_selectedDate = [DAYUtils dateFromDateComponents:comps];
-                view.textColor = [UIColor whiteColor];
+                _nowMonthView.color = self.selectedIndicatorColor;
                 [view setSelected:YES];
             }else{
                 _nowMonthView.color = self.beforeIndicatorColor;
-                view.textColor = [UIColor whiteColor];
                 [view setSelectedData:YES];
             }
             
@@ -417,11 +430,20 @@
                 UIImageView *localImage = [[UIImageView alloc]init];
                 localImage.image = [UIImage imageNamed:@"30_star"];
                 [view addSubview:localImage];
-                [localImage mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.right.equalTo(view.mas_right).mas_offset(-5);
-                    make.bottom.equalTo(view.mas_bottom);
-                    make.width.height.mas_equalTo(8);
-                }];
+                if (isPhone) {
+                    [localImage mas_makeConstraints:^(MASConstraintMaker *make) {
+                        make.right.equalTo(view.mas_right).mas_offset(-5);
+                        make.bottom.equalTo(view.mas_bottom);
+                        make.width.height.mas_equalTo(8);
+                    }];
+                }else{
+                    [localImage mas_makeConstraints:^(MASConstraintMaker *make) {
+                        make.left.equalTo(view.mas_left).offset(view.frame.size.width/2+ 25/2+10);
+                        make.top.equalTo(view.mas_top).offset(view.frame.size.width/2 +25/2+12);
+                        make.width.height.mas_equalTo(12);
+                    }];
+                }
+                
                 [imageArrView addObject:localImage];
             }
             _nowMonthView.attachingView = view;
@@ -444,18 +466,7 @@
         }
         
     }
-    if ((self.selectedIndicatorView && self.selectedIndicatorView.attachingView == view)) {
-        [view setSelected:YES];
-    }else {
-        [view setSelected:NO];
-    }
-    [view setSelectedData:NO];
-    view.textColor = self.componentTextColor;
-    view.highlightTextColor = self.highlightedComponentTextColor;
-    view.representedObject = comps;
-    view.textLabel.alpha = self->_visibleMonth == month ? 1.0 : 0.5;
-    view.textLabel.font = [FontUtil systemFontOfSize:16];
-    view.textLabel.text = [NSString stringWithFormat:@"%d", (int) day];
+    
     
 }
 
@@ -604,27 +615,7 @@
 }
 
 - (void)componentDidTap:(DAYComponentView *)sender {
-    _select = 1;
     NSDateComponents *comps = sender.representedObject;
-    if (comps.year != self->_visibleYear || comps.month != self->_visibleMonth) {
-        if (comps.month == _publishDate.integerValue -1) {
-            [self jumpToMonth:comps.month year:comps.year day:comps.day];
-            self.navigationBarView.prevTitle.hidden = YES;
-            self.navigationBarView.prevButton.hidden = YES;
-            self.navigationBarView.nextButton.hidden = NO;
-            self.navigationBarView.nextTitle.hidden = NO;
-
-        }else if (comps.month == _publishDate.integerValue){
-            [self jumpToMonth:comps.month year:comps.year day:comps.day];
-            self.navigationBarView.nextButton.hidden = YES;
-            self.navigationBarView.nextTitle.hidden = YES;
-            self.navigationBarView.prevTitle.hidden = NO;
-            self.navigationBarView.prevButton.hidden = NO;
-        }else{
-            
-        }
-        return;
-    }
     NSMutableArray *arr = [[NSMutableArray alloc]init];
     [arr addObjectsFromArray:_nowMonthArray];
     for (NSDictionary *nowSelectedDate in arr) {
@@ -643,24 +634,35 @@
         }
     
         if (comps.month == month2.integerValue && comps.day == day2.integerValue) {
+            _select = 1;
             if (self.selectedIndicatorView.hidden) {
                 for(DAYIndicatorView *view in arrView) {
-
+                    
                     if (view.selectMonth ==month2 && view.selectDay == day2 ) {
                         view.color = self.selectedIndicatorColor;
+                        [sender setSelected:YES];
+                        self->_selectedDate = [DAYUtils dateFromDateComponents:comps];
                         self.selectedIndicatorView.hidden = NO;
                         self.selectedIndicatorView.transform = CGAffineTransformMakeScale(0, 0);
                         self.selectedIndicatorView.attachingView = sender;
                         [self addConstraintToCenterIndicatorView:self.selectedIndicatorView toView:sender];
-                        sender.textColor = [UIColor whiteColor];
-                        [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.7 initialSpringVelocity:0 options:kNilOptions animations:^{
-                            self.selectedIndicatorView.transform = CGAffineTransformIdentity;
-                            [sender setSelected:YES];
-                        } completion:nil];
-                        self->_selectedDate = [DAYUtils dateFromDateComponents:comps];
+                        
+                        if (self.selectedDate != nil) {
+                            if (_select ==0) {
+                                
+                            }else{
+                                if (_noReload == 1) {
+                                    
+                                }else{
+                                    [self.delegate calendarViewDidChange:self.selectedDate];
+                                }
+                            }
+                            
+                            
+                            
+                        }
                     }else{
                         view.color = self.beforeIndicatorColor;
-                        sender.textColor = [UIColor whiteColor];
                         [sender setSelectedData:YES];
                     }
                 }
@@ -670,26 +672,51 @@
                 for(DAYIndicatorView *view in arrView) {
                     
                     if (view.selectMonth ==month2 && view.selectDay == day2 ) {
-                        view.color = self.selectedIndicatorColor;
-                        sender.textColor = [UIColor whiteColor];
+                        view.color = self.selectedIndicatorColor;;
+                        [sender setSelected:YES];
+                        self->_selectedDate = [DAYUtils dateFromDateComponents:comps];
+                        self.selectedIndicatorView.hidden = NO;
+                        self.selectedIndicatorView.transform = CGAffineTransformMakeScale(0, 0);
+                        self.selectedIndicatorView.attachingView = sender;
                         [self addConstraintToCenterIndicatorView:self.selectedIndicatorView toView:sender];
                         
-                        [UIView animateWithDuration:0.3 delay:0 usingSpringWithDamping:0.8 initialSpringVelocity:0 options:kNilOptions animations:^{
-                            [self.contentWrapperView layoutIfNeeded];
+                        if (self.selectedDate != nil) {
+                            if (_select ==0) {
+                                
+                            }else{
+                                if (_noReload == 1) {
+                                    
+                                }else{
+                                    [self.delegate calendarViewDidChange:self.selectedDate];
+                                }
+                            }
                             
-                            [((DAYComponentView *) self.selectedIndicatorView.attachingView) setSelected:NO];
-                            [sender setSelected:YES];
-                        } completion:nil];
-                        
-                        self.selectedIndicatorView.attachingView = sender;
-                        self->_selectedDate = [DAYUtils dateFromDateComponents:comps];
+                            
+                        }
                     }else{
                         view.color = self.beforeIndicatorColor;
-                        sender.textColor = [UIColor whiteColor];
                         [sender setSelectedData:YES];
                     }
                 }
             }
+            if (comps.year != self->_visibleYear || comps.month != self->_visibleMonth) {
+                if (comps.month == _toDayMonth.integerValue -1) {
+                    [self jumpToPreviousMonth:comps.day];
+                    self.navigationBarView.prevTitle.hidden = YES;
+                    self.navigationBarView.prevButton.hidden = YES;
+                    self.navigationBarView.nextButton.hidden = NO;
+                    self.navigationBarView.nextTitle.hidden = NO;
+                    
+                }else if (comps.month == _toDayMonth.integerValue){
+                    [self jumpToNextMonth:comps.day];
+                    self.navigationBarView.nextButton.hidden = YES;
+                    self.navigationBarView.nextTitle.hidden = YES;
+                    self.navigationBarView.prevTitle.hidden = NO;
+                    self.navigationBarView.prevButton.hidden = NO;
+                }
+                return;
+            }
+            
             
             
             [self sendActionsForControlEvents:UIControlEventValueChanged];
@@ -718,7 +745,7 @@
 }
 
 #pragma mark - Actions
-
+//左右滑动改变月份
 - (void)jumpToNextMonth {
     
     NSUInteger nextMonth;
@@ -736,7 +763,6 @@
     [self jumpToMonth:nextMonth year:nextYear];
    
 }
-
 - (void)jumpToPreviousMonth {
     
     NSUInteger prevMonth;
@@ -752,73 +778,7 @@
     }
     
     [self jumpToMonth:prevMonth year:prevYear];
-   
-}
-
-- (void)jumpToMonth:(NSUInteger)month year:(NSUInteger)year day:(NSInteger)day {
-    _monthNew = [NSString stringWithFormat:@"%lu",(unsigned long)month];
-    _dayNew = [NSString stringWithFormat:@"%lu",(unsigned long)day];
-    _nowMonth = [NSString stringWithFormat:@"%ld",month];
-    BOOL direction;
-    if (self->_visibleYear == year) {
-        direction = month > self->_visibleMonth;
-    }
-    else {
-        direction = year > self->_visibleYear;
-    }
     
-    self->_visibleMonth = month;
-    self->_visibleYear = year;
-    //self->_selectedDate = nil;
-    
-    // Deal with indicator views.
-    self.selectedIndicatorView.attachingView = nil;
-    [self.selectedIndicatorView setHidden:YES];
-
-    [self.contentView removeArrangedSubview:self.contentWrapperView];
-    if (arrView.count > 0) {
-        for(DAYIndicatorView *view in arrView) {
-            [view removeFromSuperview];
-        }
-        [arrView removeAllObjects];
-        
-        
-    }
-    if (imageArrView.count > 0) {
-        for(UIImageView *view in imageArrView) {
-            [view removeFromSuperview];
-        }
-        [imageArrView removeAllObjects];
-    }
-
-    [UIView transitionWithView:self.navigationBarView.textLabel duration:0.3 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
-        self.navigationBarView.textLabel.text = self.navigationBarTitle;
-    } completion:nil];
-    
-    UIView *snapshotView = [self.contentWrapperView snapshotViewAfterScreenUpdates:NO];
-    snapshotView.frame = self.contentWrapperView.frame;
-    [self addSubview:snapshotView];
-    
-    [self configureContentView];
-    
-    self.contentView.transform = CGAffineTransformMakeTranslation(CGRectGetHeight(self.contentView.frame) / 3 * (direction ? 1 : -1),0);
-    self.contentView.alpha = 0;
-    
-    [UIView animateWithDuration:0.35 delay:0 usingSpringWithDamping:0.72 initialSpringVelocity:0 options:kNilOptions animations:^{
-        snapshotView.transform = CGAffineTransformMakeTranslation(-CGRectGetHeight(self.contentView.frame) / 3 * (direction ? 1 : -1),0);
-        snapshotView.alpha = 0;
-        
-        self.selectedIndicatorView.transform = CGAffineTransformMakeScale(0, 0);
-        self.contentView.transform = CGAffineTransformIdentity;
-        self.contentView.alpha = 1;
-        
-    } completion:^(BOOL finished) {
-        [snapshotView removeFromSuperview];
-        
-        if (!self.selectedDate) {
-            self.selectedIndicatorView.hidden = YES;
-        }
-    }];
 }
 - (void)jumpToMonth:(NSUInteger)month year:(NSUInteger)year {
     _nowMonth = [NSString stringWithFormat:@"%ld",month];
@@ -854,9 +814,128 @@
         }
         [imageArrView removeAllObjects];
     }
+    
+    
+    
+    [UIView transitionWithView:self.navigationBarView.textLabel duration:0.3 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+        self.navigationBarView.textLabel.text = self.navigationBarTitle;
+    } completion:nil];
+    
+    UIView *snapshotView = [self.contentWrapperView snapshotViewAfterScreenUpdates:NO];
+    snapshotView.frame = self.contentWrapperView.frame;
+    [self addSubview:snapshotView];
+    
+    [self configureContentView];
+    
+    self.contentView.transform = CGAffineTransformMakeTranslation(CGRectGetHeight(self.contentView.frame) / 3 * (direction ? 1 : -1),0);
+    self.contentView.alpha = 0;
+    
+    [UIView animateWithDuration:0.35 delay:0 usingSpringWithDamping:0.72 initialSpringVelocity:0 options:kNilOptions animations:^{
+        snapshotView.transform = CGAffineTransformMakeTranslation(-CGRectGetHeight(self.contentView.frame) / 3 * (direction ? 1 : -1),0);
+        snapshotView.alpha = 0;
+        
+        self.selectedIndicatorView.transform = CGAffineTransformMakeScale(0, 0);
+        self.contentView.transform = CGAffineTransformIdentity;
+        self.contentView.alpha = 1;
+        
+    } completion:^(BOOL finished) {
+        [snapshotView removeFromSuperview];
+        
+        if (!self.selectedDate) {
+            self.selectedIndicatorView.hidden = YES;
+        }
+    }];
+}
 
+//点击到有数据的某一天好切换月份
+- (void)jumpToNextMonth:(NSInteger)day {
     
+    NSUInteger nextMonth;
+    NSUInteger nextYear;
     
+    if (self->_visibleMonth >= 12) {
+        nextMonth = 1;
+        nextYear = self->_visibleYear + 1;
+    }
+    else {
+        nextMonth = self->_visibleMonth + 1;
+        nextYear = self->_visibleYear;
+    }
+    
+    [self jumpToMonth:nextMonth year:nextYear day:day];
+    
+}
+
+- (void)jumpToPreviousMonth:(NSInteger)day {
+    
+    NSUInteger prevMonth;
+    NSUInteger prevYear;
+    
+    if (self->_visibleMonth <= 1) {
+        prevMonth = 12;
+        prevYear = self->_visibleYear - 1;
+    }
+    else {
+        prevMonth = self->_visibleMonth - 1;
+        prevYear = self->_visibleYear;
+    }
+    
+    [self jumpToMonth:prevMonth year:prevYear day:day];
+    
+}
+- (void)jumpToMonth:(NSUInteger)month year:(NSUInteger)year day:(NSInteger)day {
+    _monthNew = [NSString stringWithFormat:@"%lu",(unsigned long)month];
+    _dayNew = [NSString stringWithFormat:@"%lu",(unsigned long)day];
+    _nowMonth = [NSString stringWithFormat:@"%ld",month];
+    BOOL direction;
+    if (self->_visibleYear == year) {
+        direction = month > self->_visibleMonth;
+    }
+    else {
+        direction = year > self->_visibleYear;
+    }
+    
+    self->_visibleMonth = month;
+    self->_visibleYear = year;
+    NSString *date;
+    if (_monthNew.length == 1 && _dayNew.length == 1) {
+        date = [NSString stringWithFormat:@"%lu0%lu0%ld",(unsigned long)year,(unsigned long)month,(long)day];
+    }else if (_monthNew.length == 1 && _dayNew.length == 2) {
+        date = [NSString stringWithFormat:@"%lu0%lu%ld",(unsigned long)year,(unsigned long)month,(long)day];
+    }else if (_monthNew.length == 2 && _dayNew.length == 1) {
+        date = [NSString stringWithFormat:@"%lu%lu0%ld",(unsigned long)year,(unsigned long)month,(long)day];
+    }else if (_monthNew.length == 2 && _dayNew.length == 2) {
+        date = [NSString stringWithFormat:@"%lu%lu%ld",(unsigned long)year,(unsigned long)month,(long)day];
+    }
+    
+    NSDateFormatter  *dateformatter=[[NSDateFormatter alloc] init];
+    NSLocale *locale = [[NSLocale alloc]  initWithLocaleIdentifier:[[NSLocale preferredLanguages]  objectAtIndex:0]];
+    [dateformatter setLocale:locale];
+    [dateformatter setDateFormat:@"yyyyMMdd"];
+    NSDate * date1 = [dateformatter dateFromString:date];
+    
+    self->_selectedDate = date1;
+    
+    // Deal with indicator views.
+    self.selectedIndicatorView.attachingView = nil;
+    [self.selectedIndicatorView setHidden:YES];
+
+    [self.contentView removeArrangedSubview:self.contentWrapperView];
+    if (arrView.count > 0) {
+        for(DAYIndicatorView *view in arrView) {
+            [view removeFromSuperview];
+        }
+        [arrView removeAllObjects];
+        
+        
+    }
+    if (imageArrView.count > 0) {
+        for(UIImageView *view in imageArrView) {
+            [view removeFromSuperview];
+        }
+        [imageArrView removeAllObjects];
+    }
+
     [UIView transitionWithView:self.navigationBarView.textLabel duration:0.3 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
         self.navigationBarView.textLabel.text = self.navigationBarTitle;
     } completion:nil];

@@ -112,7 +112,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeUser) name:@"changeUser" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(UpdateMymodel:) name:@"UpdateMymodel" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getListselectindex:) name:@"getListselectindex" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(singleClickNoty) name:@"singleClickNoty" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(singleClickNoty:) name:@"singleClickNoty" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(doubleClickNoty:) name:@"doubleClickNoty" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(drawFirstnote) name:NOTYDrawFirstnote object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(toSerachLastNewsList) name:NOTYReloadPage object:nil];
@@ -398,7 +398,7 @@
 -(void)drawFirstnote{
     [self swipeViewDidEndDecelerating:self.mainScrollView];
 }
--(void)singleClickNoty{
+-(void)singleClickNoty:(NSNotification *)noti{
     [localPickView dissmissView];
     [localPickView2 dissmissView];
     [detailSelectView dismissMyview];
@@ -417,6 +417,9 @@
         
     }];
     
+    NASubImageScrollView *view = (NASubImageScrollView *)[self.mainScrollView itemViewAtIndex:self.mainScrollView.currentItemIndex];
+    CGFloat scale = view.zoomScale;
+    
     if (self.homeToolBar.hidden == NO) {
 //        if (self.progressViewBar.progressData.progress != 1.0f) {
 //            [self.progressViewBar setHidden:NO];
@@ -430,15 +433,25 @@
             [self resetHomeToolBar];
         }
         if (local1 == 1) {
-            btnView.hidden = NO;
-            localBtn.hidden = NO;
+            if (scale == 1) {
+                btnView.hidden = NO;
+                localBtn.hidden = NO;
+            } else {
+                btnView.hidden = YES;
+                localBtn.hidden = YES;
+            }
         }else{
             btnView.hidden = YES;
             localBtn.hidden = YES;
         }
         if (local2 == 1) {
-            btnView2.hidden = NO;
-            localBtn2.hidden = NO;
+            if (scale == 1) {
+                btnView.hidden = NO;
+                localBtn.hidden = NO;
+            } else {
+                btnView.hidden = YES;
+                localBtn.hidden = YES;
+            }
         }else{
             btnView2.hidden = YES;
             localBtn2.hidden = YES;
@@ -453,15 +466,25 @@
             [self resetHomeToolBar];
         }
         if (local1 == 1) {
-            btnView.hidden = NO;
-            localBtn.hidden = NO;
+            if (scale == 1) {
+                btnView.hidden = NO;
+                localBtn.hidden = NO;
+            } else {
+                btnView.hidden = YES;
+                localBtn.hidden = YES;
+            }
         }else{
             btnView.hidden = YES;
             localBtn.hidden = YES;
         }
         if (local2 == 1) {
-            btnView2.hidden = NO;
-            localBtn2.hidden = NO;
+            if (scale == 1) {
+                btnView.hidden = NO;
+                localBtn.hidden = NO;
+            } else {
+                btnView.hidden = YES;
+                localBtn.hidden = YES;
+            }
         }else{
             btnView2.hidden = YES;
             localBtn2.hidden = YES;
@@ -1749,14 +1772,14 @@
     search.regionDic =_regionDic;
     NSInteger count = self.pageArray.count;
     if (![self isLandscape]) {
-        search.haveChangeIndex=count - 1 - self.mainScrollView.currentItemIndex;
+        search.haveChangeIndex=self.mainScrollView.currentItemIndex;
         
     }else{
         NSArray *pageSort = [self padLandscapeCount];
         NSInteger landCount = pageSort.count;
         NSArray *sort = pageSort[landCount - 1 - self.mainScrollView.currentItemIndex];
         NSNumber *aDocIndex = sort[0];
-        search.haveChangeIndex=aDocIndex.integerValue;
+        search.haveChangeIndex=count - 1 - aDocIndex.integerValue;
         
     }
     search.isfromWhere = @"HOME";
@@ -1993,8 +2016,12 @@
             NSNumber *otherDocIndex = sort[1];
             doc = self.pageArray[aDocIndex.integerValue];
             other =  self.pageArray[otherDocIndex.integerValue];
-            
-            note.myselectIndex=aDocIndex.integerValue;
+            if (otherDocIndex.integerValue == self.pageArray.count - 1 - _haveChangeIndex) {
+                note.myselectIndex=otherDocIndex.integerValue;
+            } else {
+                note.myselectIndex=aDocIndex.integerValue;
+
+            }
             
         }
         
@@ -2051,7 +2078,6 @@
     }
     
     
-    NSInteger count = self.pageArray.count;
     if (![self isLandscape]) {
         grip.haveChangeIndex=self.mainScrollView.currentItemIndex;
         
@@ -2059,9 +2085,19 @@
         NSArray *pageSort = [self padLandscapeCount];
         NSInteger landCount = pageSort.count;
         NSArray *sort = pageSort[landCount - 1 - self.mainScrollView.currentItemIndex];
-        NSNumber *aDocIndex = sort[0];
-        grip.haveChangeIndex=aDocIndex.integerValue;
-        
+        if (sort.count == 1) {
+            NSNumber *aDocIndex = sort[0];
+            grip.haveChangeIndex=_pageArray.count - 1 - aDocIndex.integerValue;
+        } else {
+            NSNumber *aDocIndex = sort[0];
+            NSNumber *otherDocIndex = sort[1];
+            
+            if (otherDocIndex.integerValue == self.pageArray.count - 1 - _haveChangeIndex) {
+                grip.haveChangeIndex=_pageArray.count - 1 - otherDocIndex.integerValue;
+            } else {
+                grip.haveChangeIndex=_pageArray.count - 1 - aDocIndex.integerValue;
+            }
+        }
     }
     grip.isfromWhere = @"HOME";
 
@@ -2656,22 +2692,42 @@
                 }
                 NSDictionary *param;
                 if ([self isLogin]) {
-                    param = @{
-                                            @"Userid"     :  userId,
-                                            @"UseDevice"  :  NAUserDevice,
-                                            @"K090"       :  @"010",
-                                            @"Rows"       :  @"1",
-                                            @"K003"       :  [NSString stringWithFormat:@"20000101:%@",[Util getSystemDate]],
-                                            @"K004"       :  K004,
-                                            @"K005"       :  K005,
-                                            @"K006"       :  K006,
-                                            @"K002"       :  @"2",
-                                            @"Mode"       :  @"1",
-                                            @"Sort"       :  @"K003:desc,K032:desc,K006:asc",
-                                            @"Fl"         :  [NSString searchWithPublicationInfoId],
-                                            @"K081"       :  ReleaseAreaInfo,
-                                            @"K083"       : PublishDayInfo,
-                                            };
+                    if (![PublishDayInfo isEqualToString:@""] && PublishDayInfo != nil ) {
+                        param = @{
+                                  @"Userid"     :  userId,
+                                  @"UseDevice"  :  NAUserDevice,
+                                  @"K090"       :  @"010",
+                                  @"Rows"       :  @"1",
+                                  @"K003"       :  [NSString stringWithFormat:@"20000101:%@",[Util getSystemDate]],
+                                  @"K004"       :  K004,
+                                  @"K005"       :  K005,
+                                  @"K006"       :  K006,
+                                  @"K002"       :  @"2",
+                                  @"Mode"       :  @"1",
+                                  @"Sort"       :  @"K003:desc,K032:desc,K006:asc",
+                                  @"Fl"         :  [NSString searchWithPublicationInfoId],
+                                  @"K081"       :  ReleaseAreaInfo,
+                                  @"K083"       : PublishDayInfo,
+                                  };
+                    }else{
+                        param = @{
+                                  @"Userid"     :  userId,
+                                  @"UseDevice"  :  NAUserDevice,
+                                  @"K090"       :  @"010",
+                                  @"Rows"       :  @"1",
+                                  @"K003"       :  [NSString stringWithFormat:@"20000101:%@",[Util getSystemDate]],
+                                  @"K004"       :  K004,
+                                  @"K005"       :  K005,
+                                  @"K006"       :  K006,
+                                  @"K002"       :  @"2",
+                                  @"Mode"       :  @"1",
+                                  @"Sort"       :  @"K003:desc,K032:desc,K006:asc",
+                                  @"Fl"         :  [NSString searchWithPublicationInfoId],
+                                  @"K081"       :  ReleaseAreaInfo,
+                                  };
+
+                    }
+                   
                 }else{
                     param = @{
                                             @"Userid"     :  userId,
@@ -3009,23 +3065,44 @@
             // 全紙面を検索
             NSString *str =[NASaveData getDataUserClass];
             if ([str isEqualToString:@"10"]) {
-                param = @{
-                          @"K008"       :  doc.editionInfoId,
-                          @"Userid"     :  myUserid,
-                          @"UseDevice"  :  NAUserDevice,
-                          @"Rows"       :  @"100",
-                          @"K004"       :  doc.publisherGroupInfoId,
-                          @"K003"       :  [NSString stringWithFormat:@"%@:%@",doc.publishDate,doc.publishDate],
-                          @"K006"       :  doc.publicationInfoId,
-                          @"K005"       :  doc.publisherInfoId,
-                          @"K014"       :  @"1",
-                          @"K002"       :  @"2",
-                          @"Mode"       :  @"1",
-                          @"Sort"       :  @"K006:asc,K090:asc,K012:asc",
-                          @"Fl"         :  [NSString searchCurrentFl],
-                          @"K081"       :  ReleaseAreaInfo,
-                          @"K083"       : PublishDayInfo,
-                          };
+                if (![PublishDayInfo isEqualToString:@""] && PublishDayInfo != nil ) {
+                    param = @{
+                              @"K008"       :  doc.editionInfoId,
+                              @"Userid"     :  myUserid,
+                              @"UseDevice"  :  NAUserDevice,
+                              @"Rows"       :  @"100",
+                              @"K004"       :  doc.publisherGroupInfoId,
+                              @"K003"       :  [NSString stringWithFormat:@"%@:%@",doc.publishDate,doc.publishDate],
+                              @"K006"       :  doc.publicationInfoId,
+                              @"K005"       :  doc.publisherInfoId,
+                              @"K014"       :  @"1",
+                              @"K002"       :  @"2",
+                              @"Mode"       :  @"1",
+                              @"Sort"       :  @"K006:asc,K090:asc,K012:asc",
+                              @"Fl"         :  [NSString searchCurrentFl],
+                              @"K081"       :  ReleaseAreaInfo,
+                              @"K083"       : PublishDayInfo,
+                              };
+                }else{
+                    param = @{
+                              @"K008"       :  doc.editionInfoId,
+                              @"Userid"     :  myUserid,
+                              @"UseDevice"  :  NAUserDevice,
+                              @"Rows"       :  @"100",
+                              @"K004"       :  doc.publisherGroupInfoId,
+                              @"K003"       :  [NSString stringWithFormat:@"%@:%@",doc.publishDate,doc.publishDate],
+                              @"K006"       :  doc.publicationInfoId,
+                              @"K005"       :  doc.publisherInfoId,
+                              @"K014"       :  @"1",
+                              @"K002"       :  @"2",
+                              @"Mode"       :  @"1",
+                              @"Sort"       :  @"K006:asc,K090:asc,K012:asc",
+                              @"Fl"         :  [NSString searchCurrentFl],
+                              @"K081"       :  ReleaseAreaInfo,
+                              };
+                    
+                }
+                
             }else{
                 param = @{
                           @"K008"       :  doc.editionInfoId,
@@ -3579,7 +3656,7 @@
     if (![self isLandscape]) {
         NADoc *doc = self.pageArray[count - 1 - swipeView.currentItemIndex];
         [self setRiliTitle:doc withOther:nil];
-        [view.imageView updateFrame4Image:view.bounds];
+        [view.imageView updateFrame4Image:view.bounds isFromHome:YES];
     }else{
         NSArray *pageSort = [self padLandscapeCount];
         NSInteger landCount = pageSort.count;
@@ -3589,14 +3666,14 @@
             NSNumber *aDocIndex = sort[0];
             NADoc *doc = self.pageArray[aDocIndex.integerValue];
             [self setRiliTitle:doc withOther:nil];
-            [view.imageView updateFrame4Image:view.bounds];
+            [view.imageView updateFrame4Image:view.bounds isFromHome:YES];
         }else{
             NSNumber *aDocIndex = sort[0];
             NSNumber *otherDocIndex = sort[1];
             NADoc *doc = self.pageArray[aDocIndex.integerValue];
             NADoc *other =  self.pageArray[otherDocIndex.integerValue];
             [self setRiliTitle:doc withOther:other];
-            [view.imageView updateFrame4Image:view.bounds];
+            [view.imageView updateFrame4Image:view.bounds isFromHome:YES];
             
         }
     }
@@ -3694,7 +3771,7 @@
             //2面
             otherImageIndex = ((NSNumber *)curPageArray[1]).integerValue;
             otherDoc = self.pageArray[otherImageIndex];
-//            [self setRiliTitle:doc withOther:otherDoc];
+            [self setRiliTitle:doc withOther:otherDoc];
             NADoc *tmpdoc = self.pageArray[verticalCurrentPageIndex];
             if ([tmpdoc isEqual:doc]) {
                 isRightPage=YES;
@@ -3749,7 +3826,7 @@
             
             
         }else{
-//            [self setRiliTitle:doc withOther:nil];
+            [self setRiliTitle:doc withOther:nil];
             //1面
             if (doc.regionViewFlg == nil || [doc.regionViewFlg isEqualToString:@""]) {
                 local1 = 0;
@@ -4154,9 +4231,15 @@
 //                [self setRiliTitle:doc withOther:other];
 
                 if ([self currentIndex:num.integerValue]==landCount - 1 - self.mainScrollView.currentItemIndex) {
-                    AFTER(1.5, ^{
-                        [view LoadingTwoImageView:doc other:other];
-                    });
+                    NSLog(@"self.mainScrollView.currentItemIndex == %ld", (long)self.mainScrollView.currentItemIndex);
+                    // 原延迟1.5， 两面显示快速滑动会串图片（隔页串2，3面和6，7面串）
+//                    AFTER(1.5, ^{
+//                        [view LoadingTwoImageView:doc other:other];
+//                        NSLog(@"doc == %@ other == %@", doc.pageInfoName, other.pageInfoName);;
+//                    });
+                    
+                    [view LoadingTwoImageView:doc other:other];
+
                     
                     if ([doc.whichimage isEqualToString:NALargeimage] && [other.whichimage isEqualToString:NALargeimage]) {
                         view.largeModel=NAImageModelDone;
@@ -4669,7 +4752,7 @@
     [_labMonthDayHore mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(10);
         make.top.equalTo(_labYearHore.mas_bottom);
-        make.width.mas_equalTo(120);
+        make.width.mas_equalTo(150);
         make.height.mas_equalTo(35);
         
     }];

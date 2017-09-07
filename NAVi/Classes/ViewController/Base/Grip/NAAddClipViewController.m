@@ -372,9 +372,11 @@
                 if (!isChangeError && !isAddError) {
                     ITOAST_BOTTOM(@"save tag success");
                 }
-                [self dismissViewControllerAnimated:YES completion:^{
-                    
-                }];
+                AFTER(2.0, ^{
+                    [self dismissViewControllerAnimated:YES completion:^{
+                        
+                    }];
+                });
             }
             
         } else {

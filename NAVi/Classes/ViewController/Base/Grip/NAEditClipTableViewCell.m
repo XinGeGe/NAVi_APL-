@@ -28,8 +28,16 @@
         [_clipView addSubview:self.clipTextField];
         
         self.deleteClipBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [self.deleteClipBtn setImage:[UIImage imageNamed:@"21_glay"] forState:UIControlStateNormal];
         [self.contentView addSubview:self.deleteClipBtn];
+        
+        UIImageView *imageBtn = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"21_glay"]];
+        [self.deleteClipBtn addSubview:imageBtn];
+        [imageBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.width.height.mas_equalTo(15);
+            make.centerX.mas_equalTo(self.deleteClipBtn.mas_centerX);
+            make.centerY.mas_equalTo(self.deleteClipBtn.mas_centerY);
+        }];
+       
         
 
     }
@@ -51,10 +59,10 @@
         make.top.equalTo(_clipView.mas_top);
     }];
     [self.deleteClipBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self.contentView.mas_right).offset(-10);
-        make.width.mas_equalTo(15);
-        make.height.mas_equalTo(15);
-        make.top.equalTo(_clipView.mas_top).offset(8);
+        make.right.equalTo(self.contentView.mas_right).offset(0);
+        make.width.mas_equalTo(30);
+        make.height.mas_equalTo(30);
+        make.top.equalTo(_clipView.mas_top).offset(0);
     }];
     
 }

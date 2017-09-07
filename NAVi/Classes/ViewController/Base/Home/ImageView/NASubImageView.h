@@ -17,6 +17,6 @@
 - (id)initWithFrame:(CGRect)frame;
 - (void)updateFrame:(CGRect)frame;
 - (void)updateFrameForiPhone:(CGRect)frame;
-- (void)updateFrame4Image:(CGRect)superRect;
+- (void)updateFrame4Image:(CGRect)superRect isFromHome:(BOOL)formHome;
 - (void)updateFrame4Zoom:(CGRect)superRect;
 @end

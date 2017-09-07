@@ -209,7 +209,7 @@
     
     self.imageTitle=[[UILabel alloc]init];
     self.imageTitle.numberOfLines=0;
-    self.imageTitle.font=[FontUtil boldSystemFontOfSize:isPad?20:15];
+    self.imageTitle.font=[FontUtil systemFontOfSize:isPad?20:15];
     self.imageTitle.textAlignment=NSTextAlignmentCenter;
     self.imageTitle.backgroundColor=[UIColor clearColor];
     self.imageTitle.textColor=[UIColor whiteColor];

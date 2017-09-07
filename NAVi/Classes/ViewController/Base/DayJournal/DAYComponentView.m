@@ -75,8 +75,8 @@
     UITapGestureRecognizer *aRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewDidTap:)];
     [self addGestureRecognizer:aRecognizer];
     
-    UILongPressGestureRecognizer *anotherRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(viewDidLongPress:)];
-    [self addGestureRecognizer:anotherRecognizer];
+//    UILongPressGestureRecognizer *anotherRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(viewDidLongPress:)];
+//    [self addGestureRecognizer:anotherRecognizer];
     
     
     
@@ -118,16 +118,16 @@
     [self sendActionsForControlEvents:UIControlEventTouchUpInside];
 }
 
-- (void)viewDidLongPress:(id)sender {
-    if (self.containingEvent) {
-        [self becomeFirstResponder];
-        
-        UIMenuController *menu = [UIMenuController sharedMenuController];
-        menu.menuItems = @[[[UIMenuItem alloc] initWithTitle:self.containingEvent.title action:@selector(showEvent)]];
-        [menu setTargetRect:self.frame inView:self.superview];
-        [menu setMenuVisible:YES];
-    }
-}
+//- (void)viewDidLongPress:(id)sender {
+//    if (self.containingEvent) {
+//        [self becomeFirstResponder];
+//        
+//        UIMenuController *menu = [UIMenuController sharedMenuController];
+//        menu.menuItems = @[[[UIMenuItem alloc] initWithTitle:self.containingEvent.title action:@selector(showEvent)]];
+//        [menu setTargetRect:self.frame inView:self.superview];
+//        [menu setMenuVisible:YES];
+//    }
+//}
 
 - (void)showEvent {
     // If we can find a view controller to be presenter, then create and present `EKEventViewController`.

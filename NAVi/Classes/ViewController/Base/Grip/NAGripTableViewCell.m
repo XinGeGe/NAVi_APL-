@@ -123,7 +123,7 @@
     if (!_titleLbl) {
         _titleLbl = [[UITextView alloc] initWithFrame:CGRectZero];
         _titleLbl.backgroundColor = [UIColor clearColor];
-        _titleLbl.font = [FontUtil boldSystemFontOfSize:18];
+        _titleLbl.font = [FontUtil systemFontOfSize:18];
         [_titleLbl setEditable:NO];
         _titleLbl.userInteractionEnabled=NO;
     }
