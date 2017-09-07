@@ -746,7 +746,7 @@
                   moduleName = "NAVi_akita"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/xin/Documents/iOS/NAVi_APL%20/NAVi/Classes/ViewController/Base/Detail/NADetailBaseViewController.m"
-                  timestampString = "526485677.651761"
+                  timestampString = "526487649.668757"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "825"
@@ -761,7 +761,7 @@
                   moduleName = "NAVi_akita"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/xin/Documents/iOS/NAVi_APL%20/NAVi/Classes/ViewController/Base/Detail/NADetailBaseViewController.m"
-                  timestampString = "526485677.654117"
+                  timestampString = "526487649.671583"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "827"
@@ -938,11 +938,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "NAVi/Classes/ViewController/Base/Home/ImageView/NASubImageView.m"
-            timestampString = "526485676.578025"
+            timestampString = "526487510.820534"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "209"
-            endingLineNumber = "209"
+            startingLineNumber = "218"
+            endingLineNumber = "218"
             landmarkName = "-updateFrame4Image:isFromHome:"
             landmarkType = "7">
          </BreakpointContent>
@@ -954,11 +954,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "NAVi/Classes/ViewController/Base/Home/ImageView/NASubImageView.m"
-            timestampString = "526485676.578025"
+            timestampString = "526487510.820534"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "225"
-            endingLineNumber = "225"
+            startingLineNumber = "234"
+            endingLineNumber = "234"
             landmarkName = "-imageView"
             landmarkType = "7">
          </BreakpointContent>
@@ -1078,7 +1078,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "NAVi/Classes/ViewController/Base/Home/ImageView/NASubImageView.m"
@@ -1094,7 +1094,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "NAVi/Classes/ViewController/Base/Home/ImageView/NASubImageView.m"
@@ -1126,7 +1126,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "NAVi/Classes/ViewController/Base/Home/ImageView/NASubImageView.m"
@@ -1135,6 +1135,54 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "167"
             endingLineNumber = "167"
+            landmarkName = "-updateFrame4Image:isFromHome:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NAVi/Classes/ViewController/Base/Home/ImageView/NASubImageView.m"
+            timestampString = "526487366.555842"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "154"
+            endingLineNumber = "154"
+            landmarkName = "-updateFrame4Image:isFromHome:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NAVi/Classes/ViewController/Base/Home/ImageView/NASubImageView.m"
+            timestampString = "526487498.50846"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "196"
+            endingLineNumber = "196"
+            landmarkName = "-updateFrame4Image:isFromHome:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NAVi/Classes/ViewController/Base/Home/ImageView/NASubImageView.m"
+            timestampString = "526487499.704234"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "203"
+            endingLineNumber = "203"
             landmarkName = "-updateFrame4Image:isFromHome:"
             landmarkType = "7">
          </BreakpointContent>

@@ -153,55 +153,64 @@
             CGFloat heightBgView = superRect.size.height;
             CGRect newBgFrame = superRect;
             
-            if (imageSize.width > imageSize.height) {
+//            if (imageSize.width > imageSize.height) {
+//                if (imageSize.width >= widthBgView) {
+//                    newBgFrame.size.width = 0.9 * newBgFrame.size.width;
+//                    newBgFrame.size.height = imageSize.height * widthBgView / imageSize.width;
+//                    newBgFrame.origin.y = (heightBgView - newBgFrame.size.height) / 2;
+//                    newBgFrame.origin.x = 0.05 * newBgFrame.size.width;
+//                    _offx = newBgFrame.origin.x;
+//                    _offy = newBgFrame.origin.y;
+//                } else {
+//                    newBgFrame.size.width = imageSize.width;
+//                    newBgFrame.size.height = imageSize.height * widthBgView / imageSize.width;
+//                    newBgFrame.origin.y = (heightBgView - imageSize.height) / 2;
+//                    newBgFrame.origin.x = (widthBgView - newBgFrame.size.width) / 2;
+//                    _offx=newBgFrame.origin.x;
+//                    _offy = newBgFrame.origin.y;
+//                }
+//            } else {
+//                if (imageSize.height >= heightBgView) {
+//                    newBgFrame.size.height = 0.9 * newBgFrame.size.height;
+//                    newBgFrame.size.width = imageSize.width * heightBgView / imageSize.height;
+//                    newBgFrame.origin.x = (widthBgView - newBgFrame.size.width) / 2;
+//                    newBgFrame.origin.y = 0.05 * newBgFrame.size.height;
+//                    _offx=newBgFrame.origin.x;
+//                    _offy = newBgFrame.origin.y;
+//                } else {
+//                    newBgFrame.size.height = imageSize.height;
+//                    newBgFrame.size.width = imageSize.width * heightBgView / imageSize.height;
+//                    newBgFrame.origin.y = (heightBgView - imageSize.height) / 2;
+//                    newBgFrame.origin.x = (widthBgView - newBgFrame.size.width) / 2;
+//                }
+//            }
+        
+        
+            if ((imageSize.width / imageSize.height) > (widthBgView / heightBgView)) {
                 if (imageSize.width >= widthBgView) {
-                    newBgFrame.size.width = 0.9 * newBgFrame.size.width;
                     newBgFrame.size.height = imageSize.height * widthBgView / imageSize.width;
                     newBgFrame.origin.y = (heightBgView - newBgFrame.size.height) / 2;
-                    newBgFrame.origin.x = 0.05 * newBgFrame.size.width;
-                    _offx = newBgFrame.origin.x;
+                    _offx = 0;
                     _offy = newBgFrame.origin.y;
+                    newBgFrame.origin.x = 0.05 * newBgFrame.size.width;
+                    newBgFrame.size.width = 0.9 * newBgFrame.size.width;
                 } else {
                     newBgFrame.size.width = imageSize.width;
                     newBgFrame.size.height = imageSize.height * widthBgView / imageSize.width;
-                    newBgFrame.origin.y = (heightBgView - imageSize.height) / 2;
+                    newBgFrame.origin.y = (heightBgView - newBgFrame.size.height) / 2;
                     newBgFrame.origin.x = (widthBgView - newBgFrame.size.width) / 2;
                     _offx=newBgFrame.origin.x;
                     _offy = newBgFrame.origin.y;
                 }
-            } else {
-                if (imageSize.height >= heightBgView) {
-                    newBgFrame.size.height = 0.9 * newBgFrame.size.height;
-                    newBgFrame.size.width = imageSize.width * heightBgView / imageSize.height;
-                    newBgFrame.origin.x = (widthBgView - newBgFrame.size.width) / 2;
-                    newBgFrame.origin.y = 0.05 * newBgFrame.size.height;
-                    _offx=newBgFrame.origin.x;
-                    _offy = newBgFrame.origin.y;
-                } else {
-                    newBgFrame.size.height = imageSize.height;
-                    newBgFrame.size.width = imageSize.width * heightBgView / imageSize.height;
-                    newBgFrame.origin.y = (heightBgView - imageSize.height) / 2;
-                    newBgFrame.origin.x = (widthBgView - newBgFrame.size.width) / 2;
-                }
+                
+            }else {
+                newBgFrame.size.width = imageSize.width * heightBgView / imageSize.height * count;
+                newBgFrame.size.height = 0.9 * newBgFrame.size.height;
+                newBgFrame.origin.y = 0.05 * newBgFrame.size.height;
+                newBgFrame.origin.x = (widthBgView * count - newBgFrame.size.width) / 2;
+                _offx=newBgFrame.origin.x;
+                _offy = 0;
             }
-        
-        
-//            if ((imageSize.width / imageSize.height) > (widthBgView / heightBgView)) {
-//                
-//                newBgFrame.size.height = imageSize.height * widthBgView / imageSize.width;
-//                newBgFrame.origin.y = (heightBgView - newBgFrame.size.height) / 2;
-//                _offx = 0;
-//                _offy = newBgFrame.origin.y;
-//                newBgFrame.origin.x = 0.05 * newBgFrame.size.width;
-//                newBgFrame.size.width = 0.9 * newBgFrame.size.width;
-//            }else {
-//                newBgFrame.size.width = imageSize.width * heightBgView / imageSize.height * count;
-//                newBgFrame.size.height = 0.9 * newBgFrame.size.height;
-//                newBgFrame.origin.y = 0.05 * newBgFrame.size.height;
-//                newBgFrame.origin.x = (widthBgView * count - newBgFrame.size.width) / 2;
-//                _offx=newBgFrame.origin.x;
-//                _offy = 0;
-//            }
              [self updateFrame:newBgFrame];
     }
     
