@@ -53,7 +53,7 @@
     _myAlertView.layer.cornerRadius = 5;
     _myAlertView.layer.masksToBounds = YES;
     [self addSubview:_myAlertView];
-//    _myAlertView.hidden = YES; //ToDo
+    _myAlertView.hidden = YES; //ToDo
 
     
     _addClipBtn=[UIButton buttonWithType:UIButtonTypeCustom];
@@ -70,7 +70,7 @@
     [_addClipBtn addSubview:_addClipImageView];
     
     self.tableClip = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 200, 400) style:UITableViewStylePlain];
-//    [mybackview addSubview:self.tableClip]; //ToDo
+    [mybackview addSubview:self.tableClip]; //ToDo
     self.tableClip.delegate = self;
     self.tableClip.dataSource = self;
     self.tableClip.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -78,15 +78,6 @@
 - (void)addClipBtnAction{
     [self.delegate addClipClick];
 }
-//- (void)clipOneBtnAction:(UIButton *)btn{
-//    [self.delegate chooseclipOneClick:btn];
-//}
-//- (void)clipTwoBtnAction:(UIButton *)btn{
-//    [self.delegate chooseclipTwoClick:btn];
-//}
-//- (void)clipThreeBtnAction:(UIButton *)btn{
-//    [self.delegate chooseclipThreeClick:btn];
-//}
 
 - (void)clipBtnAction:(UIButton *)btn {
     NSInteger selectTag = [NASaveData getClipSelectedBtnTag];
@@ -351,91 +342,101 @@
     }
 }
 
-//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    static NSString *ide = @"cell";
-//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ide];
-//    if (!cell) {
-//        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ide];
-//        if (indexPath.row == 0) {
-//            UIButton *addClipBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//            addClipBtn.layer.cornerRadius = 5;
-//            addClipBtn.layer.masksToBounds = YES;
-//            addClipBtn.layer.borderWidth=1;
-//            addClipBtn.layer.borderColor=[UIColor colorWithRed:135.0/255.0 green:206.0/255.0 blue:250.0/255.0 alpha:1].CGColor;
-//            [addClipBtn addTarget:self action:@selector(addClipBtnAction) forControlEvents:UIControlEventTouchUpInside];
-//            [cell addSubview:addClipBtn];
-//            
-//            UIImageView *addClipImageView = [[UIImageView alloc]init];
-//            addClipImageView.backgroundColor = [UIColor whiteColor];
-//            addClipImageView.image = [UIImage imageNamed:@"12_blue"];
-//            [addClipBtn addSubview:addClipImageView];
-//            if (isPhone) {
-//                [addClipBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-//                    make.top.equalTo(cell.mas_top);
-//                    make.left.right.equalTo(cell);
-//                    make.height.mas_equalTo(30);
-//                }];
-//                
-//                [addClipImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-//                    make.top.equalTo(addClipBtn.mas_top).offset(5);
-//                    make.centerX.equalTo(addClipBtn.mas_centerX);
-//                    make.width.mas_equalTo(20);
-//                    make.height.mas_equalTo(20);
-//                }];
-//            }
-//            
-//
-//        } else {
-//            UIButton *clipBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//            clipBtn.layer.cornerRadius = 5;
-//            clipBtn.layer.masksToBounds = YES;
-//            clipBtn.layer.borderWidth=1;
-//            
-//            [clipBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-//            NAClipDoc *dicBtn = self.btnArray[indexPath.row - 1];
-//            NSString *btnTitle = dicBtn.tagName;
-//            
-//            [clipBtn setTitle:btnTitle forState:UIControlStateNormal];
-//            clipBtn.layer.borderColor=[UIColor colorWithRed:135.0/255.0 green:206.0/255.0 blue:250.0/255.0 alpha:1].CGColor;
-//            clipBtn.tag = dicBtn.tagid.integerValue;
-//            [clipBtn addTarget:self action:@selector(clipBtnAction:) forControlEvents:UIControlEventTouchUpInside];
-//            [cell addSubview:clipBtn];
-//            clipBtn.titleLabel.numberOfLines = 0;
-//            clipBtn.titleLabel.font = [UIFont systemFontOfSize:16];
-//            UIImage *btnBgImage = [self createImageWithColor:[UIColor colorWithRed:103.0/255.0 green:165.0/255.0 blue:224.0/255.0 alpha:1]];
-//            
-//            [clipBtn setBackgroundImage:btnBgImage forState:UIControlStateSelected];
-//
-//            CGSize size = [dicBtn.tagName boundingRectWithSize:CGSizeMake(90,500) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Arial" size:16] } context:nil].size;
-//            
-//            if (isPhone) {
-//                clipBtn.titleLabel.font = [FontUtil systemFontOfSize:15];
-//                
-//                [clipBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-//                    make.top.equalTo(cell.mas_top);
-//                    make.left.equalTo(cell);
-//                    if (size.height < 30) {
-//                        make.height.mas_equalTo(30);
-//                    } else {
-//                        make.height.mas_equalTo(size.height + 10);
-//                    }
-//                    make.width.mas_equalTo(90);
-//                }];
-//                
-//            } else {
-//                clipBtn.titleLabel.font = [FontUtil systemFontOfSize:20];
-//                
-//                [clipBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-//                    make.bottom.equalTo(cell.mas_bottom);
-//                    make.left.right.equalTo(cell);
-//                    make.height.mas_equalTo(20*2);
-//                }];
-//            }
-//        }
-//    }
-//    
-//    return cell;
-//}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    static NSString *ideTag = @"cellTag";
+    static NSString *ide = @"cell";
+
+        if (indexPath.row == 0) {
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ide];
+            if (!cell) {
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ide];
+                UIButton *addClipBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+                addClipBtn.layer.cornerRadius = 5;
+                addClipBtn.layer.masksToBounds = YES;
+                addClipBtn.layer.borderWidth=1;
+                addClipBtn.layer.borderColor=[UIColor colorWithRed:135.0/255.0 green:206.0/255.0 blue:250.0/255.0 alpha:1].CGColor;
+                [addClipBtn addTarget:self action:@selector(addClipBtnAction) forControlEvents:UIControlEventTouchUpInside];
+                [cell addSubview:addClipBtn];
+                
+                UIImageView *addClipImageView = [[UIImageView alloc]init];
+                addClipImageView.backgroundColor = [UIColor whiteColor];
+                addClipImageView.image = [UIImage imageNamed:@"12_blue"];
+                [addClipBtn addSubview:addClipImageView];
+                if (isPhone) {
+                    [addClipBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+                        make.top.equalTo(cell.mas_top);
+                        make.left.right.equalTo(cell);
+                        make.height.mas_equalTo(30);
+                    }];
+                    
+                    [addClipImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+                        make.top.equalTo(addClipBtn.mas_top).offset(5);
+                        make.centerX.equalTo(addClipBtn.mas_centerX);
+                        make.width.mas_equalTo(20);
+                        make.height.mas_equalTo(20);
+                    }];
+                }
+                
+            }
+            return cell;
+
+            
+        } else {
+            UITableViewCell *cellTag = [tableView dequeueReusableCellWithIdentifier:ideTag];
+            if (!cellTag) {
+                cellTag = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ideTag];
+                UIButton *clipBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+                clipBtn.layer.cornerRadius = 5;
+                clipBtn.layer.masksToBounds = YES;
+                clipBtn.layer.borderWidth=1;
+                
+                [clipBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+                NAClipDoc *dicBtn = self.btnArray[indexPath.row - 1];
+                NSString *btnTitle = dicBtn.tagName;
+                
+                [clipBtn setTitle:btnTitle forState:UIControlStateNormal];
+                clipBtn.layer.borderColor=[UIColor colorWithRed:135.0/255.0 green:206.0/255.0 blue:250.0/255.0 alpha:1].CGColor;
+                clipBtn.tag = dicBtn.tagid.integerValue;
+                [clipBtn addTarget:self action:@selector(clipBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+                [cellTag addSubview:clipBtn];
+                clipBtn.titleLabel.numberOfLines = 0;
+                clipBtn.titleLabel.font = [UIFont systemFontOfSize:16];
+                UIImage *btnBgImage = [self createImageWithColor:[UIColor colorWithRed:103.0/255.0 green:165.0/255.0 blue:224.0/255.0 alpha:1]];
+                
+                [clipBtn setBackgroundImage:btnBgImage forState:UIControlStateSelected];
+                
+                CGSize size = [dicBtn.tagName boundingRectWithSize:CGSizeMake(90,500) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Arial" size:16] } context:nil].size;
+                
+                if (isPhone) {
+                    clipBtn.titleLabel.font = [FontUtil systemFontOfSize:15];
+                    
+                    [clipBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+                        make.top.equalTo(cellTag.mas_top);
+                        make.left.equalTo(cellTag);
+                        if (size.height < 30) {
+                            make.height.mas_equalTo(30);
+                        } else {
+                            make.height.mas_equalTo(size.height + 10);
+                        }
+                        make.width.mas_equalTo(90);
+                    }];
+                    
+                } else {
+                    clipBtn.titleLabel.font = [FontUtil systemFontOfSize:20];
+                    
+                    [clipBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+                        make.bottom.equalTo(cellTag.mas_bottom);
+                        make.left.right.equalTo(cellTag);
+                        make.height.mas_equalTo(20*2);
+                    }];
+                }
+
+            }
+            
+            return cellTag;
+        }
+}
 
 -(UIImage*)createImageWithColor:(UIColor*) color
 {
