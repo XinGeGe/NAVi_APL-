@@ -25,6 +25,7 @@
 @property (nonatomic,strong)UIButton *clipTwoBtn;
 @property (nonatomic,strong)UIImageView  *addClipImageView;
 @property (nonatomic,strong)UIButton *clipThreeBtn;
+@property (nonatomic,strong)UITableView *tableClip;
 // 数组
 @property (nonatomic,strong)NSMutableArray *btnArray;
 -(void)show;
